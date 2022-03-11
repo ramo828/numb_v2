@@ -1,0 +1,5 @@
+pyautogui
+requests
+pyperclip
+BeautifulSoup4
+tqdm
