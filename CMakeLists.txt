@@ -7,8 +7,8 @@ cmake_minimum_required(VERSION 2.8)
 # çalıştırılabilir dosya (executable) oluşturun
 add_executable(numb numb.cpp lib/mylib.cpp)
 
-set(MathSolver_VERSION_MAJOR 2)
-set(MathSolver_VERSION_MINOR 0)
+set(Numb_v2_VERSION_MAJOR 2)
+set(Numb_v2_VERSION_MINOR 0)
 
 include_directories(lib/)
 
