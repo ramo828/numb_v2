@@ -12,11 +12,11 @@ class ext {
 		#define robo 0
 		#define numb 1
 		#define statistic 2
-		#define folder ""
+		#define folder ""        //null data
 		string code[3] = {
-		"python python/robo.py",
-		"python python/numb.py",
-		"python python/statistic.py"
+		"python srcpy/robo.py",
+		"python srcpy/numb.py",
+		"python srcpy/statistic.py"
 		};
 };
 
