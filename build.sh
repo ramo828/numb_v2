@@ -2,7 +2,7 @@ name="numb_compile"
 DEB_NAME="numb"
 DEB_VERSION=2.0
 
-filelocation=`bash -c "if [ -e 'getprop ro.product.vendor.model' ]; then echo 0; else echo 1; fi"`
+filelocation=`bash -c "if [ $(ps -ef|grep -c com.termux ) -gt 0 ] ; then echo 0; else echo 1; fi"`
 
 echo "file location: $filelocation"
 if [ "$filelocation" == "0" ]
