@@ -1,16 +1,16 @@
 name="numb_compile"
 DEB_NAME="numb"
 DEB_VERSION=2.0
+OS="GNU/Linux"
 
-filelocation=`bash -c "if [$(ps -ef|grep -c com.termux) -gt 0 ] ; then echo 0; else echo 1; fi"`
-
-echo "file location: $filelocation"
-if [ "$filelocation" == "0" ]
+if [ "$(uname -o)" == $OS ];
 then
 {
+	echo "Linux"
 	BINPATH="usr/local/bin"
 }
 else
+	echo "Android"
 	BINPATH="data/data/com.termux/files/usr/bin"
 fi
 
