@@ -13,10 +13,19 @@ class ext {
 		#define numb 1
 		#define statistic 2
 		#define folder ""        //null data
+		#if __ANDROID__
+			string bin="/data/data/com.termux/files/usr/bin/";
+		#elif __linux__
+                        string bin="/usr/local/bin/";
+		#else
+			string bin="/usr/local/bin/";
+		#endif
+		
+		
 		string code[3] = {
-		"python srcpy/robo.py",
-		"python srcpy/numb.py",
-		"python srcpy/statistic.py"
+		"python "+bin+"srcpy/robo.py",
+		"python "+bin+"srcpy/numb.py",
+		"python "+bin+"srcpy/statistic.py"
 		};
 };
 
@@ -27,7 +36,6 @@ class fio {
 		fio(string file){
 			_file = file;
 		}
-		fio();
 		int makeDir(string folderName);
 		void openFile();
 		void writeFile(string data);
