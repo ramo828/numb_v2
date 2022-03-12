@@ -14,6 +14,10 @@ count = 0                                     # saygac
 flag =  True                                  # Bayraq
 limit = 100                                   # Limit
 msgSpeed = 0.0                                # Atilacaq mesajin sureti
+
+def runRobo(x):
+    print("robo calisdi "+str(x));
+
 try:
     if(sys.argv[1] == "default"):
         status = 1
