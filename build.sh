@@ -1,13 +1,25 @@
 name="numb_compile"
 DEB_NAME="numb"
 DEB_VERSION=2.0
-PCBINPATH="usr/local/bin"
-BINPATH=/usr/local/bin
+
+filelocation=`bash -c "if [ -e 'getprop ro.product.vendor.model' ]; then echo 0; else echo 1; fi"`
+
+echo "file location: $filelocation"
+if [ "$filelocation" == "0" ]
+then
+{
+	BINPATH="usr/local/bin"
+}
+else
+	BINPATH="data/data/com.termux/files/usr/bin"
+fi
+
+echo $BINPATH
 echo "Sistem Temizlenir..."
 rm $name -rf
 echo "Qovluq yaradilir..."
 sleep 1
-mkdir -p $name/$PCBINPATH
+mkdir -p $name/$BINPATH
 echo "Esas fayllar kopyalanir"
 cp python message $name -r
 echo "Cython compile edilir"
@@ -17,9 +29,9 @@ echo "C++ compile edilir"
 cd ../../
 cmake CMakeLists.txt
 make
-mv numb $name/$PCBINPATH
+mv numb $name/$BINPATH
 cd $name
-mv python message $PCBINPATH
+mv python message $BINPATH
 echo "Lazimsiz fayllar temizlenir"
 cd ../
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
