@@ -2,7 +2,7 @@ name="numb_compile"
 DEB_NAME="numb"
 DEB_VERSION=2.0
 OS="GNU/Linux"
-
+PYTHON_SRC="srcpy"
 if [ "$(uname -o)" == $OS ];
 then
 {
@@ -21,9 +21,9 @@ echo "Qovluq yaradilir..."
 sleep 1
 mkdir -p $name/$BINPATH
 echo "Esas fayllar kopyalanir"
-cp python message $name -r
+cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir"
-cd $name/python/
+cd $name/$PYTHON_SRC/
 python "setup.py" build_ext --inplace
 echo "C++ compile edilir"
 cd ../../
@@ -31,7 +31,7 @@ cmake CMakeLists.txt
 make
 mv numb $name/$BINPATH
 cd $name
-mv python message $BINPATH
+mv $PYTHON_SRC message $BINPATH
 echo "Lazimsiz fayllar temizlenir"
 cd ../
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
