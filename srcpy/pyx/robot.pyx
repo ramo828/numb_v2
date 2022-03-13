@@ -4,6 +4,7 @@ import time as t
 #sudo apt-get install xsel
 #sudo apt-get install wl-clipboard
 import pyperclip as pc
+import subprocess
 import sys
 
 contactName = "Metros"
@@ -14,7 +15,15 @@ count = 0                                     # saygac
 flag =  True                                  # Bayraq
 limit = 100                                   # Limit
 msgSpeed = 0.0                                # Atilacaq mesajin sureti
-msgIndex = 0
+msgIndex = 0                                  # Default mesaj sayi
+binPath = ""                                  # binPath
+
+if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
+    binPath = "/data/data/com.termux/files/usr/bin/"
+else:
+    binPath = "/usr/local/bin/"
+
+
 def runRobo(x):
     print("robo calisdi "+str(x));
 
@@ -31,9 +40,10 @@ if(status == 0):
     startTime = int(input("Başlama vaxtı (san): "))
     begin = int(input("Başlanğıc addım: "))
     limit = int(input("Bitiş addımı: "))
+
 t.sleep(startTime)                            # Start 10 san
 try:
-    msg = open('../../message/'+str(msgIndex),'r')
+    msg = open(binPath+'message/'+str(msgIndex),'r')
 except FileNotFoundError:
     print("\n Mesaj fayli tapilmadi")
 data = msg.read()
