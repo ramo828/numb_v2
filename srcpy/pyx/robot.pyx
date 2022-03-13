@@ -14,13 +14,15 @@ count = 0                                     # saygac
 flag =  True                                  # Bayraq
 limit = 100                                   # Limit
 msgSpeed = 0.0                                # Atilacaq mesajin sureti
-
+msgIndex = 0
 def runRobo(x):
     print("robo calisdi "+str(x));
 
 try:
     if(sys.argv[1] == "default"):
         status = 1
+    elif(sys.argv[1] == "msg"):
+        msgIndex = int(sys.argv[2])
 except IndexError:
     status = 0
 
@@ -29,10 +31,9 @@ if(status == 0):
     startTime = int(input("Başlama vaxtı (san): "))
     begin = int(input("Başlanğıc addım: "))
     limit = int(input("Bitiş addımı: "))
-
 t.sleep(startTime)                            # Start 10 san
 try:
-    msg = open('message/0','r')
+    msg = open('../../message/'+str(msgIndex),'r')
 except FileNotFoundError:
     print("\n Mesaj fayli tapilmadi")
 data = msg.read()
