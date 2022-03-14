@@ -45,17 +45,31 @@ class util {
 	private:
 		int androidVar = 0;
 		int linuxVar = 1;
+		//int _robotMsgCount = 0;
 	public:
 		//Convert char to string
 		string str(char * data){
 			return string(data);
 		}
-		int Target = 0;
+		string str(int data){
+			return to_string(data);
+		}
+		int toInt(string s) {
+			int i;
+			i = stoi(s);
+			return i;
+		}
+			int Target = 0;
 		int getDevice();
 		void write(string m) {
 			cout << m;
 		}
-
+		bool equals(char *cdata, string sdata1,string sdata2) {
+			if(str(cdata) == sdata1 || str(cdata) == sdata2) 
+				return true;
+			else
+				return false;
+		}
 		void writeln(string m) {
 			cout << m << endl;
 		}
@@ -76,10 +90,31 @@ class util {
 class userUI {
 	private:
 		string key;
+		int _robotMsgCount;
 
 	public:	
 		void sysConfig(string configFile, string configData);
 		void runPY(int choise);
+		void setMsg(int robotMsgCount){
+			_robotMsgCount = robotMsgCount;
+		}
+		void getMsg(){
+			util u;
+			u.writeln(u.str(_robotMsgCount));	
+		}
+};
+
+class run {
+	private:
+		int _gcount;
+		char ** _garr;
+	public:
+		run(int gcount, char ** garr) {
+			_gcount = gcount;
+			_garr = garr;
+		}
+		void runner();
+
 };
 
 #endif
