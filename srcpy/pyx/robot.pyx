@@ -23,15 +23,12 @@ if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
 else:
     binPath = "/usr/local/bin/"
 
-
-def runRobo(x):
-    print("robo calisdi "+str(x));
-
 try:
     if(sys.argv[1] == "default"):
         status = 1
     elif(sys.argv[1] == "msg"):
         msgIndex = int(sys.argv[2])
+        print("Mesaj {countMsg}".format(countMsg = msgIndex));
 except IndexError:
     status = 0
 

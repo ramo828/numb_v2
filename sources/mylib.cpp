@@ -1,4 +1,4 @@
-#include "mylib.hpp"
+#include "../include/mylib.hpp"
 #include <iostream>
 #include <fstream>
 #include <sys/stat.h>
@@ -31,14 +31,16 @@ int fio::makeDir(string folderName){
 void userUI::runPY(int choise) {
 	util u;
 	ext e;
+	u.writeln(u.str(_robotMsgCount));
+	string codefix = e.code[0]+" msg "+u.str(_robotMsgCount);
 	switch(choise) {
-		case 0: system(e.code[0].c_str());
+		case 0: system(codefix.c_str()); // Robo
 			break;
 		case 1:
-			system(e.code[1].c_str());
+			system(e.code[1].c_str()); // Numb
 			break;
 		case 2:
-			system(e.code[2].c_str());
+			system(e.code[2].c_str()); //Statistic
 			break;
 		//case 3:
 		default: u.writeln("Bilinmeyen emr!");
