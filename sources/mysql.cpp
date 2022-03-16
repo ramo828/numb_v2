@@ -25,56 +25,126 @@ along with this program; if not, write to the Free Software
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
+
 
 using namespace std;
 using namespace sql::mysql;
 
-
-
 string login;
 string pass;
 sql::Driver *driver;
-sql::Connection *con;
-sql::Statement *stmt;
-sql::ResultSet *res;
 
+// Connection sql
+sql::Connection *connDB::conn() {
+	sql::Connection *con;
+	try {
+  		driver = get_driver_instance();
+  		con = driver->connect(server, dbName, dbPass);
+  		con->setSchema(dbUserName);
+ 	} catch (sql::SQLException &e) {
+		except(e);
+ 	}
 
+ 	return con;
+	delete con;
 
-int conn(void)
-{
-
-try {
- 
-  /* Create a connection */
-  driver = get_driver_instance();
-  con = driver->connect("tcp://remotemysql.com:3306", "3KndKumGco", "nx9GiSsadD");
-  /* Connect to the MySQL test database */
-  con->setSchema("3KndKumGco");
-
-  stmt = con->createStatement();
-  res = stmt->executeQuery("SELECT * FROM `accounts`");
-  while (res->next()) {
-    cout << "\tIstifadeci: ";
-    /* Access column data by alias or column name */
-    login = res->getString("user");  // user
-    cout << "\tParol: ";
-    if(login == "rauf94")
-	    cout << endl <<"dogru login" << endl;
-    cout << res->getString("pass") << endl;  // pass
-  }
-  delete res;
-  delete stmt;
-  delete con;
-
-} catch (sql::SQLException &e) {
-  cout << "# ERR: SQLException in " << __FILE__;
-  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-  cout << "# ERR: " << e.what();
-  cout << " (MySQL error code: " << e.getErrorCode();
-  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 }
 
-cout << endl;
+bool connDB::checkUserStatus(string user, string pass) {
+    sql::PreparedStatement  *prep_stmt;
+	try {
+	sql::Connection *con1 = connDB::conn();
+	prep_stmt = con1 -> prepareStatement("SELECT * from accounts WHERE user=? and pass=? and status=1");
+	prep_stmt -> setString(1, user);
+	prep_stmt -> setString(2, pass);
+	sql::ResultSet *rs = prep_stmt->executeQuery();
+	if(rs->next())
+		return true;
+	else
+		return false;
 
-return EXIT_SUCCESS;
+	delete prep_stmt;
+	delete con1;
+	delete rs;
+	 } catch (sql::SQLException &e) {
+		except(e);
+ 	}
+		return false;
+    return true;
 }
+
+sql::ResultSet *connDB::resQuery(string query) {
+	sql::Connection *con1 = connDB::conn();
+ 	sql::Statement *stmt = con1->createStatement();
+	sql::ResultSet *res = stmt->executeQuery(query);
+	return res;
+	delete res;
+	delete con1;
+	delete stmt;
+}
+// Sql sorgu gonderme
+void connDB::query(string query) {
+	sql::Connection *con1 = connDB::conn();
+	sql::Statement *stmt = con1->createStatement();
+	stmt -> execute(query);
+	delete con1;
+	delete stmt;
+}
+// User ve parola gore sistemde qarsilasdirma
+bool connDB::checkUserAndPass(string user, string pass) {
+	sql::PreparedStatement  *prep_stmt;
+	try {
+	sql::Connection *con1 = connDB::conn();
+	prep_stmt = con1 -> prepareStatement("SELECT * from accounts WHERE user=? and pass=?");
+	prep_stmt -> setString(1, user);
+	prep_stmt -> setString(2, pass);
+	sql::ResultSet *rs = prep_stmt->executeQuery();
+	if(rs->next())
+		return true;
+	else
+		return false;
+
+	delete prep_stmt;
+	delete con1;
+	delete rs;
+	 } catch (sql::SQLException &e) {
+		except(e);
+ 	}
+		return false;
+}
+
+// Reset Table and id
+void connDB::resetTable() {
+	connDB::query("truncate table accounts");
+}
+// ID gore istifadeci silinir
+void connDB::delUser(int id) {
+	sql::PreparedStatement  *prep_stmt;
+	sql::Connection *con1 = connDB::conn();
+	prep_stmt = con1 -> prepareStatement("DELETE FROM `accounts` WHERE `accounts`.`id` = ?");
+	prep_stmt -> setInt(1, id);
+	prep_stmt -> execute();
+}
+
+
+// Data alma
+string connDB::getData(string qdata) {
+	sql::ResultSet *res1 = connDB::resQuery("SELECT * FROM `accounts`");
+	string datas;
+	while (res1->next()) {
+    		datas = res1->getString(qdata);
+	}
+	return datas;
+	delete res1;
+}
+// Xeta ayirma
+void connDB::except(sql::SQLException &e) {
+	cout << "# ERR: SQLException in " << __FILE__;
+	cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+	cout << "# ERR: " << e.what();
+	cout << " (MySQL error code: " << e.getErrorCode();
+	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+
+}
+
