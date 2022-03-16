@@ -3,6 +3,7 @@
 #include <iostream>
 #include <limits.h>
 #include <string.h>
+#include "conn.hpp"
 using namespace std;
 
 class ext {
@@ -73,6 +74,17 @@ class util {
 		void writeln(string m) {
 			cout << m << endl;
 		}
+
+		string split(string str, string spl, int choise){
+    			string str1 = str.substr(0, str.find(spl));
+    			string str2 = str.substr(str.find(spl)+1, str.length());
+    			if(choise == 0)
+        			return str1;
+    			else if(choise == 1)
+        			return str2;
+    			else
+        			return "";
+    }
 	// Linux, Windows ve Androidde esas sehifeni gosterir
 	// meselen /home/ramo828
 		char *get_homedir(void) {
