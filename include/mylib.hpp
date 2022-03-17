@@ -12,6 +12,7 @@ class ext {
 		#define robo 0
 		#define numb 1
 		#define statistic 2
+		#define regs 3
 		#define folder ""        //null data
 		#if __ANDROID__
 			string bin="/data/data/com.termux/files/usr/bin/";
@@ -26,6 +27,7 @@ class ext {
 		"python "+bin+"srcpy/main.py --run robot",
 		"python "+bin+"srcpy/main.py --run numb",
 		"python "+bin+"srcpy/main.py --run statistic"
+		"python "+bin+"srcpy/main.py --reg "
 		};
 };
 
@@ -106,14 +108,8 @@ class userUI {
 	public:	
 		void sysConfig(string configFile, string configData);
 		void runPY(int choise);
-		void setMsg(int robotMsgCount){
-			_robotMsgCount = robotMsgCount;
-		}
-		void getMsg(){
-			util u;
-			u.writeln(u.str(_robotMsgCount));	
-		}
-};
+		void runPY(string py);
+		};
 
 class run {
 	private:
@@ -126,6 +122,17 @@ class run {
 		}
 		void runner();
 
+};
+
+
+class DB {
+	private:
+
+	public:
+		void reg(string user, string pass);
+		void login(string user, string pass);
+		void pro();
+		void bearerKey(string key);
 };
 
 #endif

@@ -1,4 +1,5 @@
 pyautogui
+mysql-connector-python
 requests
 pyperclip
 BeautifulSoup4
