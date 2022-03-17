@@ -57,8 +57,7 @@ if(status):
     try:
         exec(open(run[runChoise]).read())
     except FileNotFoundError:
-        if(not clear):
-            print("Çalışacaq fayl yoxdur!")
+        print("Çalışdırılacaq fayl yoxdur!")
   else:
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
 elif(not clear):

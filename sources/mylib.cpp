@@ -48,7 +48,8 @@ void userUI::runPY(int choise) {
 
 // Python kodlarini calisdirmaq
 void userUI::runPY(string py) {
-	system(py.c_str());
+	string py1 = "python "+py;
+	system(py1.c_str());
 }
 
 
