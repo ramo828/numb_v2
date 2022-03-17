@@ -3,7 +3,6 @@
 #include <iostream>
 #include <limits.h>
 #include <string.h>
-#include "conn.hpp"
 using namespace std;
 
 class ext {
@@ -24,9 +23,9 @@ class ext {
 		
 		
 		string code[3] = {
-		"python "+bin+"srcpy/robo.py",
-		"python "+bin+"srcpy/numb.py",
-		"python "+bin+"srcpy/statistic.py"
+		"python "+bin+"srcpy/main.py --run robot",
+		"python "+bin+"srcpy/main.py --run numb",
+		"python "+bin+"srcpy/main.py --run statistic"
 		};
 };
 

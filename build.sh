@@ -52,7 +52,7 @@ echo "Deb fayli hazirlanir"
 	echo " Programin esas meqsedi nomre satisi zamani mumkun qeder vaxta qenaet etmekdir" >> $name/DEBIAN/control
 	#umask 22
 	dpkg-deb --build --root-owner-group $name
-	rm -rf CMakeFiles CMakeCache.txt .config python/*.o  python/pyx/*.c Makefile cmake_install.cmake
+	rm -rf CMakeFiles CMakeCache.txt python/*.o  python/pyx/*.c Makefile cmake_install.cmake
 	sleep 2
 	rm numb_compile -rf
 	clear

@@ -24,7 +24,6 @@ void run::runner() {
 		}
 		else {
 			u.writeln("Taninamayan: "+u.str(_garr[1]));
-			u.writeln("ok");
 			exit(1);
 
 		}
