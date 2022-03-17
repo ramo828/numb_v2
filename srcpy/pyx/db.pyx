@@ -25,7 +25,6 @@ def reg(user, password):
     cursor = connection.cursor()
     cursor.execute(add)
     connection.commit()
-    print(cursor.rowcount, "Qeydiyyat uğurla tamamlandı\n")
     cursor.close()
   else:
     print("Xəta baş verdi. Login minimum [5] və parol minimum [8] simvoldan ibarət olmalıdır!")
@@ -40,6 +39,18 @@ def checkUserAndPassword(login, password):
       return False
     else:
       return True
+
+def alreadyUser(login):
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' """.format(login=login)
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is None:
+      return False
+    else:
+      return True
+
 
 def checkUserStatus(login, password):
     connection = conn()

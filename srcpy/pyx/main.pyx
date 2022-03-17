@@ -7,6 +7,21 @@ ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
 run = ("srcpy/numb.py","srcpy/statistic.py","srcpy/robo.py")
 runChoise = 0
 raw = ""
+regStatus = False
+clear = True;
+
+def regMetod(uuser,ppass):
+    clear = True
+    if(not t1.alreadyUser(uuser)):
+        print("""
+    \n\t##########################    
+    \tQeydiyyat uğurla başa çatdı\n
+    \t##########################\n
+                """)
+        t1.reg(uuser,ppass)
+    else:
+        print("Bu login artıq istifadə olunur!\n")
+
 try:
     if(sys.argv[1] == "--run"):
         if(sys.argv[2] == "numb"):
@@ -16,7 +31,12 @@ try:
         elif(sys.argv[2] == "robot"):
             runChoise = 2
         else:
-            raise TypeError("Bilinməyən əmr!")
+            print("Xeta")
+    elif(sys.argv[1] == "--reg"):
+        if(not regStatus):
+            regMetod(sys.argv[2],sys.argv[3])
+        elif(not clear):
+            print("Siz artıq qeydiyyatdan keçmisiniz!\n")
 except IndexError:
     print("Bos argument")
     runChoise = 0
@@ -24,21 +44,24 @@ try:
     r = open(ddir+"user.reg","r")
     raw = r.read()
 except FileNotFoundError:
-    print("Programdan istifadə üçün qeydiyyatdan keçməlisiniz!")
+    regStatus = True
+    if(not clear):
+        print("Programdan istifadə üçün qeydiyyatdan keçməlisiniz!")
 login = lib.spl(raw,",",0)
 pswd = lib.spl(raw,",",1)
-print(login)
-print(pswd)
+#print(login)
+#print(pswd)
 status = t1.checkUserAndPassword(login,pswd)
 if(status):
   if(t1.checkUserStatus(login,pswd)):
     try:
         exec(open(run[runChoise]).read())
     except FileNotFoundError:
-        print("Çalışacaq fayl yoxdur!")
+        if(not clear):
+            print("Çalışacaq fayl yoxdur!")
   else:
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
-else:
+elif(not clear):
   print("Login və ya parol yanlısdır!")
 
 

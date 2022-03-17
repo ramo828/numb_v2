@@ -31,10 +31,8 @@ int fio::makeDir(string folderName){
 void userUI::runPY(int choise) {
 	util u;
 	ext e;
-	u.writeln(u.str(_robotMsgCount));
-	string codefix = e.code[0]+" msg "+u.str(_robotMsgCount);
 	switch(choise) {
-		case 0: system(codefix.c_str()); // Robo
+		case 0: system(e.code[0].c_str()); // Robo
 			break;
 		case 1:
 			system(e.code[1].c_str()); // Numb
@@ -46,6 +44,13 @@ void userUI::runPY(int choise) {
 		default: u.writeln("Bilinmeyen emr!");
 	}
 }
+
+
+// Python kodlarini calisdirmaq
+void userUI::runPY(string py) {
+	system(py.c_str());
+}
+
 
 void userUI::sysConfig(string configFile,string configData){
 	fio cfol(folder);
