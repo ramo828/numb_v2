@@ -9,7 +9,7 @@ import json
 #######################################################################################
 #######################################VARIABLE########################################
 # bKeyDefault = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQxOTQyNzg0fQ._jbQSTx6dboyyS7Lr1ZDY3cnTW3AlZoEVPQQ5BlS7eeKLmmPTR07JfgzaXGh6Ov2mNYacUXjFEF6lnuv9Juc8Q"
-bKeyDefault ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQyMTE4MjA2fQ.HUJrHKJc2bonr7njVz0IJzvfMSqvICl777yh_SbGh_AxcHUmNAi0lPa0IkpN5TwXhRpxbXQVQBa4T4Dxt5EpBg"
+bKeyDefault ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
 dirs = os.getcwd()+"/.config/"                           # Oldugun qovluq
 ddir = "/sdcard/work/"
 number = "xxxxx"               # Null data protected
@@ -267,17 +267,17 @@ def outputInfo():
 
 def keyReadFile():
     global bKeyDefault
-    global binPath
-    if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
-        binPath = "/data/data/com.termux/files/usr/bin/"
-    else:
-        binPath = "/usr/local/bin/"
+    #global binPath
+    #if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
+    #    binPath = "/data/data/com.termux/files/usr/bin/"
+    #else:
+    #    binPath = "/usr/local/bin/"
 	
     os.system("clear")
-    print(binPath)
+    #print(binPath)
 
-    if(os.path.exists(binPath+"bKey.data")):
-        bFile = open(binPath+"bKey.data","r")
+    if(os.path.exists(dirs+"bKey.data")):
+        bFile = open(dirs+"bKey.data","r")
         print("#####External key selected#####")
         bKeyDefault = bFile.read()
         return bKeyDefault
@@ -338,11 +338,14 @@ def getConMaxData(catValKey):
 ###################################BakcellStatistic###################################
 def loadTotal(categoryKeyLocal):
     totalNumb = 0
-    r = conBakcell(categoryKeyLocal)
-    totalJSON = json.loads(r.text);
-    for tData in totalJSON:
-        totalNumb = int((tData["totalElements"]))
-    return totalNumb
+    try:
+        r = conBakcell(categoryKeyLocal)
+        totalJSON = json.loads(r.text);
+        for tData in totalJSON:
+            totalNumb = int((tData["totalElements"]))
+        return totalNumb
+    except TypeError:
+        print("Key xətalıdır!")
 
 
 def loadData(page):

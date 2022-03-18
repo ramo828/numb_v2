@@ -56,31 +56,32 @@ def bRun():
     global count
     global end
     global dataTwo
-    
-    nl.AI_Select()                                          # Kategoriyalari daxil edin
+    try:
+        nl.AI_Select()                                          # Kategoriyalari daxil edin
     #prefixValue = nl.getPrCt(0)                             # Prefix melumatlarini al
-    nl.numLimit()                                           # Nomre alagini daxil et
-    begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
-    end = nl.getIndex(1)                                    # Nomre son (araliq)
+        nl.numLimit()                                           # Nomre alagini daxil et
+        begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
+        end = nl.getIndex(1)                                    # Nomre son (araliq)
     #reverseValue = nl.getIndex(2)                           # Nomreleri deyisdir. (099 secilende 055, 055 secilende 099 elave et)
-    prefix = nl.prefixDef()                                 # Prefix deyiskeni
-    categoryKey = nl.getPrCt(1)                             # Kategoriya keyini al  
-    lim = nl.loadTotal(categoryKey)/2000
-    totalElements = math.ceil(lim)                          # Sehife sayi
-    rawTotalElement = nl.loadTotal(categoryKey)             # Nomre sayi
+        prefix = nl.prefixDef()                                 # Prefix deyiskeni
+        categoryKey = nl.getPrCt(1)                             # Kategoriya keyini al  
+        lim = nl.loadTotal(categoryKey)/2000
+        totalElements = math.ceil(lim)                          # Sehife sayi
+        rawTotalElement = nl.loadTotal(categoryKey)             # Nomre sayi
 
-    print("t"+str(totalElements))
-    for allNumber in range(totalElements):
-        os.system("clear")
-        print("Biraz gozleyin...\n")
-        print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
-        dataTwo +=nl.loadData(allNumber)
+        print("t"+str(totalElements))
+        for allNumber in range(totalElements):
+            os.system("clear")
+            print("Biraz gozleyin...\n")
+            print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
+            dataTwo +=nl.loadData(allNumber)
     
-    for pre in tqdm(range(begin,end)):
-        for dataTree in tqdm(dataTwo.split("\n")):
-            nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
-            count=count+1
-
+        for pre in tqdm(range(begin,end)):
+            for dataTree in tqdm(dataTwo.split("\n")):
+                nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
+                count=count+1
+    except TypeError:
+        print("\n\t[---Key Xətası---]")
 
 ##############################################################################
 ##############################APP_RUN#########################################
@@ -107,7 +108,11 @@ else:
 if(operator == 0):
     print("\n\tBAKCELL\n")
     number = nl.quest1()                                    # Nomreni daxil edin
-    bRun()
+    try:
+        bRun()
+    except TypeError:
+        print("Key xətası")
+
     nl.banBegin()
     nl.banEnd(count,end)
 elif(operator == 1):

@@ -15,7 +15,11 @@ void run::runner() {
 			ui.runPY(robo);
 			exit(1);
 		}
-
+		else if(u.equals(_garr[1],"-k","--key")){
+			userUI ui;
+			ui.sysConfig("bKey.data", "Bearer "+u.str(_garr[2]));
+			u.writeln("Key: "+u.str(_garr[2]));
+		}
 		else if(u.equals(_garr[1],"-reg","--register")){
 			DB db;
 			ext e;
@@ -62,9 +66,10 @@ void DB::reg(string user, string pass) {
 	ui.sysConfig("user.reg",up);
 }
 
-
 void DB::login(string login, string pass) {
-	//userUI ui;           // Istifadeci interfeysi
-	//ui.sysConfig("user.reg",login+","+pass);
+	userUI ui;           // Istifadeci interfeysi
+	string up = login+","+pass;      // user and pass
+	ui.sysConfig("user.reg",up);
+		     // 
 }
 
