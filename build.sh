@@ -55,9 +55,11 @@ then
 	echo "Linux"
 	BINPATH="usr/local/bin"
 }
-else
+else {
 	echo "Android"
 	BINPATH="data/data/com.termux/files/usr/bin"
+	yes | pkg upgrade
+}
 fi
 
 echo $BINPATH
@@ -81,6 +83,13 @@ cd $name
 mv $PYTHON_SRC message $BINPATH
 echo "Lazimsiz fayllar temizlenir"
 cd ../
+echo "Lazımlı paketler yüklənir"
+pip install --upgrade pip setuptools
+pip install --upgrade pip
+sleep 1;
+echo 'Xəta baş verərsə kodu yenidən çalışdırın'
+yes | pkg install curl clang zip python git make libxslt
+sleep 3
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
 sleep 1
 echo "Python paketleri yuklenir..."
@@ -107,9 +116,11 @@ then
 	echo "Linux"
 	sudo dpkg -i *.deb
 }
-else
+else {
 	echo "Android"
 	dpkg -i *.deb
+	termux-setup-storage
+}
 fi
 
 	cd ../

@@ -4,3 +4,7 @@ requests
 pyperclip
 BeautifulSoup4
 tqdm
+lxml
+Cython
+bs4
+
