@@ -31,7 +31,7 @@ void run::runner() {
 			else {
 				db.reg(user,pass);
 
-				ui.runPY("python "+e.bin+"srcpy/main.py --reg "+user+" "+pass);
+				ui.runPY(e.bin+"srcpy/main.py --reg "+user+" "+pass);
 		}
 
 			exit(1);
