@@ -114,10 +114,12 @@ if [ "$(uname -o)" == $OS ];
 then
 {
 	echo "Linux"
+	sudo apt-get autoremove -y
 	sudo dpkg -i *.deb
 }
 else {
 	echo "Android"
+	apt-get autoremove -y
 	dpkg -i *.deb
 	termux-setup-storage
 }
