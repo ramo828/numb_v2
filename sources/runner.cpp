@@ -30,7 +30,6 @@ void run::runner() {
 				u.writeln("Login [5] və Parol [8] simvoldan az ola bilməz");
 			else {
 				db.reg(user,pass);
-
 				ui.runPY(e.bin+"srcpy/main.py --reg "+user+" "+pass);
 		}
 
