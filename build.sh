@@ -73,6 +73,7 @@ cd $name/$PYTHON_SRC/
 python "setup.py" build_ext --inplace
 echo "C++ compile edilir"
 cd ../../
+echo "${NOCOLOR}"
 cmake CMakeLists.txt
 make -j$(nproc)
 mv numb $name/$BINPATH
