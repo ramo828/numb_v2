@@ -49,31 +49,33 @@ rm numb_v2 -rf
 git clone https://github.com/ramo828/numb_v2.git
 cd numb_v2
 
-if [ "$(uname -o)" == $OS ];
+if [ "$(uname -o)" = "$OS" ];
 then
 {
 	echo "Linux"
 	BINPATH="usr/local/bin"
+	sudo apt-get install curl clang zip python git make libxslt
 }
 else {
 	echo "Android"
 	BINPATH="data/data/com.termux/files/usr/bin"
 	yes | pkg upgrade
+	yes | pkg install curl clang zip python git make libxslt
 }
 fi
 
 echo $BINPATH
-echo "Sistem Temizlenir..."
+echo "${RED}]Sistem Temizlenir..."
 rm $name -rf
 echo "Qovluq yaradilir..."
 sleep 1
 mkdir -p $name/$BINPATH
 echo "Esas fayllar kopyalanir"
 cp $PYTHON_SRC message $name -r
-echo "Cython compile edilir"
+echo "Cython compile edilir${NOCOLOR}"
 cd $name/$PYTHON_SRC/
 python "setup.py" build_ext --inplace
-echo "C++ compile edilir"
+echo "${RED}C++ compile edilir${NOCOLOR}"
 cd ../../
 echo "${NOCOLOR}"
 cmake CMakeLists.txt
@@ -81,21 +83,20 @@ make -j$(nproc)
 mv numb $name/$BINPATH
 cd $name
 mv $PYTHON_SRC message $BINPATH
-echo "Lazimsiz fayllar temizlenir"
+echo "${RED}Lazimsiz fayllar temizlenir"
 cd ../
-echo "Lazımlı paketler yüklənir"
+echo "Lazımlı paketler yüklənir${NOCOLOR}"
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
-echo 'Xəta baş verərsə kodu yenidən çalışdırın'
-yes | pkg install curl clang zip python git make libxslt
+echo "${RED}Xəta baş verərsə kodu yenidən çalışdırın"
 sleep 3
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
 sleep 1
-echo "Python paketleri yuklenir..."
+echo "Python paketleri yuklenir...${NOCOLOR}"
 pip install -r requirements.txt
 sleep 1
-echo "Deb fayli hazirlanir"
+echo "${RED}Deb fayli hazirlanir${NOCOLOR}"
 	mkdir -p $name/DEBIAN/
 	touch $name/DEBIAN/control
 	chmod -R 0755 $name
@@ -110,7 +111,7 @@ echo "Deb fayli hazirlanir"
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
 	sleep 2
 
-if [ "$(uname -o)" == $OS ];
+if [ "$(uname -o)" = "$OS" ];
 then
 {
 	echo "Linux"
