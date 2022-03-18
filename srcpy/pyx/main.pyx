@@ -58,6 +58,7 @@ if(status):
         exec(open(run[runChoise]).read())
     except FileNotFoundError:
         print("Çalışdırılacaq fayl yoxdur!")
+        print(os.getcwd())
   else:
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
 elif(not clear):
