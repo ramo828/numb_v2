@@ -2,9 +2,15 @@ import db as t1
 import lib
 import sys
 import os
+import subprocess
+if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
+    binPath = "/data/data/com.termux/files/usr/bin/"
+else:
+    binPath = "/usr/local/bin/"
+
 
 ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
-run = ("srcpy/numb.py","srcpy/statistic.py","srcpy/robo.py")
+run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py",binPath+"srcpy/robo.py")
 runChoise = 0
 raw = ""
 regStatus = False
