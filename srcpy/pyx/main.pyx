@@ -3,6 +3,9 @@ import lib
 import sys
 import os
 import subprocess
+import hashlib
+
+
 if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
     binPath = "/data/data/com.termux/files/usr/bin/"
 else:
@@ -15,6 +18,23 @@ runChoise = 0
 raw = ""
 regStatus = False
 clear = True;
+
+key = t1.updateKey()
+
+try:
+    with open(ddir+"bKey.data","r") as f:
+        old = f.read() # read entire file as bytes
+        old_sha = hashlib.sha256(bytes(old,'utf-8')).hexdigest();
+        new_sha = hashlib.sha256(bytes(key,'utf-8')).hexdigest();
+    if(not (old_sha == new_sha)):
+        print("\t\t-------Ferqli kod-------")
+        os.system("numb -k "+key)
+    else:
+        os.system("clear")
+
+except FileNotFoundError:
+    os.system("clear")
+
 
 def regMetod(uuser,ppass):
     clear = True

@@ -99,3 +99,13 @@ def checkUserStatus(login, password):
     else:
         return 0
 
+def updateKey():
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `system` WHERE 1"""
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is not None:
+        return record[0]
+    else:
+        return 0
