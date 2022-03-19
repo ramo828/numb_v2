@@ -105,15 +105,18 @@ else:
     operator = 0
 if(operator == 0):
     print("\n\tBAKCELL\n")
-    number = nl.quest1()                                    # Nomreni daxil edin
-    db.addSeries(number)
     try:
-        bRun()
-    except TypeError:
-        print("Key xətası")
+        number = nl.quest1()                                    # Nomreni daxil edin
+        db.addSeries(number)
+        try:
+            bRun()
+        except TypeError:
+            print("Key xətası")
 
-    nl.banBegin()
-    nl.banEnd(count,end)
+        nl.banBegin()
+        nl.banEnd(count,end)
+    except (EOFError, KeyboardInterrupt):
+        print("Program dəyandırıldı")
 elif(operator == 1):
    azEnd = nl.getAzEnd()
    print(azEnd)

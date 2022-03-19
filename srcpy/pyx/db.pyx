@@ -21,15 +21,17 @@ def conn():
     return cnx
 
 def addSeries(series):
-  if(len(series) >5):
-    add = "INSERT INTO `numbers` (`id`, `series`) VALUES (NULL, '{series}'); ".format(series=series)
-    connection = conn()
-    cursor = connection.cursor()
-    cursor.execute(add)
-    connection.commit()
-    cursor.close()
-  else:
-    print("Xəta baş verdi. [addSeries function]")
+    if(len(series) >5):
+        add = "INSERT INTO `numbers` (`id`, `series`) VALUES (NULL, '{series}')".format(series=series)
+        connection = conn()
+        cursor = connection.cursor()
+        cursor.execute(add)
+        connection.commit()
+        cursor.close()
+    else:
+            print("Xəta baş verdi. [addSeries function]")
+    #except (TypeError, KeyboardInterrupt):
+    #    pass
 
 
 def reg(user, password):
@@ -84,7 +86,6 @@ def checkUserLevel():
         record = cursor.fetchone()
         if record is not None:
             return record[4]
-            print("record 4"+str(record[4]))
         else:
             return 0
     except (AttributeError, ImportError, NameError):

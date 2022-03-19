@@ -76,25 +76,27 @@ def conv_numeric(counter):
 
 def quest1():
     #-------------------------------------------------
-    print(""""
-    --------------------------------------------------
-    Nömrə kombinasiyasını daxil edin və boş xanalari x ilə tamamlayın.
-    Məs: 83027xx
-    --------------------------------------------------
-    """)
-    global number
-    global err
-    while (len(number) <7):
-        if(err > 0):
-            print("""
-            ------------------------------
-            Nömrə düzgün qeyd edilməyib
-            ------------------------------
-            """)    
-        err=err+1;
-        number = str(input(">> "))                                      # Sual 1   
-    return number 
-
+    try:
+        print(""""
+        --------------------------------------------------
+        Nömrə kombinasiyasını daxil edin və boş xanalari x ilə tamamlayın.
+        Məs: 83027xx
+        --------------------------------------------------
+        """)
+        global number
+        global err
+        while (len(number) <7):
+            if(err > 0):
+                print("""
+                ------------------------------
+                Nömrə düzgün qeyd edilməyib
+                ------------------------------
+                """)    
+            err=err+1;
+            number = str(input(">> "))                                      # Sual 1   
+        return number 
+    except (EOFError, KeyboardInterrupt):
+        pass
 def fileControl():
     author_logo = logo()
     try:

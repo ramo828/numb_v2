@@ -97,7 +97,9 @@ echo "Esas fayllar kopyalanir"
 cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir${NOCOLOR}"
 cd $name/$PYTHON_SRC/
+echo "${GREEN}"
 python "setup.py" build_ext --inplace
+echo "${NOCOLOR}"
 echo "${YELLOW}C++ compile edilir${NOCOLOR}"
 cd ../../
 
@@ -117,19 +119,23 @@ echo '		| _| | ^  \ | || _|/ _` ||  _|/ -_)(_-<'
 echo '		|___||_|_|_||_||_| \__,_| \__|\___|/__/'
 
 
-echo -e '\033[5m'
-echo "				,_     _" 
-echo "				|\_,__/|"
-echo "				/ _  _ |    ,--."
-echo "				(  @  @ )   ( ,-'"
-echo "				\  _T_/-._( ("
-echo "				 /         '. ("
-echo "				|         _  \ |"
-echo "				 \ \ ,  /      |"
-echo "				  || |-_\__   /"
-echo "				 ((_/(____,-'"
-echo '\033[0m"'
-
+echo '\033[5m	
+		                        _
+		                       | \
+		                       | |
+		                       | |
+		  |\                   | |
+		 /, ~\                / /
+		X     `-.....-------./ /
+		 ~-. ~  ~              |
+		    \             /    |
+		     \  /_     ___\   /
+		     | /\ ~~~~~   \ |
+		     | | \        || |
+		     | |\ \       || )
+		    (_/ (_/      ((_/
+\033[0m'	
+ 
 cmake CMakeLists.txt
 make -j$(nproc)
 mv numb $name/$BINPATH
