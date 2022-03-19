@@ -100,6 +100,35 @@ cd $name/$PYTHON_SRC/
 python "setup.py" build_ext --inplace
 echo "${YELLOW}C++ compile edilir${NOCOLOR}"
 cd ../../
+
+echo '			 ___  _            _'   
+echo '			| _ )| | __ _  __ | |__'
+echo '			| _ \| |/ _` |/ _|| / /'
+echo '			|___/|_|\__,_|\__||_\_\'
+
+echo '		 	    ___    _  _____ '
+echo '			   / __|  /_\|_   _|'
+echo '		 	  | (__  / _ \ | |  '
+echo '			   \___|/_/ \_\|_|  '
+	
+echo '		 ___         _             _'
+echo '		| __| _ __  (_) _ _  __ _| |_  ___  ___'
+echo '		| _| | ^  \ | || _|/ _` ||  _|/ -_)(_-<'
+echo '		|___||_|_|_||_||_| \__,_| \__|\___|/__/'
+
+	
+echo ",_     _" 
+echo " |\_,__/|"
+echo " / _  _ |    ,--."
+echo "(  @  @ )   ( ,-'"
+echo " \  _T_/-._( ("
+echo " /         '. ("
+echo "|         _  \ |"
+echo " \ \ ,  /      |"
+echo "  || |-_\__   /"
+echo " ((_/(____,-'"
+
+
 cmake CMakeLists.txt
 make -j$(nproc)
 mv numb $name/$BINPATH
