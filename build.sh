@@ -142,7 +142,7 @@ else {
 }
 fi
 
-if [ "$(comp_status}" = "true" ];
+if [ "${comp_status}" = "true" ];
 then
 {
 	echo "${RED}Local compile${NOCOLOR}"
