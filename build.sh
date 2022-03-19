@@ -42,7 +42,7 @@ echo "${GREEN}Lazim olan fayllar yuklenir"
 sleep 1;
 echo "${GREEN}Biraz gozleyin"
 sleep 1;
-echo "${RED}Yuklenen fayllar temizlenir..."
+echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
 
