@@ -1,6 +1,7 @@
 #! /bin/bash
 BLUE='\033[0;34m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 WHITE='\033[0;38m'
 NOCOLOR='\033[0m'
@@ -45,19 +46,35 @@ echo "${RED}Yuklenen fayllar temizlenir..."
 sleep 2
 echo "${GREEN}"
 
-rm numb_v2 -rf
-git clone https://github.com/ramo828/numb_v2.git
-cd numb_v2
+while getopts c: flag
+do
+    case "${flag}" in
+        c) comp_status=${OPTARG};;
+    esac
+done
+
+if [ "${comp_status}" = "true" ];
+then
+{
+	echo "${YELLOW}Local compile${NOCOLOR}"
+}
+else {
+	echo "${YELLOW}Rwmote compile${NOCOLOR}"
+	rm numb_v2 -rf
+	git clone https://github.com/ramo828/numb_v2.git
+	cd numb_v2
+}
+fi
 
 if [ "$(uname -o)" = "$OS" ];
 then
 {
-	echo "Linux"
+	echo "${RED}Linux${NOCOLOR}"
 	BINPATH="usr/local/bin"
-	sudo apt-get install curl clang zip python git make libxslt
+	sudo apt-get install curl clang zip python3 git make libxslt*-dev
 }
 else {
-	echo "Android"
+	echo "${RED}Android${NOCOLOR}"
 	BINPATH="data/data/com.termux/files/usr/bin"
 	yes | pkg upgrade
 	yes | pkg install curl clang zip python git make libxslt
@@ -65,7 +82,7 @@ else {
 fi
 
 echo $BINPATH
-echo "${RED}]Sistem Temizlenir..."
+echo "${YELLOW}Sistem Temizlenir..."
 rm $name -rf
 echo "Qovluq yaradilir..."
 sleep 1
@@ -75,28 +92,27 @@ cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir${NOCOLOR}"
 cd $name/$PYTHON_SRC/
 python "setup.py" build_ext --inplace
-echo "${RED}C++ compile edilir${NOCOLOR}"
+echo "${YELLOW}C++ compile edilir${NOCOLOR}"
 cd ../../
-echo "${NOCOLOR}"
 cmake CMakeLists.txt
 make -j$(nproc)
 mv numb $name/$BINPATH
 cd $name
 mv $PYTHON_SRC message $BINPATH
-echo "${RED}Lazimsiz fayllar temizlenir"
+echo "${YELLOW}Lazimsiz fayllar temizlenir"
 cd ../
 echo "Lazımlı paketler yüklənir${NOCOLOR}"
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
-echo "${RED}Xəta baş verərsə kodu yenidən çalışdırın"
+echo "${YELLOW}Xəta baş verərsə kodu yenidən çalışdırın"
 sleep 3
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
 sleep 1
 echo "Python paketleri yuklenir...${NOCOLOR}"
 pip install -r requirements.txt
 sleep 1
-echo "${RED}Deb fayli hazirlanir${NOCOLOR}"
+echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
 	mkdir -p $name/DEBIAN/
 	touch $name/DEBIAN/control
 	chmod -R 0755 $name
@@ -114,20 +130,31 @@ echo "${RED}Deb fayli hazirlanir${NOCOLOR}"
 if [ "$(uname -o)" = "$OS" ];
 then
 {
-	echo "Linux"
+	echo "${RED}Linux${NOCOLOR}"
 	sudo apt-get autoremove -y
 	sudo dpkg -i *.deb
 }
 else {
-	echo "Android"
+	echo "${RED}Android${NOCOLOR}"
 	apt-get autoremove -y
 	dpkg -i *.deb
 	termux-setup-storage
 }
 fi
 
+if [ "$(comp_status}" = "true" ];
+then
+{
+	echo "${RED}Local compile${NOCOLOR}"
+}
+else {
+	echo "${RED}Rwmote compile${NOCOLOR}"
 	cd ../
 	rm numb_v2 -rf
+
+}
+fi
+
 	clear
 
 
