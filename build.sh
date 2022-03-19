@@ -117,7 +117,7 @@ echo '		| _| | ^  \ | || _|/ _` ||  _|/ -_)(_-<'
 echo '		|___||_|_|_||_||_| \__,_| \__|\___|/__/'
 
 
-echo "\e[5m"
+echo -e '\033[5m'
 echo "				,_     _" 
 echo "				|\_,__/|"
 echo "				/ _  _ |    ,--."
@@ -128,7 +128,7 @@ echo "				|         _  \ |"
 echo "				 \ \ ,  /      |"
 echo "				  || |-_\__   /"
 echo "				 ((_/(____,-'"
-echo "\e[25m"
+echo '\033[0m"'
 
 cmake CMakeLists.txt
 make -j$(nproc)
