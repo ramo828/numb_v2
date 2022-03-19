@@ -8,7 +8,6 @@ import json
 
 #######################################################################################
 #######################################VARIABLE########################################
-# bKeyDefault = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQxOTQyNzg0fQ._jbQSTx6dboyyS7Lr1ZDY3cnTW3AlZoEVPQQ5BlS7eeKLmmPTR07JfgzaXGh6Ov2mNYacUXjFEF6lnuv9Juc8Q"
 bKeyDefault ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
 dirs = os.getcwd()+"/.config/"                           # Oldugun qovluq
 ddir = "/sdcard/work/"
@@ -56,7 +55,7 @@ binPath = ""
 ######################################ORTAQ############################################
 
 def conv_numeric(counter):
-    sonluq = ["a","b","c","d"]
+    sonluq = ["a","b","c","d","e","f"]
     clone = ""
     for i in range(counter):
         if(i<10):
@@ -67,6 +66,11 @@ def conv_numeric(counter):
             clone = "_"+sonluq[2]+str(i)
         elif(i<10000):
             clone = "_"+sonluq[3]+str(i)
+        elif(i<100000):
+            clone = "_"+sonluq[4]+str(i)
+        elif(i<1000000):
+            clone = "_"+sonluq[5]+str(i)
+
     return clone;
 
 
@@ -263,25 +267,22 @@ def outputInfo():
     print("OUTPUT: "+configData)
 
 
-
-
 def keyReadFile():
     global bKeyDefault
-    #global binPath
-    #if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
-    #    binPath = "/data/data/com.termux/files/usr/bin/"
-    #else:
-    #    binPath = "/usr/local/bin/"
-	
+    
     os.system("clear")
     #print(binPath)
 
     if(os.path.exists(dirs+"bKey.data")):
         bFile = open(dirs+"bKey.data","r")
+        tm.sleep(1)
+        os.system("clear")
         print("#####External key selected#####")
         bKeyDefault = bFile.read()
         return bKeyDefault
     else:
+        tm.sleep(1);
+        os.system("clear");
         print("#####Default key selected#####")
         return str(bKeyDefault)
 
@@ -310,8 +311,6 @@ prefixVar = ["+99450","+99451","+99410","+994"+prefixSel[getIndex(2)],"+99470","
 
 def prefixDef():
     return prefixVar
-
-
 
 def conBakcell(page):
     r = requests.get(url, params={"prefix":prefixSel[prefixValue],
@@ -461,15 +460,6 @@ def getAzBegin():
 
 def getAzPrefix():
     return prefixGlo
-
-
-
-
-
-
-
-
-
 
 
 

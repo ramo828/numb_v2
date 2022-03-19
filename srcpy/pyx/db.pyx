@@ -73,20 +73,22 @@ def checkUserLevel():
         r = open(ddir+"user.reg","r")
     except FileNotFoundError:
         notFound = True
-    alld = r.read()
-    login = lib.spl(alld,",",0)
-    password = lib.spl(alld,",",1)
-    connection = conn()
-    cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
-    cursor.execute(sql_select_query)
-    record = cursor.fetchone()
-    if record is not None:
-        return record[4]
-        print("record 4"+str(record[4]))
-    else:
-        return 0
-
+    try:
+        alld = r.read()
+        login = lib.spl(alld,",",0)
+        password = lib.spl(alld,",",1)
+        connection = conn()
+        cursor = connection.cursor()
+        sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+        cursor.execute(sql_select_query)
+        record = cursor.fetchone()
+        if record is not None:
+            return record[4]
+            print("record 4"+str(record[4]))
+        else:
+            return 0
+    except (AttributeError, ImportError, NameError):
+        print("Xəta baş verdi [checkUserLevel]\n")
 
 def checkUserStatus(login, password):
     connection = conn()
