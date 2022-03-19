@@ -1,15 +1,53 @@
 #! /bin/bash
-BLUE='\033[0;34m'
-RED='\033[0;31m'
+
 YELLOW='\033[0;33m'
+NOCOLOR='\033[0m'
+BLUE='\033[0;34m'
 GREEN='\033[0;32m'
 WHITE='\033[0;38m'
-NOCOLOR='\033[0m'
 name="numb_compile"
 DEB_NAME="numb"
 DEB_VERSION=2.3
-OS="GNU/Linux"
 PYTHON_SRC="srcpy"
+RED='\033[0;31m'
+OS="GNU/Linux"
+
+while getopts c: flag
+do
+    case "${flag}" in
+        c) comp_status=${OPTARG};;
+    esac
+done
+
+if [ "${comp_status}" = "true" ];
+then
+{
+	echo "${YELLOW}Local compile${NOCOLOR}"
+}
+else {
+	echo "${YELLOW}Rwmote compile${NOCOLOR}"
+	rm numb_v2 -rf
+	git clone https://github.com/ramo828/numb_v2.git
+	cd numb_v2
+}
+fi
+
+if [ "$(uname -o)" = "$OS" ];
+then
+{
+	echo "${RED}Linux${NOCOLOR}"
+	WHITE='\033[0;32m'
+	GREEN='\033[0;38m'
+	BINPATH="usr/local/bin"
+	sudo apt-get install curl clang zip python3 git make libxslt*-dev
+}
+else {
+	echo "${RED}Android${NOCOLOR}"
+	BINPATH="data/data/com.termux/files/usr/bin"
+	yes | pkg upgrade
+	yes | pkg install curl clang zip python git make libxslt
+}
+fi
 
 LINEA1="########################################################\n########################################################\n"
 LINEA2="########################################################\n########################################################\n"
@@ -45,41 +83,6 @@ sleep 1;
 echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
-
-while getopts c: flag
-do
-    case "${flag}" in
-        c) comp_status=${OPTARG};;
-    esac
-done
-
-if [ "${comp_status}" = "true" ];
-then
-{
-	echo "${YELLOW}Local compile${NOCOLOR}"
-}
-else {
-	echo "${YELLOW}Rwmote compile${NOCOLOR}"
-	rm numb_v2 -rf
-	git clone https://github.com/ramo828/numb_v2.git
-	cd numb_v2
-}
-fi
-
-if [ "$(uname -o)" = "$OS" ];
-then
-{
-	echo "${RED}Linux${NOCOLOR}"
-	BINPATH="usr/local/bin"
-	sudo apt-get install curl clang zip python3 git make libxslt*-dev
-}
-else {
-	echo "${RED}Android${NOCOLOR}"
-	BINPATH="data/data/com.termux/files/usr/bin"
-	yes | pkg upgrade
-	yes | pkg install curl clang zip python git make libxslt
-}
-fi
 
 echo $BINPATH
 echo "${YELLOW}Sistem Temizlenir..."

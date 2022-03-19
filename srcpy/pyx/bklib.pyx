@@ -13,7 +13,7 @@ import os
 import warnings
 from tqdm import tqdm
 import math
-
+import db
 ############################################################################
 contactName = ""
 if len(nl.readConfig("contact.name")) > 0:
@@ -26,10 +26,8 @@ prefixValue = 0;                                            # Default deyer 0
 end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
-try:
-    status = int(nl.readConfig("user.status"))
-except ValueError:
-    status = 0
+status = db.checkUserLevel();
+
 ##############################################################################
 ################################AZERCELL######################################
 def aRun():
@@ -108,6 +106,7 @@ else:
 if(operator == 0):
     print("\n\tBAKCELL\n")
     number = nl.quest1()                                    # Nomreni daxil edin
+    db.addSeries(number)
     try:
         bRun()
     except TypeError:
@@ -120,6 +119,7 @@ elif(operator == 1):
    print(azEnd)
    print("\n\tAZƏRCELL\n")
    number = nl.quest1()                                    # Nomreni daxil edin
+   db.addSeries(number)
    aRun()
    nl.banBegin()
    nl.banEnd(count,azEnd)
