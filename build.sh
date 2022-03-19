@@ -11,27 +11,6 @@ DEB_VERSION=2.3
 PYTHON_SRC="srcpy"
 RED='\033[0;31m'
 OS="GNU/Linux"
-
-while getopts c: flag
-do
-    case "${flag}" in
-        c) comp_status=${OPTARG};;
-    esac
-done
-
-if [ "${comp_status}" = "true" ];
-then
-{
-	echo "${YELLOW}Local compile${NOCOLOR}"
-}
-else {
-	echo "${YELLOW}Rwmote compile${NOCOLOR}"
-	rm numb_v2 -rf
-	git clone https://github.com/ramo828/numb_v2.git
-	cd numb_v2
-}
-fi
-
 if [ "$(uname -o)" = "$OS" ];
 then
 {
@@ -39,13 +18,18 @@ then
 	WHITE='\033[0;32m'
 	GREEN='\033[0;38m'
 	BINPATH="usr/local/bin"
+	echo "${WHITE}"
 	sudo apt-get install curl clang zip python3 git make libxslt*-dev
+	echo "${NOCOLOR}"
+
 }
 else {
 	echo "${RED}Android${NOCOLOR}"
 	BINPATH="data/data/com.termux/files/usr/bin"
+	echo "${GREEN}"
 	yes | pkg upgrade
 	yes | pkg install curl clang zip python git make libxslt
+	echo "${NOCOLOR}"
 }
 fi
 
@@ -84,6 +68,25 @@ echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
 
+while getopts c: flag
+do
+    case "${flag}" in
+        c) comp_status=${OPTARG};;
+    esac
+done
+
+if [ "${comp_status}" = "true" ];
+then
+{
+	echo "${YELLOW}Local compile${NOCOLOR}"
+}
+else {
+	echo "${YELLOW}Rwmote compile${NOCOLOR}"
+	rm numb_v2 -rf
+	git clone https://github.com/ramo828/numb_v2.git
+	cd numb_v2
+}
+fi
 echo $BINPATH
 echo "${YELLOW}Sistem Temizlenir..."
 rm $name -rf
