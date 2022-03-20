@@ -19,7 +19,7 @@ then
 	GREEN='\033[0;38m'
 	BINPATH="usr/local/bin"
 	echo "${WHITE}"
-	sudo apt-get install curl clang zip python3 git make libxslt*-dev
+	sudo apt-get install curl clang zip python3 git make libxslt*-dev cmake
 	echo "${NOCOLOR}"
 
 }
@@ -28,7 +28,7 @@ else {
 	BINPATH="data/data/com.termux/files/usr/bin"
 	echo "${GREEN}"
 	yes | pkg upgrade
-	yes | pkg install curl clang zip python git make libxslt
+	yes | pkg install curl clang zip python git make libxslt cmake
 	echo "${NOCOLOR}"
 }
 fi
