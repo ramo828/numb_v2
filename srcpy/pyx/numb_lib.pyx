@@ -79,7 +79,8 @@ def quest1():
     try:
         print(""""
         -----------------------------------------------
-        Nömrə kombinasiyasını daxil edin və boş xanalari x ilə tamamlayın.
+        Nömrə kombinasiyasını daxil edin və boş xanalari
+        x ilə tamamlayın.
         Məs: 83027xx
         -----------------------------------------------
         """)
