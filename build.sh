@@ -87,22 +87,29 @@ else {
 	cd numb_v2
 }
 fi
+# 1ci merhele
 echo $BINPATH
 echo "${YELLOW}Sistem Temizlenir..."
+# Eger onceden yaradilibsa il
 rm $name -rf
 echo "Qovluq yaradilir..."
 sleep 1
+# yardimci qovlugu yarat
 mkdir -p $name/$BINPATH
 echo "Esas fayllar kopyalanir"
+# pyhon kodlarini ve mesajlari yardimci qovluga gonder
 cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir${NOCOLOR}"
+# yardimci qovluqdaki python qovluguna daxil ol
 cd $name/$PYTHON_SRC/
 echo "${GREEN}"
+# python kodlarini compile et
 python "setup.py" build_ext --inplace
 echo "${NOCOLOR}"
 echo "${YELLOW}C++ compile edilir${NOCOLOR}"
+# esas kod qovluguna qayit
 cd ../../
-
+# Logo
 echo '			 ___  _            _'   
 echo '			| _ )| | __ _  __ | |__'
 echo '			| _ \| |/ _` |/ _|| / /'
@@ -135,26 +142,36 @@ echo '\033[5m
 		     | |\ \       || )
 		    (_/ (_/      ((_/
 \033[0m'	
- 
-cmake CMakeLists.txt
+# Cmake calisdir
+cmake .
+# Core sayina gore c++ compile et
 make -j$(nproc)
+# numb faylini yardimci qovluqdaki OS path at
 mv numb $name/$BINPATH
+echo "---numb $name/$BINPATH---"
+# Yardimci qovluga daxil ol
 cd $name
+# Yardimci qovlugdaki python kodlarini OS path'a at
 mv $PYTHON_SRC message $BINPATH
 echo "${YELLOW}Lazimsiz fayllar temizlenir"
+# Esak kod qovluguna geri dom
 cd ../
 echo "Lazımlı paketler yüklənir${NOCOLOR}"
+# Pip ve setuptools guncelle
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
 echo "${YELLOW}Xəta baş verərsə kodu yenidən çalışdırın"
 sleep 3
+# yaradilmis lazimsiz fayllari sil
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
 sleep 1
 echo "Python paketleri yuklenir...${NOCOLOR}"
+# Lazim olan python kitabxanalarini yukle
 pip install -r requirements.txt
 sleep 1
 echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
+# DEB fayli hazirla
 	mkdir -p $name/DEBIAN/
 	touch $name/DEBIAN/control
 	chmod -R 0755 $name
@@ -168,7 +185,7 @@ echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
 	dpkg-deb --build --root-owner-group $name
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
 	sleep 2
-
+# Emeliyyat sistemine gore
 if [ "$(uname -o)" = "$OS" ];
 then
 {
@@ -191,6 +208,7 @@ then
 }
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
+	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 	cd ../
 	rm numb_v2 -rf
 
@@ -198,5 +216,5 @@ else {
 fi
 
 	clear
-
+echo "Yüklənmə tamamlandı"
 
