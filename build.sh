@@ -68,10 +68,10 @@ echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
 
-while getopts c: flag
+while getopts l: flag
 do
     case "${flag}" in
-        c) comp_status=${OPTARG};;
+        l) comp_status=${OPTARG};;
     esac
 done
 
@@ -216,5 +216,6 @@ else {
 fi
 
 	clear
+numb --contactName Metros
 echo "Yüklənmə tamamlandı"
 

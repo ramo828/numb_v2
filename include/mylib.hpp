@@ -125,7 +125,7 @@ class DB {
 	public:
 		void reg(string user, string pass);
 		void login(string user, string pass);
-		void pro();
+		void setName(string name);
 		void bearerKey(string key);
 };
 
