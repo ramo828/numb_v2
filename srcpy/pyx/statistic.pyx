@@ -15,7 +15,7 @@ sharp = ""
 conf = "default.dir"           # Export edilecek qovluq
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
-prefix = nl.prefixDef()                                 # Prefix deyiskeni
+prefix = nl.prefixDefinition()                                 # Prefix deyiskeni
 nl.setOperatorKey(0)
 
 
@@ -23,11 +23,11 @@ choise = int(input("\n\t0 - Yükləmə modu\n\t1 - Analiz modu\n>> "))
 
 if(choise == 0):
     tip = int(input("\n\t0 - Köhnə data \n\t1 - Yeni data\n >> "))
-    number = nl.quest1()                                    # Nomreni daxil edin
-    nl.AI_Select()                                          # Kategoriyalari daxil edin
-    prefixValue = nl.getPrCt(0)                             # Prefix melumatlarini al
-    categoryKey = nl.getPrCt(1)                             # Kategoriya keyini al  
-    prefix = nl.prefixDef()                                 # Prefix deyiskeni
+    number = nl.input_number()                                    # Nomreni daxil edin
+    nl.setCategory()                                          # Kategoriyalari daxil edin
+    prefixValue = nl.getPrefixOrCategory(0)                             # Prefix melumatlarini al
+    categoryKey = nl.getPrefixOrCategory(1)                             # Kategoriya keyini al  
+    prefix = nl.prefixDefinition()                                 # Prefix deyiskeni
 
 def File(file,appendMode):
     try:

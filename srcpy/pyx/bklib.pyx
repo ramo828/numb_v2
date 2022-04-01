@@ -116,7 +116,7 @@ print("""
     """)
 
 if(status != 0):
-    print("-------ProMode-------\n")
+    print("\t-------ProMode-------\n")
     if(status == 1):
         print("""
         \t 1 - Bakcell

@@ -548,7 +548,11 @@ def conNar(narSeries):
         "prestigeLevel":prestige,
         "size":sizeNar }
     r = requests.get(url["Nar"],params=params,headers=setHeader(1))
-    narData = json.loads(r.text)
+    if(len(r.text) < 7):
+        narData = json.loads(r.text)
+    else:
+        print("Nömrə tapılmadı!")
+        exit(1)
     for nar in narData:
         narTwo = (nar["msisdn"])
         narNumber = narNumber+str(narTwo[3:])+"\n"
