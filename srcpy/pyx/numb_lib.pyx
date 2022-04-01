@@ -15,7 +15,7 @@ url["Nar"] = "https://public-api.azerconnect.az/msazfposapptrans/api/msisdn-sear
 #----------------------------------------------------------
 bearerKey = dict()                                         # Key Lugeti
 bearerKey["Bakcell"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
-bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRoIjoiSVNQLFJFQ0hBUkdFX0xPRyIsImV4cCI6MTY0ODgxODQxNH0.-Pw-ryOdHcJaXULMsKDVTfykQbv6dRNsodd2DMUltUlqLc1i2IyXdzVCRRr37u5nHnoWoAsybV0EhuiwZ2ydxQ" 
+bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRoIjoiSVNQLFJFQ0hBUkdFX0xPRyIsImV4cCI6MTY0ODkwNzA5Mn0.ox1r4jNdH873sBwyzZAntAn6ld0Mk1nal1nH2jst3HyVy9Vhiv9-PLGvjIRmfufAO8cRoONyae1a-qjdHfgrIA" 
 #----------------------------------------------------------
 dirs = os.getcwd()+"/.config/"                             # Oldugun qovluq
 ddir = "/sdcard/work/"

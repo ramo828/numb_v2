@@ -20,9 +20,9 @@ if len(nl.readCNConfig("contact.name")) > 0:
     contactName = nl.readConfig("contact.name") 
 else:
     contactName = "Metros"
-# dataTwo = "";                                               # Data 2
-# count = 0;                                                  # Saygac
-# prefixValue = 0;                                            # Default deyer 0
+dataTwo = "";                                               # Data 2
+count = 0;                                                  # Saygac
+prefixValue = 0;                                            # Default deyer 0
 end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
@@ -123,6 +123,8 @@ if(status != 0):
         \t 2 - Nar
         """)
         operator = int(input(">> "))
+        if(operator == 2):
+            operator =3
     elif(status == 2):
         print("""
         \t 1 - Bakcell
@@ -155,7 +157,7 @@ if(operator == 1 and status > 0):
     except (EOFError, KeyboardInterrupt):
         print("Program dəyandırıldı")
 
-elif(operator == 2 and status > 1):
+elif(operator == 2 and status > 2):
    azEnd = nl.getAzEnd()
    print(azEnd)
    print("\n\tAZƏRCELL\n")
@@ -165,7 +167,7 @@ elif(operator == 2 and status > 1):
    nl.bannerEnd()
    nl.bannerBegin(count,azEnd)
 
-elif(operator == 3 and status > 2):
+elif(operator == 3 and status > 0):
     print("\n\tNar\n")
     number = nl.input_number()                                   # Nomreni daxil edin
     db.addSeries(number)
