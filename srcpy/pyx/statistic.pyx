@@ -16,6 +16,8 @@ conf = "default.dir"           # Export edilecek qovluq
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
 prefix = nl.prefixDef()                                 # Prefix deyiskeni
+nl.setOperatorKey(0)
+
 
 choise = int(input("\n\t0 - Yükləmə modu\n\t1 - Analiz modu\n>> "))
 

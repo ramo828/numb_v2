@@ -16,17 +16,17 @@ import math
 import db
 ############################################################################
 contactName = ""
-if len(nl.readConfig("contact.name")) > 0:
+if len(nl.readCNConfig("contact.name")) > 0:
     contactName = nl.readConfig("contact.name") 
 else:
     contactName = "Metros"
-dataTwo = "";                                               # Data 2
-count = 0;                                                  # Saygac
-prefixValue = 0;                                            # Default deyer 0
+# dataTwo = "";                                               # Data 2
+# count = 0;                                                  # Saygac
+# prefixValue = 0;                                            # Default deyer 0
 end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
-status = db.checkUserLevel();
+status = db.checkUserLevel()
 
 ##############################################################################
 ################################AZERCELL######################################
@@ -55,14 +55,13 @@ def bRun():
     global end
     global dataTwo
     try:
-        nl.AI_Select()                                          # Kategoriyalari daxil edin
-    #prefixValue = nl.getPrCt(0)                             # Prefix melumatlarini al
-        nl.numLimit()                                           # Nomre alagini daxil et
+        nl.setOperatorKey(0)
+        nl.setCategory                                          # Kategoriyalari daxil edin
+        nl.number_range()                                       # Nomre alagini daxil et
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
-    #reverseValue = nl.getIndex(2)                           # Nomreleri deyisdir. (099 secilende 055, 055 secilende 099 elave et)
-        prefix = nl.prefixDef()                                 # Prefix deyiskeni
-        categoryKey = nl.getPrCt(1)                             # Kategoriya keyini al  
+        prefix = nl.prefixDefinition()                          # Prefix deyiskeni
+        categoryKey = nl.getPrefixOrCategory(1)                 # Kategoriya keyini al  
         lim = nl.loadTotal(categoryKey)/2000
         totalElements = math.ceil(lim)                          # Sehife sayi
         rawTotalElement = nl.loadTotal(categoryKey)             # Nomre sayi
@@ -82,6 +81,29 @@ def bRun():
         print("\n\t[---Key Xətası---]")
 
 ##############################################################################
+################################Nar###########################################
+def nRun(number):
+    global count
+    global end
+    global dataTwo
+    try:
+        nl.setOperatorKey(1)
+        nl.setPrefix()
+        nl.setPrestige()
+        nl.number_range()                                       # Nomre alagini daxil et
+        begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
+        end = nl.getIndex(1)                                    # Nomre son (araliq)
+        prefix = nl.prefixDefinition()
+        dataTwo +=nl.conNar(number)
+        for pre in tqdm(range(begin,end)):
+            for dataTree in tqdm(dataTwo.split("\n")):
+                nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
+                count=count+1
+    except TypeError:
+        print("\n\t[---Key Xətası---]")
+
+
+##############################################################################
 ##############################APP_RUN#########################################
 author_logo = nl.logo()                                 # Muellif logosu
 w = nl.fileControl()                                    # config file control
@@ -92,44 +114,73 @@ print("""
     --------------------------------------------------
     ##################################################
     """)
-if(status == 1):
-    print("\n\t-----------ProMod-----------\n")
-    print("""
-           Çalışacağınız operator: \n
-            \t0 - Bakcell\n
-            \t1 - Azərcell\n
-	    """)
+status = 3
 
-    operator = int(input(">> "))
+if(status != 0):
+    print("-------ProMode-------\n")
+    if(status == 1):
+        print("""
+        \t 1 - Bakcell
+        \t 2 - Nar
+        """)
+        operator = int(input(">> "))
+    elif(status == 2):
+        print("""
+        \t 1 - Bakcell
+        \t 2 - Azercell
+        """)
+        operator = int(input(">> "))
+    elif(status == 3):
+        print("""
+        \t 1 - Bakcell
+        \t 2 - Azercell
+        \t 3 - Nar
+        """)
+        operator = int(input(">> "))
 else:
     operator = 0
-if(operator == 0):
+
+if(operator == 1 and status > 0):
+    nl.setOperatorKey(0)
     print("\n\tBAKCELL\n")
     try:
-        number = nl.quest1()                                    # Nomreni daxil edin
+        number = nl.input_number()                                    # Nomreni daxil edin
         db.addSeries(number)
         try:
             bRun()
         except TypeError:
             print("Key xətası")
 
-        nl.banBegin()
-        nl.banEnd(count,end)
+        nl.bannerBegin()
+        nl.bannerEnd(count,end)
     except (EOFError, KeyboardInterrupt):
         print("Program dəyandırıldı")
-elif(operator == 1):
+
+elif(operator == 2 and status > 1):
    azEnd = nl.getAzEnd()
    print(azEnd)
    print("\n\tAZƏRCELL\n")
-   number = nl.quest1()                                    # Nomreni daxil edin
+   number = nl.input_number()                                    # Nomreni daxil edin
    db.addSeries(number)
    aRun()
-   nl.banBegin()
-   nl.banEnd(count,azEnd)
+   nl.bannerEnd()
+   nl.bannerBegin(count,azEnd)
+
+elif(operator == 3 and status > 2):
+    print("\n\tNar\n")
+    number = nl.input_number()                                   # Nomreni daxil edin
+    db.addSeries(number)
+    try:
+        nRun(number)
+    except TypeError:
+        print("Key xətası")
+
+    nl.bannerBegin()
+    nl.bannerEnd(count,end)
 else:
    print("Bilinməyən əmr!")
 
 
 ##############################################################################
-print(nl.readConfig(nl.getFP(0))+nl.getFP(1))
+print(nl.readConfig(nl.getFileOrPath(0))+nl.getFileOrPath(1))
 ##############################################################################
