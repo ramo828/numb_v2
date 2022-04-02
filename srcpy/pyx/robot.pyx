@@ -37,12 +37,23 @@ if(status == 0):
     startTime = int(input("Başlama vaxtı (san): "))
     begin = int(input("Başlanğıc addım: "))
     limit = int(input("Bitiş addımı: "))
+    cust = str(input("Öz mesaj faylınızla dəvam etmək üçün [H] və ya [Yes], sistem mesaji ilə dəvam etmək istəyirsinizsə [Y] və ya [No] yazıb enter'ə basın! >> ")).lower()
+    if(cust == 'h' or cust == "yes"):
+        msgName = str(input("Mesaj faylının adını daxil et: "))
+        t.sleep(startTime)                            # Start 10 san
+        try:
+            msg = open(msgName,'r')
+        except FileNotFoundError:
+            print("\n Mesaj fayli tapilmadi")
+    elif(cust == 'y' or cust == "no"):
+        t.sleep(startTime)                            # Start 10 san
+        try:
+            msg = open(binPath+'message/'+str(msgIndex),'r')
+        except FileNotFoundError:
+            print("\n Mesaj fayli tapilmadi")
+    else:
+        print("Xetalı emr!")
 
-t.sleep(startTime)                            # Start 10 san
-try:
-    msg = open(binPath+'message/'+str(msgIndex),'r')
-except FileNotFoundError:
-    print("\n Mesaj fayli tapilmadi")
 data = msg.read()
 pc.copy(data)
 count=count+begin                             # Saygaca baslangic deyeri elave et
@@ -56,8 +67,10 @@ while flag:
         msgSpeed = 0.75
     elif(count >= 51 and count <= 100):
         msgSpeed = 0.50
+    elif(count >= 100 and count <= 200):
+        msgSpeed = 0.25
     else:
-        msgSpeed = 0.20
+        msgSpeed = 0.15
 
     pg.press('down',presses=count,interval=msgSpeed)
     t.sleep(0.300)
