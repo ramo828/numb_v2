@@ -8,23 +8,23 @@ void run::runner() {
 	userUI ui;           // Istifadeci interfeysi
 	if(_gcount > 1) {
 		if(u.equals(_garr[1],"-stat","--statistic")){
-			ui.runPY(statistic);
-			exit(1);
+			ui.runPY(statistic);                                  // Analiz modu
+			exit(1);                                              // python calisandan sonra cpp'den cix
 		}
 		else if(u.equals(_garr[1],"-bot","--robot")){
-			ui.runPY(robo);
-			exit(1);
+			ui.runPY(robo);                                       // avto mesaj modu
+			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
 		else if(u.equals(_garr[1],"-k","--key")){
 			userUI ui;
-			ui.sysConfig("bKey.data", "Bearer "+u.str(_garr[2]));
-			u.writeln("Key: "+u.str(_garr[2]));
+			ui.sysConfig("bKey.data", "Bearer "+u.str(_garr[2])); // Key yaratma emri
+			u.writeln("Key: "+u.str(_garr[2]));                   // daxil edilen keyi goster
 		}
 
 		else if(u.equals(_garr[1],"-cn","--contactName")){
-			DB db;
-			db.setName(u.str(_garr[2]));
-			u.writeln("Kontakt adı: "+u.str(_garr[2]));
+			DB db;                                                // DataBase clasini cagir
+			db.setName(u.str(_garr[2]));                          // DB'a adi daxil ele
+			u.writeln("Kontakt adı: "+u.str(_garr[2]));           // Kontaktin adini goster
 		}
 		else if(u.equals(_garr[1],"-reg","--register")){
 			DB db;
@@ -54,6 +54,7 @@ void run::runner() {
 	
 		}
 		else {
+			
 			u.writeln("Taninamayan: "+u.str(_garr[1]));
 			exit(1);
 

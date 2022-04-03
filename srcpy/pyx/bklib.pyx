@@ -27,7 +27,7 @@ end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
 status = db.checkUserLevel()
-
+number = ""
 ##############################################################################
 ################################AZERCELL######################################
 def aRun():
@@ -56,7 +56,9 @@ def bRun():
     global dataTwo
     try:
         nl.setOperatorKey(0)
-        nl.setCategory                                          # Kategoriyalari daxil edin
+        os.system("clear")
+        nl.setCategory()                                        # Kategoriyalari daxil edin
+        number = nl.input_number()                              # Nomreni daxil edin
         nl.number_range()                                       # Nomre alagini daxil et
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
@@ -114,6 +116,7 @@ print("""
     --------------------------------------------------
     ##################################################
     """)
+###################################################################
 
 if(status != 0):
     print("\t-------ProMode-------\n")
@@ -139,13 +142,15 @@ if(status != 0):
         """)
         operator = int(input(">> "))
 else:
+    bRun()
     operator = 0
 
-if(operator == 1 and status > 0):
+#########################################################################
+
+if(operator == 1 and status >= 0):
     nl.setOperatorKey(0)
     print("\n\tBAKCELL\n")
     try:
-        number = nl.input_number()                                    # Nomreni daxil edin
         db.addSeries(number)
         try:
             bRun()
@@ -157,7 +162,7 @@ if(operator == 1 and status > 0):
     except (EOFError, KeyboardInterrupt):
         print("Program dəyandırıldı")
 
-elif(operator == 2 and status > 2):
+elif(operator == 2 and status >= 2):
    azEnd = nl.getAzEnd()
    print(azEnd)
    print("\n\tAZƏRCELL\n")
@@ -178,6 +183,8 @@ elif(operator == 3 and status > 0):
 
     nl.bannerBegin()
     nl.bannerEnd(count,end)
+elif(operator == 0):
+    pass
 else:
    print("Bilinməyən əmr!")
 

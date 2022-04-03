@@ -298,10 +298,18 @@ def prefixDefinition():
 def setCategory():
     global categoryKey
     global prefixValue
-    prefixValue = int(input("Prefix: (0 - 55; 1 - 99: "));              # Sual 2 055 yoxsa 099?
+    print("""
+    -------------------------------------\n
+    \tPrefix: \n
+    0 - 55\n
+    1 - 99\n
+    -------------------------------------\n
+    """)
+    prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
     if(prefixSel[prefixValue] == "55"):
-        print("""-------------------------------------\n
-        \tKategoriya seç\n
+        print("""
+        -------------------------------------\n
+        \tKategoriya seç: \n
         0 - Sadə\n
         1 - Xüsusi1\n
         2 - Xüsusi2\n

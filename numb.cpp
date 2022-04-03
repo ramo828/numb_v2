@@ -6,7 +6,8 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	userUI ui;
 	util u;
-	if(u.getDevice())
+	
+		if(u.getDevice())
 		ui.sysConfig("default.dir",u.get_homedir());
 	else
 		ui.sysConfig("default.dir","/sdcard/work");
