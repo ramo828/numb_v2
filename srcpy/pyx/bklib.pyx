@@ -46,6 +46,9 @@ def aRun():
             dataFour,                                       # Yekun data
             count)                                          # Kontaktin ad ardicilligi
             count=count+1
+    nl.bannerBegin()
+    nl.bannerEnd(count,end)
+
 
 
 ##############################################################################
@@ -79,6 +82,9 @@ def bRun():
             for dataTree in tqdm(dataTwo.split("\n")):
                 nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
                 count=count+1
+        nl.bannerBegin()
+        nl.bannerEnd(count,end)
+
     except TypeError:
         print("\n\t[---Key Xətası---]")
 
@@ -101,6 +107,9 @@ def nRun(number):
             for dataTree in tqdm(dataTwo.split("\n")):
                 nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
                 count=count+1
+        nl.bannerBegin()
+        nl.bannerEnd(count,end)
+
     except TypeError:
         print("\n\t[---Key Xətası---]")
 
@@ -157,8 +166,6 @@ if(operator == 1 and status >= 0):
         except TypeError:
             print("Key xətası")
 
-        nl.bannerBegin()
-        nl.bannerEnd(count,end)
     except (EOFError, KeyboardInterrupt):
         print("Program dəyandırıldı")
 
@@ -169,8 +176,6 @@ elif(operator == 2 and status >= 2):
    number = nl.input_number()                                    # Nomreni daxil edin
    db.addSeries(number)
    aRun()
-   nl.bannerEnd()
-   nl.bannerBegin(count,azEnd)
 
 elif(operator == 3 and status > 0):
     print("\n\tNar\n")
@@ -181,8 +186,6 @@ elif(operator == 3 and status > 0):
     except TypeError:
         print("Key xətası")
 
-    nl.bannerBegin()
-    nl.bannerEnd(count,end)
 elif(operator == 0):
     pass
 else:
