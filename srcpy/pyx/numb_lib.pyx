@@ -168,7 +168,7 @@ def input_number():
 
 def fileControl():
     author_logo = logo()
-    if(os.path.isfile(".config/")):
+    if(not os.path.isfile(".config/")):
         try:
             w = open(readConfig(path)+fileName,"w")
         except FileNotFoundError:
@@ -178,7 +178,10 @@ def fileControl():
         return w
     else:
         print("Ayarlar mövcud deyildi ancaq yeniden yaradılacaq\n Təkrar programa daxil olun!")
-        os.mkdir(".config")
+        try:
+            os.mkdir(".config")
+        except FileExistsError:
+            pass
 
 def getFileOrPath(index):
     if(index == 0):
