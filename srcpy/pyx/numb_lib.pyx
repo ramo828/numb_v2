@@ -168,7 +168,7 @@ def input_number():
 
 def fileControl():
     author_logo = logo()
-    if(not os.path.isfile(".config/")):
+    if(os.path.isdir(".config/")):
         try:
             w = open(readConfig(path)+fileName,"w")
         except FileNotFoundError:
