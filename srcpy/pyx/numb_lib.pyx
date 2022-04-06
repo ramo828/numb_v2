@@ -168,13 +168,17 @@ def input_number():
 
 def fileControl():
     author_logo = logo()
-    try:
-        w = open(readConfig(path)+fileName,"w")
-    except FileNotFoundError:
-        print("Göstərilən adres mövcud deyil\n"+readConfig(path)+"\n")
-    finally:
-        print(author_logo)
-    return w
+    if(os.path.isfile(".config/")):
+        try:
+            w = open(readConfig(path)+fileName,"w")
+        except FileNotFoundError:
+            print("Göstərilən adres mövcud deyil\n"+readConfig(path)+"\n")
+        finally:
+            print(author_logo)
+        return w
+    else:
+        print("Ayarlar mövcud deyildi ancaq yeniden yaradılacaq\n Təkrar programa daxil olun!")
+        os.mkdir(".config")
 
 def getFileOrPath(index):
     if(index == 0):
