@@ -4,6 +4,7 @@ import sys
 import os
 import subprocess
 import hashlib
+import time as tm
 
 
 if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
@@ -29,6 +30,8 @@ try:
     if(not (old_sha == new_sha)):
         print("\t\t-------Ferqli kod-------")
         os.system("numb -k "+key)
+        tm.sleep(1/2)
+        os.system("clear")
     else:
         os.system("clear")
 
