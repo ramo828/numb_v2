@@ -173,6 +173,11 @@ def fileControl():
             w = open(readConfig(path)+fileName,"w")
         except FileNotFoundError:
             print("Göstərilən adres mövcud deyil\n"+readConfig(path)+"\n")
+            tm.sleep(1)
+            print("Adress yenidən hazırlanacaq...")
+            tm.sleep(1)
+            os.system("mkdir -p sdcard/work && numb")
+            exit(1)
         finally:
             print(author_logo)
         return w
