@@ -30,7 +30,6 @@ run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py",binPath+"srcpy/robo.
 runChoise = 0
 raw = ""
 regStatus = False
-clear = True
 
 
 
@@ -60,14 +59,13 @@ try:
     else:
         print("Duz")
         os.system("clear")
-        exit(1)
+        # exit(1)
 
 except TypeError:
     os.system("clear")
 
 
 def regMetod(uuser,ppass):
-    clear = True
     if(not t1.alreadyUser(uuser)):
         print("""
     \n\t##########################    
@@ -77,6 +75,8 @@ def regMetod(uuser,ppass):
         t1.reg(uuser,ppass)
     else:
         print("Bu login artıq istifadə olunur!\n")
+
+
 
 try:
     if(sys.argv[1] == "--run"):
@@ -91,19 +91,15 @@ try:
     elif(sys.argv[1] == "--reg"):
         if(not regStatus):
             regMetod(sys.argv[2],sys.argv[3])
-        elif(not clear):
+        else:
             print("Siz artıq qeydiyyatdan keçmisiniz!\n")
 except IndexError:
     print("Bos argument")
     runChoise = 0
-try:
-    raw = t1.getUserData(0)+","+t1.getUserData(1)
-except TypeError:
-    regStatus = True
-    if(not clear):
-        print("Programdan istifadə üçün qeydiyyatdan keçməlisiniz!")
-login = lib.spl(raw,",",0)
-pswd = lib.spl(raw,",",1)
+
+
+login = t1.getUserData(0)
+pswd = t1.getUserData(1)
 
 status = t1.checkUserAndPassword(login,pswd)
 if(status):
@@ -115,7 +111,7 @@ if(status):
         print(os.getcwd())
   else:
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
-elif(not clear):
+else:
   print("Login və ya parol yanlısdır!")
 
 

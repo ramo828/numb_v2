@@ -163,9 +163,7 @@ def fileControl():
             pass
 
 def getFileOrPath(index):
-    if(index == 0):
-        return path                                                             # 0 daxil edilende qovlugu
-    elif(index == 1):                                                           # 1 daxil edilende fayl adini qaytar
+    if(index == 1):                                                           # 1 daxil edilende fayl adini qaytar
         return fileName
     else:
         return "Error"
@@ -191,7 +189,6 @@ def bannerEnd(count,end):
     Tapılan nomrə sayı: """+ str(count/end)+"""
     -----------------------------------------
     """)
-    outputInfo()
 
 def vcardWrite(w,contactName,prefix,prefixAraligi,nomreler,count1):
     w.write(

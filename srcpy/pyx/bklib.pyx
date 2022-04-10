@@ -23,7 +23,7 @@ prefixValue = 0;                                            # Default deyer 0
 end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
-status = 0#db.checkUserLevel()
+status = db.checkUserLevel(db.getUserData(0),db.getUserData(1))
 number = ""
 operator = 0
 

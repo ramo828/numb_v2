@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import errorcode
-import lib
 import os
 import sqlite3
 import datetime
@@ -60,13 +59,17 @@ def updateName(name):                                                           
     cursor.execute(keyValue)
     con.commit()
 
-def getUserData(index):                                                                        # Istifadeci melumatlari
-    data1 = ""
-    cursor.execute("SELECT * FROM account")
+def getUserData(index):
+    if(index == 0):
+        sql = "SELECT user FROM account"
+    elif(index == 1):
+        sql = "SELECT pass FROM account"
+    else:
+        raise TypeError("Index tapılmadı")                                                                        # Istifadeci melumatlari
+    cursor.execute(sql)
     data = cursor.fetchall()
-    for i in data:
-        data1 = data[1][index]
-    return data1
+    
+    return data[0][0]
 
 def getKey(op):                                                                                # Keyi cagir Bakcell/Nar
     if(op == 0):
@@ -182,30 +185,17 @@ def alreadyUser(login):
     else:
       return True
 
-def checkUserLevel():
-    notFound = False
-    global r
-    ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
-    try:
-        r = open(ddir+"user.reg","r")
-    except FileNotFoundError:
-        notFound = True
-    try:
-        alld = r.read()
-        login = lib.spl(alld,",",0)
-        password = lib.spl(alld,",",1)
-        connection = conn()
-        cursor = connection.cursor()
-        sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
-        cursor.execute(sql_select_query)
-        record = cursor.fetchone()
-        if record is not None:
-            return record[4]
-        else:
-            return 0
-    except (AttributeError, ImportError, NameError):
-        print("Xəta baş verdi [checkUserLevel]\n")
-
+def checkUserLevel(login, password):
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is not None:
+        return record[4]
+    else:
+        return 0
+    
 def checkUserStatus(login, password):
     connection = conn()
     cursor = connection.cursor()
