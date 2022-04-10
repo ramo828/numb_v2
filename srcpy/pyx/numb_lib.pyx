@@ -6,20 +6,15 @@ from bs4 import BeautifulSoup as soup
 import subprocess
 import json
 import random
+import db
+
 #----------------------------------------------------------
-operator = ["Azercell","Bakcell","Nar"]                    # Operator
 url = dict()                                               # URL lugeti
 url["Bakcell"] = "https://public-api.azerconnect.az/msbkcposappreservation/api/freemsisdn-nomre/search"
 url["Azercell"] = "https://azercellim.com/az/search/"
 url["Nar"] = "https://public-api.azerconnect.az/msazfposapptrans/api/msisdn-search" 
-#----------------------------------------------------------
-bearerKey = dict()                                         # Key Lugeti
-bearerKey["Bakcell"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
-bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRoIjoiSVNQLFJFQ0hBUkdFX0xPRyIsImV4cCI6MTY0ODkwNzA5Mn0.ox1r4jNdH873sBwyzZAntAn6ld0Mk1nal1nH2jst3HyVy9Vhiv9-PLGvjIRmfufAO8cRoONyae1a-qjdHfgrIA" 
-#----------------------------------------------------------
+
 dirs = os.getcwd()+"/.config/"                             # Oldugun qovluq
-ddir = "/sdcard/work/"
-path = "default.dir"                                       # Export edilecek qovluq
 fileName = "/Ramo_SOFT_all_Contacts.vcf"                   # Export edilecek kintakt fayli
 prefixSel = ["55","99"];                                   # Prefix secimi
 prefixValue = 0
@@ -61,7 +56,6 @@ azercellPrefix = ["90","50","51","10"]                     # Prefix var
 prefixNar = "70"
 sizeNar = 10000
 prestige = "PRESTIGE"
-configData = ""
 bKeyDefault = ""
 ssl = False
 h = {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -78,47 +72,30 @@ azercellBegin = 0
 azercellEnd = 0
 narCounter = 0
 narNumber = ""
-bKey = ""
+key = ""
 #-------------------------------------------------
 
 ##################################GLOBAL_DATA############################################################
 
-def keyReadFile(choiseKey):
-    global bKeyDefault
-    bakcellKeyFile = "bKey.data"
-    narKeyFile = "bKeyNar.data"
-    selectKeyFile = ""
-    os.system("clear")
-    if(choiseKey == 0):
-        print("Bakcell\n")
-        selectKeyFile = bakcellKeyFile
-    elif(choiseKey == 1):
-        print("Nar\n")
-        selectKeyFile = narKeyFile
 
-    if(os.path.exists(dirs+selectKeyFile)):
-        bFile = open(dirs+selectKeyFile,"r")
-        tm.sleep(1)
-        os.system("clear")
-        print("#####External key selected#####")
-        bKeyDefault = bFile.read()
-        return bKeyDefault
-    else:
-        tm.sleep(1);
-        os.system("clear");
-        print("#####Default key selected#####")
-        return str(bearerKey["Bakcell"] if choiseKey == 0 else bearerKey["Nar"])
 
 def setOperatorKey(operator):
-    global bKey
-    bKey = keyReadFile(operator)
+    global key
+    if(operator == 0):
+        key = db.getKey(0)
+    elif(operator == 1):
+        key = db.getKey(1)
+    else:
+        raise TypeError("Xetali secim")
+    
+    # return key
 
 def setHeader(opcode):
     headers = {'content-type': 'application/json',         # Content type json
     'Accept':'application/json, text/plain, */*',          # Accept type json
     'Accept-Encoding':'gzip, deflate, br',                 # Encoding gzip compressed data
     'Accept-Language':'tr-TR,tr;q=0.9,az-TR;q=0.8,az;q=0.7,en-US;q=0.6,en;q=0.5',
-     'Authorization': bKey,
+     'Authorization': key,
     'Connection':'keep-alive'}
     return headers
 
@@ -170,10 +147,10 @@ def fileControl():
     author_logo = logo()
     if(os.path.isdir(".config/")):
         try:
-            w = open(readConfig(path)+fileName,"w")
+            w = open(db.getHomeDir()+fileName,"w")
         except FileNotFoundError:
             os.system("clear")
-            print("Göstərilən adres mövcud deyil\n"+readConfig(path)+"\n")
+            print("Göstərilən adres mövcud deyil\n"+db.getHomeDir()+"\n")
             exit(1)
         finally:
             print(author_logo)
@@ -225,23 +202,6 @@ def vcardWrite(w,contactName,prefix,prefixAraligi,nomreler,count1):
 	+dataVcard[4]
 	+dataVcard[5])
 
-def readConfig(conf):
-    if(os.path.exists(dirs+conf)):
-        config = open(dirs+conf,"r")
-        configData = config.read()
-        return configData
-    else:
-        configData = ddir
-        return configData
-
-def readCNConfig(conf):
-    if(os.path.exists(dirs+conf)):
-        config = open(dirs+conf,"r")
-        configData = config.read()
-        return configData
-    else:
-        configData = "Metros"
-        return configData
 
 def getPrefixOrCategory(index):
     if(index == 0):
@@ -249,9 +209,6 @@ def getPrefixOrCategory(index):
     elif(index == 1):
         return categoryKey
 
-def outputInfo():
-    global configData
-    print("OUTPUT: "+configData)
 
 def number_range():
     global reverseValue
@@ -578,6 +535,16 @@ def conNar(narSeries):
 
 def getNarCointer():
     return narCounter
+
+def spl(data, sep ,index):
+    spdata = list()
+    try:
+        for pdata in data.split(sep):
+            spdata.append(pdata)
+        return(spdata[index])
+    except IndexError:
+        print("\n\t\tYaddaşda hesab yoxdur!\n")
+
 
 def logo():
     logo_index = random.randint(0, 12)

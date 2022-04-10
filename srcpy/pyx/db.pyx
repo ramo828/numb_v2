@@ -2,6 +2,121 @@ import mysql.connector
 from mysql.connector import errorcode
 import lib
 import os
+import sqlite3
+import datetime
+
+################################SQLLite####################################
+account = "CREATE TABLE if NOT EXISTS account (user TEXT, pass TEXT)"
+server = "CREATE TABLE if NOT EXISTS sqlServer (host TEXT,user TEXT, pass TEXT, database TEXT)"
+settings = "CREATE TABLE if NOT EXISTS settings (keyBakcell TEXT, keyNar TEXT, contactName TEXT, homeDir TEXT)"
+history = "CREATE TABLE if NOT EXISTS number (Date TEXT ,operator TEXT, prefix TEXT, series TEXT, category TEXT)"
+log = "CREATE TABLE if NOT EXISTS log (Date TEXT ,line TEXT, error TEXT, errno INT)"
+
+db_file = ".config/numb_data.db"
+command = [
+account,
+settings,
+history,
+log,
+server
+]
+
+
+con = sqlite3.connect(db_file)
+cursor = con.cursor()
+
+def createTable():                                                                             # Tablo qur
+    for i in range(len(command)):
+        cursor.execute(command[i])
+    con.commit()
+
+def addAccount(user,password):                                                                 # Account elave et
+    addValue = "INSERT INTO account VALUES('{0}','{1}')".format(user,password)
+    cursor.execute(addValue)
+    con.commit()
+
+def addSettings(keyBakcell,keyNar,contactName,homeDir):                                        # Ayarlar
+    addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}')".format(keyBakcell,keyNar,contactName,homeDir)
+    cursor.execute(addValue)
+    con.commit()
+
+def updateKeyLocal(key,op):                                                                         # Key Bakcell/Nar
+    if(op == 0):
+        keyValue = "UPDATE settings SET keyBakcell = '{0}'".format(key)
+    elif(op == 1):
+        keyValue = "UPDATE settings SET keyNar = '{0}'".format(key)
+    else:
+        raise TabError("Operator tapılmadı!")
+    cursor.execute(keyValue)
+    con.commit()
+
+def updateDir(dir):                                                                            # Esas qovluq
+    keyValue = "UPDATE settings SET homeDir = '{0}'".format(dir)
+    cursor.execute(keyValue)
+    con.commit()
+
+def updateName(name):                                                                          # kontakt adini deyisdir
+    keyValue = "UPDATE settings SET contactName = '{0}'".format(name)                  
+    cursor.execute(keyValue)
+    con.commit()
+
+def getUserData(index):                                                                        # Istifadeci melumatlari
+    data1 = ""
+    cursor.execute("SELECT * FROM account")
+    data = cursor.fetchall()
+    for i in data:
+        data1 = data[1][index]
+    return data1
+
+def getKey(op):                                                                                # Keyi cagir Bakcell/Nar
+    if(op == 0):
+        sql = "SELECT keyBakcell FROM settings"
+    elif(op == 1):
+        sql = "SELECT keyNar FROM settings"
+    else:
+        raise TypeError("Operator tapılmadı")
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return data[0][0]
+
+def getName():                                                                               
+    sql = "SELECT contactName FROM settings"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return data[0][0]
+
+def getHomeDir():                                                                               
+    sql = "SELECT homeDir FROM settings"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return data[0][0]
+
+
+def insertNumber(operator, prefix, series, category):
+    date = datetime.datetime.now()
+    operatorS = ""
+    if(operator == 1):
+        operatorS = "Bakcell"
+    elif(operator == 2):
+        operatorS = "Azercell"
+    elif(operator == 3):
+        operatorS = "Nar"
+    else:
+        raise TypeError("Operator xətalı seçilib!")
+    addValue = "INSERT INTO number VALUES('{0}','{1}', '{2}', '{3}','{4}')".format(date,operatorS,prefix,series, category)
+    cursor.execute(addValue)
+    con.commit()
+
+def addLog(line, error, errorNo):
+    date = datetime.datetime.now()
+    addValue = "INSERT INTO log VALUES('{0}','{1}', '{2}', '{3}')".format(date,line,error,errorNo)
+    cursor.execute(addValue)
+    con.commit()
+
+def closeDB():
+    con.close()
+
+###################################EndSQLLite#########################################################
 
 def conn():
   try:
@@ -102,13 +217,13 @@ def checkUserStatus(login, password):
     else:
         return 0
 
-def updateKey():
+def updateKey(op):
     connection = conn()
     cursor = connection.cursor()
     sql_select_query = """SELECT * FROM `system` WHERE 1"""
     cursor.execute(sql_select_query)
     record = cursor.fetchone()
     if record is not None:
-        return record[0]
+        return record[op]
     else:
         return 0

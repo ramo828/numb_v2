@@ -6,13 +6,13 @@ import math
 from tqdm import tqdm
 import os
 import time as tm
+import db
 
 stopFlag = True
 nameFile = ""
 new = ""
 tip = 1
 sharp = ""
-conf = "default.dir"           # Export edilecek qovluq
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
 prefix = nl.prefixDefinition()                                 # Prefix deyiskeni
@@ -40,8 +40,7 @@ def File(file,appendMode):
 def calcData():
     f = File("old.numb","r")
     f1 = File("new.numb","r")
-    path = nl.readConfig(conf)
-    yekun = File(path+"/Founded.vcf","w")
+    yekun = File(db.getHomeDir()+"/Founded.vcf","w")
     dataNew = f1.readlines()
     dataOld = f.readlines()
     count = 0

@@ -15,19 +15,18 @@ from tqdm import tqdm
 import math
 import db
 ############################################################################
-contactName = ""
-if len(nl.readCNConfig("contact.name")) > 0:
-    contactName = nl.readConfig("contact.name") 
-else:
-    contactName = "Metros"
+contactName = db.getName()
+
 dataTwo = "";                                               # Data 2
 count = 0;                                                  # Saygac
 prefixValue = 0;                                            # Default deyer 0
 end = 0
 warnings.filterwarnings("ignore")
 new_data = ""
-status = db.checkUserLevel()
+status = 0#db.checkUserLevel()
 number = ""
+operator = 0
+
 ##############################################################################
 ################################AZERCELL######################################
 def aRun():
@@ -193,5 +192,5 @@ else:
 
 
 ##############################################################################
-print(nl.readConfig(nl.getFileOrPath(0))+nl.getFileOrPath(1))
+print(db.getHomeDir()+nl.getFileOrPath(1))
 ##############################################################################
