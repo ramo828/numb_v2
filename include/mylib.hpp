@@ -129,7 +129,7 @@ class DB {
 		sqlite3_stmt * st;
 
 	public:
-		
+		void setAutoStatus(string status);
 		void reg(string user, string pass);
 		void login(string user, string pass);
 		void setName(string name);

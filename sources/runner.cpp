@@ -77,11 +77,19 @@ void run::runner() {
 		}
 
 		else if(_gcount > 2){
+			DB db;
 			if(u.equals(_garr[1],"-bot","--robot")){
 			ui.runPY(robo);
 			exit(1);
 			}
-	
+			else if(u.equals(_garr[1],"-auto","--setAuto")){
+				if(u.equals(_garr[2],"true","True"))
+					db.setAutoStatus("1");
+				else if(u.equals(_garr[2],"false","False"))
+					db.setAutoStatus("0");
+				else
+					cout << "Xəta" << endl;
+			}
 		}
 		else {
 			
@@ -97,7 +105,17 @@ void run::runner() {
 
 }
 
-
+void DB::setAutoStatus(string status){
+	string autoStatus = "UPDATE settings SET autoKey = "+status+"";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, autoStatus.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
+}
 
 void DB::setName(string name){
 	string updateName = "UPDATE settings SET contactName = '"+name+"'";

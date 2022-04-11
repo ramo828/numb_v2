@@ -23,7 +23,7 @@ if( len(readDB.read()) > 0):
     pass
 else:
     t1.createTable()
-    t1.addSettings(bearerKey["Bakcell"],bearerKey["Nar"],defaultName,homeDir)
+    t1.addSettings(bearerKey["Bakcell"],bearerKey["Nar"],defaultName,homeDir,1)
 
 ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
 run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py",binPath+"srcpy/robo.py")
@@ -32,37 +32,36 @@ raw = ""
 regStatus = False
 
 
+if(t1.autoKey()):
+    try:
+        key = t1.updateKey(0)                                            # Bakcell
+        old = t1.getKey(0)                                               # oldBakcell
 
-try:
-    key = t1.updateKey(0)                                            # Bakcell
-    old = t1.getKey(0)                                               # oldBakcell
+        narKey = t1.updateKey(1)                                         # Nar
+        narOld = t1.getKey(1)                                            # oldNar
 
-    narKey = t1.updateKey(1)                                         # Nar
-    narOld = t1.getKey(1)                                            # oldNar
+        old_sha = hashlib.sha256(bytes(old,'utf-8')).hexdigest()
+        new_sha = hashlib.sha256(bytes(key,'utf-8')).hexdigest()
 
-    old_sha = hashlib.sha256(bytes(old,'utf-8')).hexdigest()
-    new_sha = hashlib.sha256(bytes(key,'utf-8')).hexdigest()
+        old_sha_nar = hashlib.sha256(bytes(narOld,'utf-8')).hexdigest()
+        new_sha_nar = hashlib.sha256(bytes(narKey,'utf-8')).hexdigest()
 
-    old_sha_nar = hashlib.sha256(bytes(narOld,'utf-8')).hexdigest()
-    new_sha_nar = hashlib.sha256(bytes(narKey,'utf-8')).hexdigest()
+        if(not (old_sha == new_sha)):
+            print("\t\t-------Ferqli kod Bakcell-------")
+            t1.updateKeyLocal(key,0)
+            tm.sleep(1/2)
+            os.system("clear")
+        elif(not (old_sha_nar == new_sha_nar)):
+            print("\t\t-------Ferqli kod Nar-------")
+            t1.updateKeyLocal(narKey,1)
+            tm.sleep(1/2)
+            os.system("clear")
+        else:
+            # print("Duz")
+            os.system("clear")
 
-    if(not (old_sha == new_sha)):
-        print("\t\t-------Ferqli kod Bakcell-------")
-        t1.updateKeyLocal(key,0)
-        tm.sleep(1/2)
+    except TypeError:
         os.system("clear")
-    elif(not (old_sha_nar == new_sha_nar)):
-        print("\t\t-------Ferqli kod Nar-------")
-        t1.updateKeyLocal(narKey,1)
-        tm.sleep(1/2)
-        os.system("clear")
-    else:
-        print("Duz")
-        os.system("clear")
-        # exit(1)
-
-except TypeError:
-    os.system("clear")
 
 
 def regMetod(uuser,ppass):

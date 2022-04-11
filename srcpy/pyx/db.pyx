@@ -7,7 +7,7 @@ import datetime
 ################################SQLLite####################################
 account = "CREATE TABLE if NOT EXISTS account (user TEXT, pass TEXT)"
 server = "CREATE TABLE if NOT EXISTS sqlServer (host TEXT,user TEXT, pass TEXT, database TEXT)"
-settings = "CREATE TABLE if NOT EXISTS settings (keyBakcell TEXT, keyNar TEXT, contactName TEXT, homeDir TEXT)"
+settings = "CREATE TABLE if NOT EXISTS settings (keyBakcell TEXT, keyNar TEXT, contactName TEXT, homeDir TEXT, autoKey INT)"
 history = "CREATE TABLE if NOT EXISTS number (Date TEXT ,operator TEXT, prefix TEXT, series TEXT, category TEXT)"
 log = "CREATE TABLE if NOT EXISTS log (Date TEXT ,line TEXT, error TEXT, errno INT)"
 
@@ -34,8 +34,8 @@ def addAccount(user,password):                                                  
     cursor.execute(addValue)
     con.commit()
 
-def addSettings(keyBakcell,keyNar,contactName,homeDir):                                        # Ayarlar
-    addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}')".format(keyBakcell,keyNar,contactName,homeDir)
+def addSettings(keyBakcell,keyNar,contactName,homeDir, autoStatus):                                        # Ayarlar
+    addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}', {4})".format(keyBakcell,keyNar,contactName,homeDir,autoStatus)
     cursor.execute(addValue)
     con.commit()
 
@@ -53,6 +53,12 @@ def updateDir(dir):                                                             
     keyValue = "UPDATE settings SET homeDir = '{0}'".format(dir)
     cursor.execute(keyValue)
     con.commit()
+
+def autoKey():                                                  # AvtoKey
+    Value = "SELECT autoKey FROM settings "
+    cursor.execute(Value)
+    data = cursor.fetchall()
+    return data[0][0]
 
 def updateName(name):                                                                          # kontakt adini deyisdir
     keyValue = "UPDATE settings SET contactName = '{0}'".format(name)                  
