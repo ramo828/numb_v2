@@ -60,16 +60,19 @@ def updateName(name):                                                           
     con.commit()
 
 def getUserData(index):
-    if(index == 0):
-        sql = "SELECT user FROM account"
-    elif(index == 1):
-        sql = "SELECT pass FROM account"
-    else:
-        raise TypeError("Index tapılmadı")                                                                        # Istifadeci melumatlari
-    cursor.execute(sql)
-    data = cursor.fetchall()
+    try:
+        if(index == 0):
+            sql = "SELECT user FROM account"
+        elif(index == 1):
+            sql = "SELECT pass FROM account"
+        else:
+            raise TypeError("Index tapılmadı")                                  
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        return data[0][0]
+    except IndexError:
+       pass
     
-    return data[0][0]
 
 def getKey(op):                                                                                # Keyi cagir Bakcell/Nar
     if(op == 0):
@@ -208,12 +211,14 @@ def checkUserStatus(login, password):
         return 0
 
 def updateKey(op):
+    if(op == 0):
+        sql = "SELECT keyBakcell FROM `system`"
+    elif(op == 1):
+        sql = "SELECT keyNar FROM `system`"
+    else:
+        print('Xətalı operator')
     connection = conn()
     cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `system` WHERE 1"""
-    cursor.execute(sql_select_query)
+    cursor.execute(sql)
     record = cursor.fetchone()
-    if record is not None:
-        return record[op]
-    else:
-        return 0
+    return record[0]

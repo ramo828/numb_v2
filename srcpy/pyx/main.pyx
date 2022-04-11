@@ -111,7 +111,11 @@ if(status):
         print(os.getcwd())
   else:
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
+elif(login is None and pswd is None):
+        print("""\n
+            Siz qeydiiyatdan keçməmisiniz! 
+            Zəhmət olmasa qeydiyyatdan keçin.""")
 else:
-  print("Login və ya parol yanlısdır!")
+    print("Login və ya parol yanlısdır!")
 
 
