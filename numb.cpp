@@ -4,13 +4,12 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	userUI ui;
+	DB db;
 	util u;
-	
-		if(u.getDevice())
-		ui.sysConfig("default.dir",u.get_homedir());
+	if(u.getDevice())
+		db.setHomeDir(u.get_homedir()); // Linux
 	else
-		ui.sysConfig("default.dir","/sdcard/work");
+		db.setHomeDir("/sdcard/work/"); // Android
 	run r(argc, argv);
 	r.runner();
 	return 0;

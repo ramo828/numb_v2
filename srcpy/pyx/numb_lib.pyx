@@ -519,11 +519,15 @@ def conNar(narSeries):
         "prestigeLevel":prestige,
         "size":sizeNar }
     r = requests.get(url["Nar"],params=params,headers=setHeader(1))
-    if(len(r.text) < 7):
+    if(len(r.text) > 7):
         narData = json.loads(r.text)
+    elif(r.status_code != 200):
+        print("Key xətalıdır")
+        exit(1)
     else:
         print("Nömrə tapılmadı!")
         exit(1)
+    
     for nar in narData:
         narTwo = (nar["msisdn"])
         narNumber = narNumber+str(narTwo[3:])+"\n"
@@ -532,15 +536,6 @@ def conNar(narSeries):
 
 def getNarCointer():
     return narCounter
-
-def spl(data, sep ,index):
-    spdata = list()
-    try:
-        for pdata in data.split(sep):
-            spdata.append(pdata)
-        return(spdata[index])
-    except IndexError:
-        print("\n\t\tYaddaşda hesab yoxdur!\n")
 
 
 def logo():
