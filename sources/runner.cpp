@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sqlite3.h>
 #include "../include/mylib.hpp"
 
 using namespace std;
@@ -16,9 +17,38 @@ void run::runner() {
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
 		else if(u.equals(_garr[1],"-k","--key")){
-			userUI ui;
-			ui.sysConfig("bKey.data", "Bearer "+u.str(_garr[2])); // Key yaratma emri
+			util u;
+			DB db;
+			db.updateBakcellKey("Bearer "+u.str(_garr[2]));       // Key yaratma emri
 			u.writeln("Key: "+u.str(_garr[2]));                   // daxil edilen keyi goster
+		}
+
+		else if(u.equals(_garr[1],"-knar","--keyNar")){
+			util u;
+			DB db;
+			db.updateNarKey("Bearer "+u.str(_garr[2]));           // Key yaratma emri
+			u.writeln("Key: "+u.str(_garr[2]));                   // daxil edilen keyi goster
+		}
+		else if(u.equals(_garr[1],"-ext","--exit")){
+			DB db;
+			db.clearDb("account");
+		}
+		else if(u.equals(_garr[1],"-up","--update")){
+			string upCommand = "curl https://raw.githubusercontent.com/ramo828/numb_v2/main/build.sh | dash -";
+			system(upCommand.c_str());
+		}
+		else if(u.equals(_garr[1],"-l","--login")){
+			DB db;
+			ext e;
+			string user;
+			string pass;
+			cout << "\t------Daxil Ol-------" << endl;
+			cout << "Login: ";
+			cin >> user;
+			cout << "Password: ";
+			cin >> pass;
+			db.login(user,pass);
+			system("numb");
 		}
 
 		else if(u.equals(_garr[1],"-cn","--contactName")){
@@ -67,21 +97,86 @@ void run::runner() {
 
 }
 
+
+
 void DB::setName(string name){
-	userUI ui;          		 // Istifadeci interfeysi
-	ui.sysConfig("contact.name",name);
+	string updateName = "UPDATE settings SET contactName = '"+name+"'";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, updateName.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
+}
+
+void DB::setHomeDir(string dir){
+	string updateDir = "UPDATE settings SET homeDir = '"+dir+"'";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, updateDir.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
+}
+
+void DB::clearDb(string db){
+	string clear = "DELETE FROM "+db+"";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, clear.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
+}
+
+void DB::updateBakcellKey(string key){
+	string updateDir = "UPDATE settings SET keyBakcell = '"+key+"'";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, updateDir.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
+}
+void DB::updateNarKey(string key){
+	string updateDir = "UPDATE settings SET keyNar = '"+key+"'";
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, updateDir.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
 }
 
 void DB::reg(string user, string pass) {
-	userUI ui;          		 // Istifadeci interfeysi
-	string up = user+","+pass;      // user and pass
-	ui.sysConfig("user.reg",up);
+	DB db;
+	db.clearDb("account");
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare( database, regSql.c_str(), -1, &st, NULL);
+        sqlite3_bind_text(st, 1, user.c_str(), user.length(), SQLITE_TRANSIENT);
+        sqlite3_bind_text(st, 2, pass.c_str(), pass.length(), SQLITE_TRANSIENT);
+        sqlite3_step( st );
+
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+    sqlite3_close(database);
 }
 
-void DB::login(string login, string pass) {
-	userUI ui;           // Istifadeci interfeysi
-	string up = login+","+pass;      // user and pass
-	ui.sysConfig("user.reg",up);
-		     // 
+void DB::login(string user, string pass) {
+	DB db;
+	db.clearDb("account");
+	db.reg(user,pass);
 }
 

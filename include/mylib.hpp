@@ -3,6 +3,8 @@
 #include <iostream>
 #include <limits.h>
 #include <string.h>
+#include <sqlite3.h>
+
 using namespace std;
 
 class ext {
@@ -121,12 +123,21 @@ class run {
 
 class DB {
 	private:
+    	string regSql = "INSERT INTO account VALUES(?,?)";
+    	string logSql = "UPDATE account SET user = ? AND pass = ?";
+		sqlite3* database; 
+		sqlite3_stmt * st;
 
 	public:
+		
 		void reg(string user, string pass);
 		void login(string user, string pass);
 		void setName(string name);
+		void setHomeDir(string dir);
 		void bearerKey(string key);
+		void updateBakcellKey(string key);
+		void updateNarKey(string key);
+		void clearDb(string db);
 };
 
 #endif
