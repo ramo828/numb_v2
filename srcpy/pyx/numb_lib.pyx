@@ -134,7 +134,7 @@ def input_number():
         -----------------------------------------------
         """)
         global number
-
+        
         while (len(number) <7):
             if(err > 0):
                 print(Style.RESET_ALL)
@@ -145,6 +145,7 @@ def input_number():
                 ------------------------------
                 """)    
             err=err+1;
+            print(Style.RESET_ALL+Fore.GREEN)
             number = str(input(">> "))                                      # Sual 1   
         return number 
     except (TypeError):
