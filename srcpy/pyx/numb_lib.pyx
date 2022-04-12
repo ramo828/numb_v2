@@ -180,33 +180,23 @@ def getFileOrPath(index):
         return "Error"
 
 def bannerBegin():
-    print(Style.RESET_ALL)
-    print(Fore.GREEN)
-    tm.sleep(1)
-    print("\n\tMəlumatlar serverdən alınır")
-    tm.sleep(1)
+    print(Style.RESET_ALL+Fore.GREEN+"\n\tMəlumatlar serverdən alınır")
+    tm.sleep(1/1.5)
     print("\n\tMəlumatlar işlənir")
-    tm.sleep(1)
-
+    tm.sleep(1/1.5)
 def bannerEnd(count,end):
     print("\n\tKontakt Hazırlanır")
-    tm.sleep(1)
+    tm.sleep(1/1.5)
     print("\n\tKontaktlar Hazırdır")
     print("""
     ------------------------------------------
     Kontaktların sayı: \033[1;32;40m"""+ str(count)+"""\033[0m""")
-    print(Style.RESET_ALL)
-    print(Fore.GREEN)
-    print("""
-    ------------------------------------------
-    """)
+    print(Style.RESET_ALL+Fore.GREEN+"""
+    ------------------------------------------""")
     try:
         print("""
-    ------------------------------------------
-        Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
-        print(Style.RESET_ALL)
-        print(Fore.GREEN)
-        print("""
+    Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
+        print(Style.RESET_ALL+Fore.GREEN+"""
     ------------------------------------------
         """)
     except ZeroDivisionError:
@@ -240,7 +230,7 @@ def number_range():
         reverseValue = 0 
     
     intervalMsg = """
-    -------------------------------------\n
+        -------------------------------------\n
     \t 1) Azərcell  (050)
     \t 2) Azərcell  (051)
     \t 3) Azərcell  (010)
@@ -250,7 +240,7 @@ def number_range():
     \t 7) Naxtel    (060)
     \t 0) Hamısı
     \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
-    -------------------------------------\n
+        -------------------------------------\n
     """.format(prefixSel[reverseValue])
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)
