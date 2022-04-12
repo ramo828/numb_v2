@@ -237,7 +237,7 @@ def number_range():
         reverseValue = 0 
     
     intervalMsg = """
-    -------------------------------------\n
+    \t-------------------------------------\n
     \t 1) Azərcell  (050)
     \t 2) Azərcell  (051)
     \t 3) Azərcell  (010)
@@ -247,7 +247,7 @@ def number_range():
     \t 7) Naxtel    (060)
     \t 0) Hamısı
     \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
-    -------------------------------------\n
+    \t-------------------------------------\n
     """.format(prefixSel[reverseValue])
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)
@@ -294,17 +294,17 @@ def setCategory():
     print(Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX)
     print("""
-    -------------------------------------\n
+        -------------------------------------\n
     """)
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)
-    print("\tPrefix: ")
+    print("\t\tPrefix: ")
     print(Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX)
     print("""
-    \t0 - 55\n
-    \t1 - 99\n
-    -------------------------------------\n
+    \t\t0 - 55\n
+    \t\t1 - 99\n
+        -------------------------------------\n
     """)
     prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
     if(prefixSel[prefixValue] == "55"):
@@ -523,6 +523,7 @@ def setPrefix():
     \tPrefix seç: \n
     \t070 - 0\n
     \t077 - 1\n
+    --------------------------------------
     """)
     narPref = int(input(">> "))
     if(narPref == 0):
