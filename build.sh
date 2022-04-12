@@ -216,6 +216,5 @@ else {
 fi
 
 	clear
-numb --contactName Metros
 echo "Yüklənmə tamamlandı"
 

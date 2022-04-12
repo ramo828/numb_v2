@@ -6,6 +6,8 @@ import time as t
 import pyperclip as pc
 import subprocess
 import sys
+import colorama
+from colorama import Fore, Back, Style
 
 contactName = "Metros"
 status = 0
@@ -28,11 +30,15 @@ try:
         status = 1
     elif(sys.argv[1] == "msg"):
         msgIndex = int(sys.argv[2])
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
         print("Mesaj {countMsg}".format(countMsg = msgIndex));
 except IndexError:
     status = 0
 
 if(status == 0):
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
     contactName = str(input("Kontakt adı: "))
     startTime = int(input("Başlama vaxtı (san): "))
     begin = int(input("Başlanğıc addım: "))
@@ -44,6 +50,8 @@ if(status == 0):
         try:
             msg = open(msgName,'r')
         except FileNotFoundError:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("\n Mesaj fayli tapilmadi")
     elif(cust == 'y' or cust == "no"):
         t.sleep(startTime)                            # Start 10 san
@@ -52,6 +60,8 @@ if(status == 0):
         except FileNotFoundError:
             print("\n Mesaj fayli tapilmadi")
     else:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Xetalı emr!")
 
 data = msg.read()
@@ -59,7 +69,7 @@ pc.copy(data)
 count=count+begin                             # Saygaca baslangic deyeri elave et
 while flag:
     pg.hotkey('ctrl','alt','n')               # Search contacts
-    pg.write(" "+contactName, interval=0.50)      # Contact name
+    pg.write(" "+contactName, interval=0.50)  # Contact name
     print(count)                              # saygaci goster 
     if(count < 10):
         msgSpeed = 1.0

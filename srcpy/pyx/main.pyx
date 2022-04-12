@@ -5,6 +5,9 @@ import hashlib
 import time as tm
 import db as t1
 import numb_lib as lib
+import colorama
+from colorama import Fore, Back, Style
+
 #----------------------------------------------------------
 bearerKey = dict()                                         # Key Lugeti
 bearerKey["Bakcell"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
@@ -12,6 +15,8 @@ bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRo
 #----------------------------------------------------------
 defaultName = "Metros"
 homeDir = "/home/ramo828/"
+
+colorama.init()
 
 if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
     binPath = "/data/data/com.termux/files/usr/bin/"
@@ -47,11 +52,13 @@ if(t1.autoKey()):
         new_sha_nar = hashlib.sha256(bytes(narKey,'utf-8')).hexdigest()
 
         if(not (old_sha == new_sha)):
+            print(Fore.RED)
             print("\t\t-------Ferqli kod Bakcell-------")
             t1.updateKeyLocal(key,0)
             tm.sleep(1/2)
             os.system("clear")
         elif(not (old_sha_nar == new_sha_nar)):
+            print(Fore.RED)
             print("\t\t-------Ferqli kod Nar-------")
             t1.updateKeyLocal(narKey,1)
             tm.sleep(1/2)
@@ -66,6 +73,8 @@ if(t1.autoKey()):
 
 def regMetod(uuser,ppass):
     if(not t1.alreadyUser(uuser)):
+        print(Style.RESET_ALL)
+        print(Fore.BLUE)
         print("""
     \n\t##########################    
     \tQeydiyyat uğurla başa çatdı\n
@@ -73,6 +82,8 @@ def regMetod(uuser,ppass):
                 """)
         t1.reg(uuser,ppass)
     else:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Bu login artıq istifadə olunur!\n")
 
 
@@ -91,8 +102,12 @@ try:
         if(not regStatus):
             regMetod(sys.argv[2],sys.argv[3])
         else:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("Siz artıq qeydiyyatdan keçmisiniz!\n")
 except IndexError:
+    print(Style.RESET_ALL)
+    print(Fore.RED)
     print("Bos argument")
     runChoise = 0
 
@@ -106,15 +121,23 @@ if(status):
     try:
         exec(open(run[runChoise]).read())
     except FileNotFoundError:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Çalışdırılacaq fayl yoxdur!")
         print(os.getcwd())
   else:
+    print(Style.RESET_ALL)
+    print(Fore.MAGENTA)
     print("Login və Parol doğrudur ancaq status aktiv deyil!")
 elif(login is None and pswd is None):
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("""\n
             Siz qeydiiyatdan keçməmisiniz! 
             Zəhmət olmasa qeydiyyatdan keçin.""")
 else:
+    print(Style.RESET_ALL)
+    print(Fore.RED)
     print("Login və ya parol yanlısdır!")
 
 

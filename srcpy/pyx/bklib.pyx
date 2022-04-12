@@ -14,6 +14,9 @@ import warnings
 from tqdm import tqdm
 import math
 import db
+import colorama
+from colorama import Fore, Back, Style
+
 ############################################################################
 contactName = db.getName()
 
@@ -73,6 +76,8 @@ def bRun():
         print("t"+str(totalElements))
         for allNumber in range(totalElements):
             os.system("clear")
+            print(Style.RESET_ALL)
+            print(Fore.LIGHTBLUE_EX)
             print("Biraz gozleyin...\n")
             print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
             dataTwo +=nl.loadData(allNumber)
@@ -110,6 +115,8 @@ def nRun(number):
         nl.bannerEnd(count,end)
 
     except TypeError:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("\n\t[---Key Xətası---]")
 
 
@@ -117,6 +124,8 @@ def nRun(number):
 ##############################APP_RUN#########################################
 author_logo = nl.logo()                                 # Muellif logosu
 w = nl.fileControl()                                    # config file control
+print(Style.RESET_ALL)
+print(Fore.MAGENTA)
 print("""
     ##################################################
     --------------------------------------------------
@@ -127,8 +136,12 @@ print("""
 ###################################################################
 
 if(status != 0):
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTBLACK_EX)
     print("\t-------ProMode-------\n")
     if(status == 1):
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
         print("""
         \t 1 - Bakcell
         \t 2 - Nar
@@ -137,12 +150,16 @@ if(status != 0):
         if(operator == 2):
             operator =3
     elif(status == 2):
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
         print("""
         \t 1 - Bakcell
         \t 2 - Azercell
         """)
         operator = int(input(">> "))
     elif(status == 3):
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
         print("""
         \t 1 - Bakcell
         \t 2 - Azercell
@@ -157,19 +174,27 @@ else:
 
 if(operator == 1 and status >= 0):
     nl.setOperatorKey(0)
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX)
     print("\n\tBAKCELL\n")
     try:
         db.addSeries(number)
         try:
             bRun()
         except TypeError:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("Key xətası")
 
     except (EOFError, KeyboardInterrupt):
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Program dəyandırıldı")
 
 elif(operator == 2 and status >= 2):
    azEnd = nl.getAzEnd()
+   print(Style.RESET_ALL)
+   print(Fore.LIGHTMAGENTA_EX)
    print(azEnd)
    print("\n\tAZƏRCELL\n")
    number = nl.input_number()                                    # Nomreni daxil edin
@@ -177,20 +202,28 @@ elif(operator == 2 and status >= 2):
    aRun()
 
 elif(operator == 3 and status > 0):
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX)
     print("\n\tNar\n")
     number = nl.input_number()                                   # Nomreni daxil edin
     db.addSeries(number)
     try:
         nRun(number)
     except TypeError:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Key xətası")
 
 elif(operator == 0):
     pass
 else:
-   print("Bilinməyən əmr!")
+    print(Style.RESET_ALL)
+    print(Fore.RED)
+    print("Bilinməyən əmr!")
 
 
 ##############################################################################
+print(Style.RESET_ALL)
+print(Fore.LIGHTBLACK_EX)
 print(db.getHomeDir()+nl.getFileOrPath(1))
 ##############################################################################

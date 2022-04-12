@@ -1,3 +1,4 @@
+from code import interact
 import os.path                                             # Lib
 import os
 import time as tm
@@ -7,6 +8,8 @@ import subprocess
 import json
 import random
 import db
+import colorama
+from colorama import Fore, Back, Style
 
 #----------------------------------------------------------
 url = dict()                                               # URL lugeti
@@ -121,6 +124,8 @@ def conv_numeric(counter):                                 # kontakt adlarinin s
 def input_number():
     err = 0;                                                   # Xeta
     try:
+        print(Style.RESET_ALL)
+        print(Fore.MAGENTA)
         print(""""
         -----------------------------------------------
         Nömrə kombinasiyasını daxil edin və boş xanalari
@@ -132,6 +137,8 @@ def input_number():
 
         while (len(number) <7):
             if(err > 0):
+                print(Style.RESET_ALL)
+                print(Fore.RED)
                 print("""
                 ------------------------------
                 Nömrə düzgün qeyd edilməyib
@@ -150,12 +157,16 @@ def fileControl():
             w = open(db.getHomeDir()+fileName,"w")
         except FileNotFoundError:
             os.system("clear")
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("Göstərilən adres mövcud deyil\n"+db.getHomeDir()+"\n")
             exit(1)
         finally:
             print(author_logo)
         return w
     else:
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTRED_EX)
         print("Ayarlar mövcud deyildi ancaq yeniden yaradılacaq\n Təkrar programa daxil olun!")
         try:
             os.mkdir(".config")
@@ -169,6 +180,8 @@ def getFileOrPath(index):
         return "Error"
 
 def bannerBegin():
+    print(Style.RESET_ALL)
+    print(Fore.GREEN)
     tm.sleep(1)
     print("\n\tMəlumatlar serverdən alınır")
     tm.sleep(1)
@@ -180,14 +193,20 @@ def bannerEnd(count,end):
     tm.sleep(1)
     print("\n\tKontaktlar Hazırdır")
     print("""
-    \n
     ------------------------------------------
-    Kontaktların sayı: """+ str(count)+"""
+    Kontaktların sayı: \033[1;32;40m"""+ str(count)+"""\033[0m""")
+    print(Style.RESET_ALL)
+    print(Fore.GREEN)
+    print("""
     ------------------------------------------
     """)
     print("""
-    Tapılan nomrə sayı: """+ str(count/end)+"""
-    -----------------------------------------
+    ------------------------------------------
+    Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
+    print(Style.RESET_ALL)
+    print(Fore.GREEN)
+    print("""
+    ------------------------------------------
     """)
 
 def vcardWrite(w,contactName,prefix,prefixAraligi,nomreler,count1):
@@ -216,8 +235,8 @@ def number_range():
         reverseValue = 1                                                              #
     else:                                                                             #
         reverseValue = 0 
-    intervalMsg = """\n
-    \t ----Operator aralığını daxil edin----
+    
+    intervalMsg = """
     \t 1) Azərcell  (050)
     \t 2) Azərcell  (051)
     \t 3) Azərcell  (010)
@@ -228,6 +247,13 @@ def number_range():
     \t 0) Hamısı
     \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
     """.format(prefixSel[reverseValue])
+    print(Style.RESET_ALL)
+    print(Fore.MAGENTA)
+    print("""\n
+    \t ----Operator aralığını daxil edin----
+    """)
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
     print(intervalMsg);
     rawData = str(input(">> "))
     noRawData = ""
@@ -239,6 +265,8 @@ def number_range():
         begin = 0
         end = 7
     else:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Xəta baş verdi")
 
 
@@ -261,18 +289,31 @@ def prefixDefinition():
 def setCategory():
     global categoryKey
     global prefixValue
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
+    print("-------------------------------------\n")
+    print(Style.RESET_ALL)
+    print(Fore.MAGENTA)
+    print("\tPrefix: ")
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
     print("""
-    -------------------------------------\n
-    \tPrefix: \n
     0 - 55\n
     1 - 99\n
     -------------------------------------\n
     """)
     prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
     if(prefixSel[prefixValue] == "55"):
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
+        print("-------------------------------------\n")
+        print(Style.RESET_ALL)
+        print(Fore.MAGENTA)
         print("""
-        -------------------------------------\n
-        \tKategoriya seç: \n
+        \tKategoriya seç: \n""")
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
+        print("""
         0 - Sadə\n
         1 - Xüsusi1\n
         2 - Xüsusi2\n
@@ -285,15 +326,22 @@ def setCategory():
         elif(cat == 2):
             categoryKey = "xüsusi2"
         else:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("""
             ----------------
             Xətalı seçim
             ----------------
             """)
     elif(prefixSel[prefixValue] == "99"):
+        print(Style.RESET_ALL)
+        print(Fore.MAGENTA)
         print("""
         -------------------------------------\n
-        \tKategoriya seç\n
+        \tKategoriya seç\n""")
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX)
+        print("""
         0 - Sadə\n
         1 - Bürünc\n
         2 - Gümüş\n
@@ -312,12 +360,16 @@ def setCategory():
         elif(cat == 4):
             categoryKey = "platin"
         else:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("""
             ------------------
             Xətalı seçim
             -------------------
             """)
     else:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("""
             -------------------
             Xətalı seçim
@@ -355,6 +407,8 @@ def loadTotal(categoryKeyLocal):
             totalNumb = int((tData["totalElements"]))
         return totalNumb
     except TypeError:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Key xətalıdır!")
 
 
@@ -415,8 +469,11 @@ def numb_run(number):
       sp = soupData(find)
       if(len(sp) == 0):
          if(count_num == 1 and len(sp) == 0):
+            print(Style.RESET_ALL)
+            print(Fore.LIGHTRED_EX)
             print("Melumat yoxdur")
-            exit(1) # deyisdim
+         print(Style.RESET_ALL)
+         print(Fore.LIGHTGREEN_EX)
          print("Səhifə sayı: "+str(count_num-1))
          stopFlag = False
       else:
@@ -429,6 +486,8 @@ def numb_run(number):
          if(count_num%25 == 0):
             loading_bar=loading_bar+"\n"
          os.system("clear")
+         print(Style.RESET_ALL)
+         print(Fore.LIGHTGREEN_EX)
          print("Biraz gözləyin"+dot)
          print(loading_bar)
          sum_d=sum_d+str(sp)
@@ -450,6 +509,8 @@ def getAzPrefix():
 #####################NAR##########################
 def setPrefix():
     global prefixNar
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
     print("""
     -------------------------------------\n
     \tPrefix seç: \n
@@ -464,6 +525,8 @@ def setPrefix():
 
 def setPrestige():
     global prestige
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
     print("""
     -------------------------------------\n
     \tKategoriya seç: \n
@@ -497,6 +560,8 @@ def setPrestige():
     elif(catNar == 8):
         prestige = "PRESTIGE7"
     else:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Xətalı əmr!") 
 
 
@@ -522,9 +587,13 @@ def conNar(narSeries):
     if(len(r.text) > 7):
         narData = json.loads(r.text)
     elif(r.status_code != 200):
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print("Key xətalıdır")
         exit(1)
     else:
+        print(Style.RESET_ALL)
+        print(Fore.LIGHTRED_EX)
         print("Nömrə tapılmadı!")
         exit(1)
     
@@ -539,6 +608,8 @@ def getNarCointer():
 
 
 def logo():
+    print(Style.RESET_ALL)
+    print(Fore.YELLOW)
     logo_index = random.randint(0, 12)
     logo = list()
     logo = [

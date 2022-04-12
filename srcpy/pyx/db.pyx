@@ -3,6 +3,8 @@ from mysql.connector import errorcode
 import os
 import sqlite3
 import datetime
+import colorama
+from colorama import Fore, Back, Style
 
 ################################SQLLite####################################
 account = "CREATE TABLE if NOT EXISTS account (user TEXT, pass TEXT)"
@@ -156,6 +158,8 @@ def addSeries(series):
         connection.commit()
         cursor.close()
     else:
+            print(Style.RESET_ALL)
+            print(Fore.RED)
             print("Xəta baş verdi. [addSeries function]")
     #except (TypeError, KeyboardInterrupt):
     #    pass
@@ -170,6 +174,8 @@ def reg(user, password):
     connection.commit()
     cursor.close()
   else:
+    print(Style.RESET_ALL)
+    print(Fore.RED)
     print("Xəta baş verdi. Login minimum [5] və parol minimum [8] simvoldan ibarət olmalıdır!")
 
 def checkUserAndPassword(login, password):
@@ -222,6 +228,8 @@ def updateKey(op):
     elif(op == 1):
         sql = "SELECT keyNar FROM `system`"
     else:
+        print(Style.RESET_ALL)
+        print(Fore.RED)
         print('Xətalı operator')
     connection = conn()
     cursor = connection.cursor()
