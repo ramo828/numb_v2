@@ -240,7 +240,7 @@ def number_range():
         reverseValue = 0 
     
     intervalMsg = """
-        -------------------------------------\n
+    -------------------------------------\n
     \t 1) Azərcell  (050)
     \t 2) Azərcell  (051)
     \t 3) Azərcell  (010)
@@ -250,7 +250,7 @@ def number_range():
     \t 7) Naxtel    (060)
     \t 0) Hamısı
     \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
-        -------------------------------------\n
+    -------------------------------------\n
     """.format(prefixSel[reverseValue])
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)

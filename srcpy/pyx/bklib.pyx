@@ -138,13 +138,16 @@ print("""
 if(status != 0):
     print(Style.RESET_ALL)
     print(Fore.LIGHTBLACK_EX)
-    print("\t-------ProMode-------\n")
+    print("\t\t-------ProMode-------\n")
     if(status == 1):
         print(Style.RESET_ALL)
         print(Fore.LIGHTGREEN_EX)
         print("""
+        -------------------------------------\n
         \t 1 - Bakcell
+        -------------------------------------\n
         \t 2 - Nar
+        -------------------------------------\n
         """)
         operator = int(input(">> "))
         if(operator == 2):
@@ -153,17 +156,24 @@ if(status != 0):
         print(Style.RESET_ALL)
         print(Fore.LIGHTGREEN_EX)
         print("""
+        -------------------------------------\n
         \t 1 - Bakcell
+        -------------------------------------\n
         \t 2 - Azercell
+        -------------------------------------\n
         """)
         operator = int(input(">> "))
     elif(status == 3):
         print(Style.RESET_ALL)
         print(Fore.LIGHTGREEN_EX)
         print("""
+        -------------------------------------\n
         \t 1 - Bakcell
+        -------------------------------------\n
         \t 2 - Azercell
+        -------------------------------------\n
         \t 3 - Nar
+        -------------------------------------\n
         """)
         operator = int(input(">> "))
 else:
