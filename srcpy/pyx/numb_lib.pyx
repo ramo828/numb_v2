@@ -237,6 +237,7 @@ def number_range():
         reverseValue = 0 
     
     intervalMsg = """
+    -------------------------------------\n
     \t 1) Azərcell  (050)
     \t 2) Azərcell  (051)
     \t 3) Azərcell  (010)
@@ -246,6 +247,7 @@ def number_range():
     \t 7) Naxtel    (060)
     \t 0) Hamısı
     \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
+    -------------------------------------\n
     """.format(prefixSel[reverseValue])
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)
@@ -291,22 +293,26 @@ def setCategory():
     global prefixValue
     print(Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX)
-    print("-------------------------------------\n")
+    print("""
+    -------------------------------------\n
+    """)
     print(Style.RESET_ALL)
     print(Fore.MAGENTA)
     print("\tPrefix: ")
     print(Style.RESET_ALL)
     print(Fore.LIGHTGREEN_EX)
     print("""
-    0 - 55\n
-    1 - 99\n
+    \t0 - 55\n
+    \t1 - 99\n
     -------------------------------------\n
     """)
     prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
     if(prefixSel[prefixValue] == "55"):
         print(Style.RESET_ALL)
         print(Fore.LIGHTGREEN_EX)
-        print("-------------------------------------\n")
+        print("""
+        -------------------------------------\n
+        """)
         print(Style.RESET_ALL)
         print(Fore.MAGENTA)
         print("""
@@ -347,6 +353,7 @@ def setCategory():
         2 - Gümüş\n
         3 - Qızıl\n
         4 - Platin
+        -------------------------------------
         """)
         cat = int(input(">> "))     
         if(cat == 0):
@@ -539,6 +546,7 @@ def setPrestige():
     \t7 - Prestige6\n
     \t8 - Prestige7\n
     \t0 - Hamısı\n
+    -------------------------------------
     """)
     catNar = int(input(">> "))
     if(catNar == 0):
