@@ -540,6 +540,7 @@ def setPrestige():
     \t6 - Prestige5\n
     \t7 - Prestige6\n
     \t8 - Prestige7\n
+    \t9 - General \n
     \t0 - Hamısı\n
     -------------------------------------
     """)
@@ -562,6 +563,8 @@ def setPrestige():
         prestige = "PRESTIGE6" 
     elif(catNar == 8):
         prestige = "PRESTIGE7"
+    elif(catNar == 9):
+        prestige = "GENERAL"
     else:
         print(Style.RESET_ALL)
         print(Fore.RED)
