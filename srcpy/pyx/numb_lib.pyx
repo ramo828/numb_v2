@@ -200,14 +200,17 @@ def bannerEnd(count,end):
     print("""
     ------------------------------------------
     """)
-    print("""
+    try:
+        print("""
     ------------------------------------------
-    Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
-    print(Style.RESET_ALL)
-    print(Fore.GREEN)
-    print("""
+        Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
+        print(Style.RESET_ALL)
+        print(Fore.GREEN)
+        print("""
     ------------------------------------------
-    """)
+        """)
+    except ZeroDivisionError:
+        pass
 
 def vcardWrite(w,contactName,prefix,prefixAraligi,nomreler,count1):
     w.write(
