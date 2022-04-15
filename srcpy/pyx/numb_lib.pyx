@@ -261,7 +261,7 @@ def opName():
     opr.append("\t 8) Naxtell   (066)")
     opr.append("\t 0) Hamısı         ")
     opr.append("\t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)")
-    opr.append("\t (Nümunə: 1;3;6) (Azərcell, Bakcell və Nar)")
+    opr.append("\t (Nümunə: 1;4;6) (Azərcell(050), Bakcell(055) və Nar(077))")
     opr.append("\t-------------------------------------\n")
 
     for i in range(len(opr)):
