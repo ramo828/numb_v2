@@ -1,14 +1,11 @@
-from code import interact
 import os.path                                             # Lib
 import os
 import time as tm
 import requests
 from bs4 import BeautifulSoup as soup
-import subprocess
 import json
 import random
 import db
-import colorama
 from colorama import Fore, Back, Style
 
 #----------------------------------------------------------
@@ -19,12 +16,10 @@ url["Nar"] = "https://public-api.azerconnect.az/msazfposapptrans/api/msisdn-sear
 
 dirs = os.getcwd()+"/.config/"                             # Oldugun qovluq
 fileName = "/Ramo_SOFT_all_Contacts.vcf"                   # Export edilecek kintakt fayli
-prefixSel = ["55","99"];                                   # Prefix secimi
 prefixValue = 0
 categoryKey = "sadə"
 begin = 0                                                  # Baslangic 
 end = 0                                                    # Son
-reverseValue = 0
 dataVcard = [
  "BEGIN:VCARD\n"
 ,"N:","FN:"
@@ -44,15 +39,7 @@ category["gümüş"] = "1582551485948558941";                 # Gumus key
 category["qızıl"] = "1582551461421619154";                 # Qizil key
 category["platin"] = "1582551437850968791";                # Platin key
 categoryKey099 = "bürünc"                                  # Buruc nomreler
-prefixGlobal = [
-"+99450",
-"+99451",
-"+99410",
-"+99455",
-"+99499",
-"+99470",
-"+99477",
-"+99460"]
+prefixSel = ["55","99"]
 number = "xxxxx"
 azercellIndex = 3                                          # 010 nomre
 azercellPrefix = ["90","50","51","10"]                     # Prefix var
@@ -60,6 +47,8 @@ prefixNar = "70"
 sizeNar = 10000
 prestige = "PRESTIGE"
 bKeyDefault = ""
+prefix = []
+
 ssl = False
 h = {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
      "accept-encoding":"gzip, deflate, br",
@@ -71,8 +60,7 @@ h = {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,
      "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"
            }
 
-azercellBegin = 0
-azercellEnd = 0
+
 narCounter = 0
 narNumber = ""
 key = ""
@@ -80,6 +68,49 @@ key = ""
 
 ##################################GLOBAL_DATA############################################################
 
+def magenta():
+    print(Style.RESET_ALL)
+    print(Fore.MAGENTA)
+
+def light_magenta():
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX)
+
+def lightGreen():
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTGREEN_EX)
+
+def red():
+    print(Style.RESET_ALL)
+    print(Fore.RED) 
+
+def light_red():
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTRED_EX)
+
+def yellow():
+    print(Style.RESET_ALL)
+    print(Fore.YELLOW)
+
+def light_blue():
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTBLUE_EX)
+
+def light_black():
+    print(Style.RESET_ALL)
+    print(Fore.LIGHTBLACK_EX)
+
+def getPrefix():
+    prefix.append("+99450")
+    prefix.append("+99451")
+    prefix.append("+99410")
+    prefix.append("+99455")
+    prefix.append("+99499")
+    prefix.append("+99470")
+    prefix.append("+99477")
+    prefix.append("+99460")
+    return prefix
+    
 
 
 def setOperatorKey(operator):
@@ -124,8 +155,7 @@ def conv_numeric(counter):                                 # kontakt adlarinin s
 def input_number():
     err = 0;                                                   # Xeta
     try:
-        print(Style.RESET_ALL)
-        print(Fore.MAGENTA)
+        magenta()
         print(""""
         -----------------------------------------------
         Nömrə kombinasiyasını daxil edin və boş xanalari
@@ -137,8 +167,7 @@ def input_number():
         
         while (len(number) <7):
             if(err > 0):
-                print(Style.RESET_ALL)
-                print(Fore.RED)
+                red()
                 print("""
                 ------------------------------
                 Nömrə düzgün qeyd edilməyib
@@ -158,16 +187,14 @@ def fileControl():
             w = open(db.getHomeDir()+fileName,"w")
         except FileNotFoundError:
             os.system("clear")
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            red()
             print("Göstərilən adres mövcud deyil\n"+db.getHomeDir()+"\n")
             exit(1)
         finally:
             print(author_logo)
         return w
     else:
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTRED_EX)
+        light_red()
         print("Ayarlar mövcud deyildi ancaq yeniden yaradılacaq\n Təkrar programa daxil olun!")
         try:
             os.mkdir(".config")
@@ -220,49 +247,81 @@ def getPrefixOrCategory(index):
         return categoryKey
 
 
+def opName():
+
+    opr = []
+    opr.append("\t-------------------------------------\n")
+    opr.append("\t 1) Azərcell  (050)")
+    opr.append("\t 2) Azərcell  (051)")
+    opr.append("\t 3) Azərcell  (010)")
+    opr.append("\t 4) Bakcell   (055)")
+    opr.append("\t 5) Bakcell   (099)")
+    opr.append("\t 6) Nar       (070)")
+    opr.append("\t 7) Nar       (077)")
+    opr.append("\t 8) Naxtell   (066)")
+    opr.append("\t 0) Hamısı         ")
+    opr.append("\t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)")
+    opr.append("\t (Nümunə: 1;3;6) (Azərcell, Bakcell və Nar)")
+    opr.append("\t-------------------------------------\n")
+
+    for i in range(len(opr)):
+        print(opr[i]+"")
+
+def countChar(chara):
+    count1 = 0;
+    for i in chara.split(';'):
+        count1 +=1
+    return count1
+
+def select_prefix(msg):
+    count2 = 0
+    test = getPrefix()
+    tip1 = []
+    tip = 0
+    chc = countChar(msg)
+    try:
+        for i in range(chc):
+            tip1.append(test[int(msg[tip])-1])
+            count2 +=1
+            tip+=2
+        return tip1
+    except IndexError:
+        print("Xətalı daxiletmə!")
+
 def number_range():
-    global reverseValue
-    global end
+    global end                                            # end deyisenini global et
     global begin
-    reverseValue = 0;                                                                 # 055 nomrələr seçildikdə kontakta 099
-    if(prefixValue == 0):                                                             # nömrələri əlavə et
-        reverseValue = 1                                                              #
-    else:                                                                             #
-        reverseValue = 0 
-    
-    intervalMsg = """
-        -------------------------------------\n
-    \t 1) Azərcell  (050)
-    \t 2) Azərcell  (051)
-    \t 3) Azərcell  (010)
-    \t 4) Bakcell   (0{})
-    \t 5) NarMobile (070)
-    \t 6) NarMobile (077)
-    \t 7) Naxtel    (060)
-    \t 0) Hamısı
-    \t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)
-        -------------------------------------\n
-    """.format(prefixSel[reverseValue])
-    print(Style.RESET_ALL)
-    print(Fore.MAGENTA)
+    global prefix
+    temp_data = ""
+    magenta()                                             # Magenta reng
     print("""\n
     \t ----Operator aralığını daxil edin----
     """)
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
-    print(intervalMsg);
-    rawData = str(input(">> "))
+    lightGreen()
+    opName()
+    rawData = str(input(">> "))                           # Alinacaq deger
     noRawData = ""
-    if(not rawData.isdigit()):
-        noRawData = rawData.split(":")
-        begin = int(noRawData[0])-1
-        end = int(noRawData[1])
-    elif(int(rawData) == 0):
+
+    if(not rawData.isnumeric()):
+        if(not rawData.find(";") < 0):                    # ; simvolunu tap
+            temp_data = select_prefix(rawData)            # tamper data
+            end = len(temp_data)                          # uzunlugunu tap
+            prefix = temp_data                            # prefix deyisenine elave et
+
+    if(not rawData.isnumeric()):                          # Eger int degeri degilse
+        if(not rawData.find(":") < 0):                    # : simvolunu tap
+            noRawData = rawData.split(":")                # : simvolunu parcala
+            begin = int(noRawData[0])-1                   # : simvolundan bir simvol ireli get ve int'e cevir
+            end = int(noRawData[1])                       # : simvolundan bir addim ireli cek ve int'e cevir
+            if(begin > end):                              # begin end degerinden boyukdurse
+                raise TypeError("Birinci ədəd ikinci ədəddən böyük ola bilməz!")
+    
+  
+    elif(int(rawData) == 0):                          # Eger 0 secilibse butun prefixleri sec
         begin = 0
-        end = 7
+        end = 8
     else:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        red()
         print("Xəta baş verdi")
 
 
@@ -271,30 +330,22 @@ def getIndex(index):
         return begin
     elif(index == 1):
         return end
-    elif(index == 2):
-        return reverseValue
     else:
         return "ERROR"
 
-prefixVar = ["+99450","+99451","+99410","+994"+prefixSel[getIndex(2)],"+99470","+99477","+99460"]     # dogru
 
-def prefixDefinition():
-    return prefixVar
 
 #################################BAKCELL########################################
 def setCategory():
     global categoryKey
     global prefixValue
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
+    lightGreen()
     print("""
         -------------------------------------\n
     """)
-    print(Style.RESET_ALL)
-    print(Fore.MAGENTA)
+    magenta()
     print("\t\tPrefix: ")
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
+    lightGreen()
     print("""
     \t\t0 - 55\n
     \t\t1 - 99\n
@@ -302,17 +353,14 @@ def setCategory():
     """)
     prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
     if(prefixSel[prefixValue] == "55"):
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        lightGreen()
         print("""
         -------------------------------------\n
         """)
-        print(Style.RESET_ALL)
-        print(Fore.MAGENTA)
+        magenta()
         print("""
         \tKategoriya seç: \n""")
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        lightGreen()
         print("""
         0 - Sadə\n
         1 - Xüsusi1\n
@@ -326,21 +374,18 @@ def setCategory():
         elif(cat == 2):
             categoryKey = "xüsusi2"
         else:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            red()
             print("""
             ----------------
             Xətalı seçim
             ----------------
             """)
     elif(prefixSel[prefixValue] == "99"):
-        print(Style.RESET_ALL)
-        print(Fore.MAGENTA)
+        magenta()
         print("""
         -------------------------------------\n
         \tKategoriya seç\n""")
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        lightGreen()
         print("""
         0 - Sadə\n
         1 - Bürünc\n
@@ -361,16 +406,14 @@ def setCategory():
         elif(cat == 4):
             categoryKey = "platin"
         else:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            red()
             print("""
             ------------------
             Xətalı seçim
             -------------------
             """)
     else:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            red()
             print("""
             -------------------
             Xətalı seçim
@@ -408,8 +451,7 @@ def loadTotal(categoryKeyLocal):
             totalNumb = int((tData["totalElements"]))
         return totalNumb
     except TypeError:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        red()
         print("Key xətalıdır!")
 
 
@@ -470,11 +512,9 @@ def numb_run(number):
       sp = soupData(find)
       if(len(sp) == 0):
          if(count_num == 1 and len(sp) == 0):
-            print(Style.RESET_ALL)
-            print(Fore.LIGHTRED_EX)
+            light_red()
             print("Melumat yoxdur")
-         print(Style.RESET_ALL)
-         print(Fore.LIGHTGREEN_EX)
+         lightGreen()
          print("Səhifə sayı: "+str(count_num-1))
          stopFlag = False
       else:
@@ -487,8 +527,7 @@ def numb_run(number):
          if(count_num%25 == 0):
             loading_bar=loading_bar+"\n"
          os.system("clear")
-         print(Style.RESET_ALL)
-         print(Fore.LIGHTGREEN_EX)
+         lightGreen()
          print("Biraz gözləyin"+dot)
          print(loading_bar)
          sum_d=sum_d+str(sp)
@@ -496,22 +535,11 @@ def numb_run(number):
       count_num=count_num+1
     
 
-def getAzEnd():
-    return azercellEnd
-
-def getAzBegin():
-    return azercellBegin
-
-
-def getAzPrefix():
-    return prefixGlobal
-
 
 #####################NAR##########################
 def setPrefix():
     global prefixNar
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
+    lightGreen()
     print("""
     -------------------------------------\n
     \tPrefix seç: \n
@@ -527,8 +555,7 @@ def setPrefix():
 
 def setPrestige():
     global prestige
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
+    lightGreen()
     print("""
     -------------------------------------\n
     \tKategoriya seç: \n
@@ -566,8 +593,7 @@ def setPrestige():
     elif(catNar == 9):
         prestige = "GENERAL"
     else:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        red()
         print("Xətalı əmr!") 
 
 
@@ -593,13 +619,11 @@ def conNar(narSeries):
     if(len(r.text) > 7):
         narData = json.loads(r.text)
     elif(r.status_code != 200):
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        red()
         print("Key xətalıdır")
         exit(1)
     else:
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTRED_EX)
+        light_red()
         print("Nömrə tapılmadı!")
         exit(1)
     
@@ -614,8 +638,7 @@ def getNarCointer():
 
 
 def logo():
-    print(Style.RESET_ALL)
-    print(Fore.YELLOW)
+    yellow()
     logo_index = random.randint(0, 12)
     logo = list()
     logo = [

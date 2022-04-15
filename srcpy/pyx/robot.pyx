@@ -6,8 +6,7 @@ import time as t
 import pyperclip as pc
 import subprocess
 import sys
-import colorama
-from colorama import Fore, Back, Style
+import numb_lib as nl
 
 contactName = "Metros"
 status = 0
@@ -30,15 +29,13 @@ try:
         status = 1
     elif(sys.argv[1] == "msg"):
         msgIndex = int(sys.argv[2])
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        nl.lightGreen()
         print("Mesaj {countMsg}".format(countMsg = msgIndex));
 except IndexError:
     status = 0
 
 if(status == 0):
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTGREEN_EX)
+    nl.lightGreen()
     contactName = str(input("Kontakt adı: "))
     startTime = int(input("Başlama vaxtı (san): "))
     begin = int(input("Başlanğıc addım: "))
@@ -50,8 +47,7 @@ if(status == 0):
         try:
             msg = open(msgName,'r')
         except FileNotFoundError:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            nl.red()
             print("\n Mesaj fayli tapilmadi")
     elif(cust == 'y' or cust == "no"):
         t.sleep(startTime)                            # Start 10 san
@@ -60,8 +56,7 @@ if(status == 0):
         except FileNotFoundError:
             print("\n Mesaj fayli tapilmadi")
     else:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        nl.red()
         print("Xetalı emr!")
 
 data = msg.read()

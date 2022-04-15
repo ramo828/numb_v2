@@ -1,10 +1,9 @@
 import mysql.connector
 from mysql.connector import errorcode
-import os
 import sqlite3
 import datetime
-import colorama
-from colorama import Fore, Back, Style
+import numb_lib as nl
+
 
 ################################SQLLite####################################
 account = "CREATE TABLE if NOT EXISTS account (user TEXT, pass TEXT)"
@@ -141,9 +140,11 @@ def conn():
                                 
   except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-      print("İstifadəçi adında və ya şifrədə bir problem var")
+        nl.red()
+        print("İstifadəçi adında və ya şifrədə bir problem var")
     elif err.errno == errorcode.ER_BAD_DB_ERROR:
-      print("Verilənlər bazası yoxdur")
+        nl.red()
+        print("Verilənlər bazası yoxdur")
     else:
       print(err)
   else:
@@ -158,8 +159,7 @@ def addSeries(series):
         connection.commit()
         cursor.close()
     else:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            nl.red()
             print("Xəta baş verdi. [addSeries function]")
     #except (TypeError, KeyboardInterrupt):
     #    pass
@@ -174,8 +174,7 @@ def reg(user, password):
     connection.commit()
     cursor.close()
   else:
-    print(Style.RESET_ALL)
-    print(Fore.RED)
+    nl.red()
     print("Xəta baş verdi. Login minimum [5] və parol minimum [8] simvoldan ibarət olmalıdır!")
 
 def checkUserAndPassword(login, password):
@@ -228,8 +227,7 @@ def updateKey(op):
     elif(op == 1):
         sql = "SELECT keyNar FROM `system`"
     else:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        nl.red()
         print('Xətalı operator')
     connection = conn()
     cursor = connection.cursor()

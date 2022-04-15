@@ -5,17 +5,13 @@
 # |____|_  /(____  /__|_|  /\____/_______  /\_______  /\___  /     |____|   
 #        \/      \/      \/              \/         \/     \/             
 ############################################################################
-import requests                                              # Lib
-import json                                                  # Lib
-import time as tm                                            # Lib
 import numb_lib as nl
 import os
 import warnings
 from tqdm import tqdm
 import math
 import db
-import colorama
-from colorama import Fore, Back, Style
+
 
 ############################################################################
 contactName = db.getName()
@@ -35,15 +31,18 @@ operator = 0
 def aRun():
     global new_data
     global count
-    prefixAz = nl.getAzPrefix()
+    prefix = nl.getPrefix()                                 # Prefix deyiskeni
+    nl.number_range()                                       # Nomre alagini daxil et
+    begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
+    end = nl.getIndex(1)                                    # Nomre son (araliq)
     nl.numb_run(number)
     new_data = nl.sum_data()
-    for pre in range(nl.getAzBegin(),nl.getAzEnd()):
+    for pre in range(begin,end):
         for n in tqdm(new_data.split("\n")):
             dataFour = n
             nl.vcardWrite(w,                                # Vcard skelet
             contactName,                                    # Kontakt adi
-            prefixAz,                                       # Prefix
+            prefix,                                         # Prefix
             pre,                                            # Prefix Araligi
             dataFour,                                       # Yekun data
             count)                                          # Kontaktin ad ardicilligi
@@ -63,11 +62,11 @@ def bRun():
         nl.setOperatorKey(0)
         os.system("clear")
         nl.setCategory()                                        # Kategoriyalari daxil edin
-        number = nl.input_number()                              # Nomreni daxil edin
-        nl.number_range()                                       # Nomre alagini daxil et
+        nl.number_range()                                   
+            # Nomre alagini daxil et
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
-        prefix = nl.prefixDefinition()                          # Prefix deyiskeni
+        prefix = nl.getPrefix()                                 # Prefix deyiskeni
         categoryKey = nl.getPrefixOrCategory(1)                 # Kategoriya keyini al  
         lim = nl.loadTotal(categoryKey)/2000
         totalElements = math.ceil(lim)                          # Sehife sayi
@@ -76,8 +75,7 @@ def bRun():
         print("t"+str(totalElements))
         for allNumber in range(totalElements):
             os.system("clear")
-            print(Style.RESET_ALL)
-            print(Fore.LIGHTBLUE_EX)
+            nl.light_blue()
             print("Biraz gozleyin...\n")
             print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
             dataTwo +=nl.loadData(allNumber)
@@ -105,7 +103,7 @@ def nRun(number):
         nl.number_range()                                       # Nomre alagini daxil et
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
-        prefix = nl.prefixDefinition()
+        prefix = nl.getPrefix()
         dataTwo +=nl.conNar(number)
         for pre in tqdm(range(begin,end)):
             for dataTree in tqdm(dataTwo.split("\n")):
@@ -115,8 +113,7 @@ def nRun(number):
         nl.bannerEnd(count,end)
 
     except TypeError:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        nl.red()
         print("\n\t[---Key Xətası---]")
 
 
@@ -124,8 +121,7 @@ def nRun(number):
 ##############################APP_RUN#########################################
 author_logo = nl.logo()                                 # Muellif logosu
 w = nl.fileControl()                                    # config file control
-print(Style.RESET_ALL)
-print(Fore.MAGENTA)
+nl.magenta()
 print("""
     ##################################################
     --------------------------------------------------
@@ -136,12 +132,10 @@ print("""
 ###################################################################
 
 if(status != 0):
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTBLACK_EX)
+    nl.light_black()
     print("\t\t-------ProMode-------\n")
     if(status == 1):
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        nl.lightGreen()
         print("""
         -------------------------------------\n
         \t 1 - Bakcell
@@ -153,8 +147,7 @@ if(status != 0):
         if(operator == 2):
             operator =3
     elif(status == 2):
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        nl.lightGreen()
         print("""
         -------------------------------------\n
         \t 1 - Bakcell
@@ -164,8 +157,7 @@ if(status != 0):
         """)
         operator = int(input(">> "))
     elif(status == 3):
-        print(Style.RESET_ALL)
-        print(Fore.LIGHTGREEN_EX)
+        nl.lightGreen()
         print("""
         -------------------------------------\n
         \t 1 - Bakcell
@@ -184,56 +176,48 @@ else:
 
 if(operator == 1 and status >= 0):
     nl.setOperatorKey(0)
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTMAGENTA_EX)
+    nl.light_magenta()
     print("\n\tBAKCELL\n")
+    number = nl.input_number()                                   # Nomreni daxil edin
     try:
         db.addSeries(number)
         try:
             bRun()
         except TypeError:
-            print(Style.RESET_ALL)
-            print(Fore.RED)
+            nl.red()
             print("Key xətası")
 
     except (EOFError, KeyboardInterrupt):
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        nl.red()
         print("Program dəyandırıldı")
 
 elif(operator == 2 and status >= 2):
-   azEnd = nl.getAzEnd()
-   print(Style.RESET_ALL)
-   print(Fore.LIGHTMAGENTA_EX)
-   print(azEnd)
+   nl.light_magenta()
+   print(nl.getIndex(1))
    print("\n\tAZƏRCELL\n")
    number = nl.input_number()                                    # Nomreni daxil edin
    db.addSeries(number)
    aRun()
 
 elif(operator == 3 and status > 0):
-    print(Style.RESET_ALL)
-    print(Fore.LIGHTMAGENTA_EX)
+    nl.light_magenta()
     print("\n\tNar\n")
     number = nl.input_number()                                   # Nomreni daxil edin
     db.addSeries(number)
     try:
         nRun(number)
     except TypeError:
-        print(Style.RESET_ALL)
-        print(Fore.RED)
+        nl.red()
         print("Key xətası")
 
 elif(operator == 0):
     pass
 else:
-    print(Style.RESET_ALL)
-    print(Fore.RED)
+    nl.red()
     print("Bilinməyən əmr!")
 
 
 ##############################################################################
-print(Style.RESET_ALL)
-print(Fore.LIGHTBLACK_EX)
+nl.light_black()
 print(db.getHomeDir()+nl.getFileOrPath(1))
 ##############################################################################
