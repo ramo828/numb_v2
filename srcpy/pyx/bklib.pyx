@@ -31,6 +31,7 @@ operator = 0
 def aRun():
     global new_data
     global count
+    nl.setAzercellPrefix()
     prefix = nl.getPrefix()                                 # Prefix deyiskeni
     nl.number_range()                                       # Nomre alagini daxil et
     begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)

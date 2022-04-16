@@ -43,6 +43,7 @@ prefixSel = ["55","99"]
 number = "xxxxx"
 azercellIndex = 3                                          # 010 nomre
 azercellPrefix = ["90","50","51","10"]                     # Prefix var
+azercellPrefVar = ""
 prefixNar = "70"
 sizeNar = 10000
 prestige = "PRESTIGE"
@@ -99,6 +100,10 @@ def light_blue():
 def light_black():
     print(Style.RESET_ALL)
     print(Fore.LIGHTBLACK_EX)
+
+def green():
+    print(Style.RESET_ALL)
+    print(Fore.GREEN)
 
 def getPrefix():
     prefix.append("+99450")
@@ -261,7 +266,7 @@ def opName():
     opr.append("\t 8) Naxtell   (066)")
     opr.append("\t 0) Hamısı         ")
     opr.append("\t (Nümunə: 1:3) (Azərcell-dən Bakcell-ə qədər)")
-    opr.append("\t (Nümunə: 1;4;6) (Azərcell(050), Bakcell(055) və Nar(077))")
+    opr.append("\t (Nümunə: 1;3;6) (Azərcell, Bakcell və Nar)")
     opr.append("\t-------------------------------------\n")
 
     for i in range(len(opr)):
@@ -467,6 +472,33 @@ def loadData(page):
     return dataFour
 
 ###############################AZERCELL##################################################
+
+def setAzercellPrefix():
+    global azercellPrefVar
+
+    magenta()
+    msg = """
+    -------------------------------------
+            ---Prefix seç---
+        1 - 050
+        2 - 051
+        3 - 010
+        0 - Hamısı
+
+    -------------------------------------
+    """
+    print(msg)
+    lightGreen()
+    cp = int(input(">> "))
+    if(cp == 0):
+        azercellPrefVar = azercellPrefix[0]
+    if(cp == 1):
+        azercellPrefVar = azercellPrefix[1]
+    if(cp == 2):
+        azercellPrefVar = azercellPrefix[2]
+    if(cp == 3):
+        azercellPrefVar = azercellPrefix[3]
+
 gozleme = 1/50;                                        # Data alma zamani
 sum_d = ""
 
@@ -485,7 +517,7 @@ def extractData(number,page):
    "num5":num[4],                                        # Number Splitter 5
    "num6":num[5],                                        # Number Splitter 6
    "num7":num[6],                                        # Number Splitter 7
-   "prefix":azercellPrefix[azercellIndex],               # Prefix
+   "prefix":azercellPrefVar,                             # Prefix
    "send_search":"1"}                                    # Page
    
    r = requests.post(url["Azercell"]+str(page),data=p,verify=ssl,headers=h)    # Request Send
@@ -524,7 +556,7 @@ def numb_run(number):
             dot_count = 0
             dot = ""
          loading_bar=loading_bar+"#"
-         if(count_num%25 == 0):
+         if(count_num%75 == 0):
             loading_bar=loading_bar+"\n"
          os.system("clear")
          lightGreen()
