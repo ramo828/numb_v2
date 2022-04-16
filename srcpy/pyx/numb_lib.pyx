@@ -475,20 +475,26 @@ def loadData(page):
 
 def setAzercellPrefix():
     global azercellPrefVar
-
-    magenta()
-    msg = """
+    msg = ["""
     -------------------------------------
+    """,
+    """
             ---Prefix seç---
+    """,
+    """
         1 - 050
         2 - 051
         3 - 010
         0 - Hamısı
 
     -------------------------------------
-    """
-    print(msg)
+    """]
     lightGreen()
+    print(msg[0])
+    magenta()
+    print(msg[1])
+    lightGreen()
+    print(msg[2])
     cp = int(input(">> "))
     if(cp == 0):
         azercellPrefVar = azercellPrefix[0]
