@@ -180,7 +180,7 @@ def reg(user, password):
 def checkUserAndPassword(login, password):
     connection = conn()
     cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
     cursor.execute(sql_select_query)
     record = cursor.fetchone()
     if record is None:
@@ -191,7 +191,7 @@ def checkUserAndPassword(login, password):
 def alreadyUser(login):
     connection = conn()
     cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' """.format(login=login)
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' """.format(login=login)
     cursor.execute(sql_select_query)
     record = cursor.fetchone()
     if record is None:
@@ -202,7 +202,7 @@ def alreadyUser(login):
 def checkUserLevel(login, password):
     connection = conn()
     cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
     cursor.execute(sql_select_query)
     record = cursor.fetchone()
     if record is not None:
@@ -213,7 +213,7 @@ def checkUserLevel(login, password):
 def checkUserStatus(login, password):
     connection = conn()
     cursor = connection.cursor()
-    sql_select_query = """SELECT * FROM `accounts` WHERE `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
     cursor.execute(sql_select_query)
     record = cursor.fetchone()
     if record is not None:
