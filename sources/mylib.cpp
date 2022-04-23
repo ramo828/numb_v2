@@ -53,6 +53,17 @@ void userUI::runPY(string py) {
 }
 
 
+// Python kodlarini calisdirmaq
+void userUI::runPY(string py, string args1, string args2) {
+	string py1 = "python "+py+" "+args1+" "+args2;
+	system(py1.c_str());
+}
+
+void userUI::runPY(string py, string args1, string args2, string args3) {
+	string py1 = "python "+py+" "+args1+" "+args2 +" "+args3;
+	system(py1.c_str());
+}
+
 void userUI::sysConfig(string configFile,string configData){
 	fio cfol(folder);
 	fio cfil(".config/"+configFile);

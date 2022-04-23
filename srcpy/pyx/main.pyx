@@ -33,6 +33,7 @@ runChoise = 0
 raw = ""
 regStatus = False
 
+choise = 0
 
 if(t1.autoKey()):
     try:
@@ -99,6 +100,18 @@ try:
         else:
             lib.red()
             print("Siz artıq qeydiyyatdan keçmisiniz!\n")
+
+    elif(sys.argv[1] == "--updateGlobalKey"):
+        if(sys.argv[2].lower() == 'bakcell'):
+            choise = 0
+        elif(sys.argv[2].lower() == "nar"):
+            choise = 1
+        else:
+            choise = -1
+        t1.updateGlobalKey(choise,sys.argv[3])
+        tm.sleep(1)
+        exit(1)
+
 except IndexError:
     lib.red()
     print("Bos argument")

@@ -234,3 +234,19 @@ def updateKey(op):
     cursor.execute(sql)
     record = cursor.fetchone()
     return record[0]
+
+def updateGlobalKey(op, key):
+    if(op == 0):
+        sql = "UPDATE `system` SET `keyBakcell` = 'Bearer {0}' WHERE `system`.`id` = 1; ".format(key)
+    elif(op == 1):
+        sql = "UPDATE `system` SET `keyNar` = 'Bearer {0}' WHERE `system`.`id` = 1; ".format(key)
+    else:
+        nl.red()
+        print('Xətalı operator')
+    connection = conn()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+    cursor.close()
+
+

@@ -27,6 +27,9 @@ class ext {
 		"python "+bin+"srcpy/main.py --run numb",
 		"python "+bin+"srcpy/main.py --run statistic"
 		};
+		string getBin(){
+			return bin;
+		}
 };
 
 class fio {
@@ -46,6 +49,7 @@ class util {
 		int androidVar = 0;
 		int linuxVar = 1;
 	public:
+		
 		//Convert char to string
 		string str(char * data){
 			return string(data);
@@ -105,6 +109,8 @@ class userUI {
 		void sysConfig(string configFile, string configData);
 		void runPY(int choise);
 		void runPY(string py);
+		void runPY(string py, string args1, string args2);
+		void runPY(string py, string args1, string args2, string args3);
 		};
 
 class run {

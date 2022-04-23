@@ -7,6 +7,7 @@ using namespace std;
 void run::runner() {
 	util u;              // Aletler
 	userUI ui;           // Istifadeci interfeysi
+	ext e;
 	if(_gcount > 1) {
 		if(u.equals(_garr[1],"-stat","--statistic")){
 			ui.runPY(statistic);                                  // Analiz modu
@@ -14,6 +15,13 @@ void run::runner() {
 		}
 		else if(u.equals(_garr[1],"-bot","--robot")){
 			ui.runPY(robo);                                       // avto mesaj modu
+			exit(1);                                              // python calisdiqdan sonra cpp'den cix
+		}
+		else if(u.equals(_garr[1],"-global","--globalKey")){
+			ui.runPY(e.getBin()+"srcpy/main.py","--updateGlobalKey",u.str(_garr[2]),u.str(_garr[3]));
+			u.writeln("Operator: "+u.str(_garr[2]));              // daxil edilen keyi goster
+			u.writeln("Key: "+u.str(_garr[3]));                   // daxil edilen keyi goster
+
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
 		else if(u.equals(_garr[1],"-k","--key")){
