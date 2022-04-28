@@ -14,7 +14,7 @@ tip = 1
 sharp = ""
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
-prefix = nl.prefixDefinition()                                 # Prefix deyiskeni
+prefix = nl.getPrefix()                                 # Prefix deyiskeni
 nl.setOperatorKey(0)
 
 nl.lightGreen()
@@ -26,7 +26,7 @@ if(choise == 0):
     nl.setCategory()                                                    # Kategoriyalari daxil edin
     prefixValue = nl.getPrefixOrCategory(0)                             # Prefix melumatlarini al
     categoryKey = nl.getPrefixOrCategory(1)                             # Kategoriya keyini al  
-    prefix = nl.prefixDefinition()                                      # Prefix deyiskeni
+    prefix = nl.getPrefix()                                             # Prefix deyiskeni
 
 def File(file,appendMode):
     try:
