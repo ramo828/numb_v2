@@ -676,16 +676,20 @@ def loadNarData(page):
         narNumber = narNumber+narTwo[3:]+"\n"
         narCounter=narCounter+1
     return narNumber
-    
+ 
 
 def narPageCount():
-    stopFlag = True
     meData = ""
     page = 0
-    while(stopFlag):
+    while True:
+        os.system("clear")
+        yellow()
+        print("Böyük həcmli datalarda yüklənmə zaman ala bilər!\n")
+        lightGreen()
+        print("Səhifə: {0}\n".format(page))
         meData=loadNarData(page)
         if(not meData):
-            stopFlag = False
+            break
         else:
             page+=1
     return page

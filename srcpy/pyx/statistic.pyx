@@ -100,8 +100,8 @@ def dlData():
             sharp=sharp+"\n"
         os.system("clear")
         nl.lightGreen()
-        print("Biraz gozleyin...\n")
-        print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
+        print("Biraz gözləyin...\n")
+        print("Səhifə sayı: "+str(totalElements)+"\nNömrə sayı: "+str(rawTotalElement))
         print(sharp)
         if(operator == 0):
             new +=nl.loadData(cevir)                                   # Tapilan sehifedeki umumi nomreler
