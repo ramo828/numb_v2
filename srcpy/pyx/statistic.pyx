@@ -16,12 +16,8 @@ begin = nl.getIndex(0)                                  # Nomre baslangic (arali
 end = nl.getIndex(1)   
 prefix = nl.getPrefix()                                 # Prefix deyiskeni
 
-print("""
-    0 - Bakcell
-    1 - Nar
-""")
-operator = int(input(">> "))
-
+nl.lightGreen();
+operator = int(input("\n\t0 - Bakcell\n\t1 - Nar\n>> "))
 if(operator == 0):
     nl.setOperatorKey(0)
 elif(operator == 1):
