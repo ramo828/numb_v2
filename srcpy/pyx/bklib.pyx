@@ -39,7 +39,7 @@ def aRun():
     nl.numb_run(number)
     new_data = nl.sum_data()
     for pre in range(begin,end):
-        for n in tqdm(new_data.split("\n")):
+        for n in tqdm(new_data.splitlines()):
             dataFour = n
             nl.vcardWrite(w,                                # Vcard skelet
             contactName,                                    # Kontakt adi
@@ -63,8 +63,7 @@ def bRun():
         nl.setOperatorKey(0)
         os.system("clear")
         nl.setCategory()                                        # Kategoriyalari daxil edin
-        nl.number_range()                                   
-            # Nomre alagini daxil et
+        nl.number_range()                                       # Nomre araligini daxil et
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
         prefix = nl.getPrefix()                                 # Prefix deyiskeni
@@ -82,7 +81,7 @@ def bRun():
             dataTwo +=nl.loadData(allNumber)
     
         for pre in tqdm(range(begin,end)):
-            for dataTree in tqdm(dataTwo.split("\n")):
+            for dataTree in tqdm(dataTwo.splitlines()):
                 nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
                 count=count+1
         nl.bannerBegin()
@@ -93,7 +92,7 @@ def bRun():
 
 ##############################################################################
 ################################Nar###########################################
-def nRun(number):
+def nRun():
     global count
     global end
     global dataTwo
@@ -105,9 +104,9 @@ def nRun(number):
         begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
         end = nl.getIndex(1)                                    # Nomre son (araliq)
         prefix = nl.getPrefix()
-        dataTwo +=nl.conNar(number)
+        dataTwo +=nl.loadNarData(0)
         for pre in tqdm(range(begin,end)):
-            for dataTree in tqdm(dataTwo.split("\n")):
+            for dataTree in tqdm(dataTwo.splitlines()):
                 nl.vcardWrite(w,contactName,prefix,pre,dataTree,count)
                 count=count+1
         nl.bannerBegin()
@@ -205,7 +204,7 @@ elif(operator == 3 and status > 0):
     number = nl.input_number()                                   # Nomreni daxil edin
     db.addSeries(number)
     try:
-        nRun(number)
+        nRun()
     except TypeError:
         nl.red()
         print("Key xətası")

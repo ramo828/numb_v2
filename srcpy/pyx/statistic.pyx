@@ -15,7 +15,22 @@ sharp = ""
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
 prefix = nl.getPrefix()                                 # Prefix deyiskeni
-nl.setOperatorKey(0)
+
+operator = int(input("""
+    0 - Bakcell
+    1 - Nar
+    >>
+"""))
+
+if(operator == 0):
+    nl.setOperatorKey(0)
+elif(operator == 1):
+    nl.setOperatorKey(1)
+else:
+    raise TypeError("Yanlış seçim!")
+
+
+
 
 nl.lightGreen()
 choise = int(input("\n\t0 - Yükləmə modu\n\t1 - Analiz modu\n>> "))
@@ -23,10 +38,15 @@ choise = int(input("\n\t0 - Yükləmə modu\n\t1 - Analiz modu\n>> "))
 if(choise == 0):
     tip = int(input("\n\t0 - Köhnə data \n\t1 - Yeni data\n >> "))
     number = nl.input_number()                                          # Nomreni daxil edin
-    nl.setCategory()                                                    # Kategoriyalari daxil edin
+    if(operator == 0):
+        nl.setCategory()
+    elif(operator == 1):
+        nl.setPrefix()                                                  # Kategoriyalari daxil edin
+        nl.setPrestige()
+    else:
+        raise TypeError("Xəta")                           
     prefixValue = nl.getPrefixOrCategory(0)                             # Prefix melumatlarini al
-    categoryKey = nl.getPrefixOrCategory(1)                             # Kategoriya keyini al  
-    prefix = nl.getPrefix()                                             # Prefix deyiskeni
+    categoryKey = nl.getPrefixOrCategory(1)
 
 def File(file,appendMode):
     try:
@@ -47,7 +67,7 @@ def calcData():
     found = ""
     for d in tqdm(dataNew):
         if(d not in dataOld):
-            count=count+1
+            count+=1
             found +=d
     nl.green()
     print("Tapıldı: "+str(count))
@@ -55,7 +75,7 @@ def calcData():
     for pre in tqdm(range(0,7)):
         for dataTree in tqdm(found.splitlines()):
             nl.vcardWrite(yekun,"FContact",prefix,pre,dataTree,count1)
-            count1=count1+1
+            count1=+1
     print("Tapıldı: "+str(count1))
     
 
@@ -69,9 +89,16 @@ def dlData():
     else:
         raise NameError("Seçim mövcud deyil")    
     f = File(nameFile,"w")
-    totalElements = math.ceil(nl.loadTotal(categoryKey)/2000)                 # Sehife sayi
-    rawTotalElement = nl.loadTotal(categoryKey)                               # Nomre sayi
-    for cevir in range(totalElements):                          # Tapilan sehifede nomreleri liste yukle
+    if(operator == 0):
+        totalElements = math.ceil(nl.loadTotal(categoryKey)/2000)                 # Sehife sayi
+        rawTotalElement = nl.loadTotal(categoryKey)                               # Nomre sayi
+    elif(operator == 1):
+        totalElements = nl.narPageCount()                                         # Sehife sayi
+        rawTotalElement = nl.loadNarTotal(totalElements-1)+(totalElements-1)*2000 # Nomre sayi
+    else:
+        raise TypeError("Xəta")
+
+    for cevir in range(totalElements):                          
         sharp=sharp+"#"
         if(cevir+1%40 == 0):
             sharp=sharp+"\n"
@@ -80,7 +107,14 @@ def dlData():
         print("Biraz gozleyin...\n")
         print("Sehife sayi: "+str(totalElements)+"\nNomre sayi: "+str(rawTotalElement))
         print(sharp)
-        new +=nl.loadData(cevir)                                   # Tapilan sehifedeki umumi nomreler
+        if(operator == 0):
+            new +=nl.loadData(cevir)                                   # Tapilan sehifedeki umumi nomreler
+        elif(operator == 1):
+            new += nl.loadNarData(cevir)
+        else:
+            new = ""
+            raise TypeError("Error")                                     # Tapilan sehifedeki umumi nomreler
+
     f.write(new)
     f.close()
 if(choise == 0):

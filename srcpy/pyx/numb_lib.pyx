@@ -62,8 +62,6 @@ h = {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,
            }
 
 
-narCounter = 0
-narNumber = ""
 key = ""
 #-------------------------------------------------
 
@@ -352,8 +350,8 @@ def setCategory():
     print("\t\tPrefix: ")
     lightGreen()
     print("""
-    \t\t0 - 55\n
-    \t\t1 - 99\n
+    \t\t0 - 055\n
+    \t\t1 - 099\n
         -------------------------------------\n
     """)
     prefixValue = int(input(">> "));              # Sual 2 055 yoxsa 099?
@@ -447,11 +445,11 @@ def getConMaxData(catValKey):
     return r
 
 ###################################BakcellStatistic###################################
-def loadTotal(categoryKeyLocal):
+def loadTotal(page):
     totalNumb = 0
     try:
-        r = conBakcell(categoryKeyLocal)
-        totalJSON = json.loads(r.text);
+        r = conBakcell(page)
+        totalJSON = json.loads(r.text)
         for tData in totalJSON:
             totalNumb = int((tData["totalElements"]))
         return totalNumb
@@ -634,15 +632,12 @@ def setPrestige():
         red()
         print("Xətalı əmr!") 
 
-
-def conNar(narSeries):
-    global narCounter
-    global narNumber
+def narParams(page):                                      # Local Function
     num = [
-    narSeries[0],                                            # Split part1                                  
-    narSeries[1],narSeries[2],                                  # Split part2 
-    narSeries[3],narSeries[4],                                  # Split part3
-    narSeries[5],narSeries[6]]                                  # Split part4
+    number[0],                                            # Split part1                                  
+    number[1],number[2],                                  # Split part2 
+    number[3],number[4],                                  # Split part3
+    number[5],number[6]]                                  # Split part4
     params = {"prefix":prefixNar,
         "a1":num[0].replace("x", ""),
         "a2":num[1].replace("x", ""),
@@ -652,8 +647,21 @@ def conNar(narSeries):
         "a6":num[5].replace("x", ""),
         "a7":num[6].replace("x", ""),
         "prestigeLevel":prestige,
-        "size":sizeNar }
+        "size":sizeNar,
+        "page":page }
+    return params
+
+def conNar(page):
+    params = narParams(page)
     r = requests.get(url["Nar"],params=params,headers=setHeader(1))
+    return r
+    
+
+def loadNarData(page):
+    narNumber = ""
+    narCounter = 0
+    narTwo = ""
+    r = conNar(page)
     if(len(r.text) > 7):
         narData = json.loads(r.text)
     elif(r.status_code != 200):
@@ -662,17 +670,42 @@ def conNar(narSeries):
         exit(1)
     else:
         light_red()
-        print("Nömrə tapılmadı!")
-        exit(1)
-    
+        return ""
     for nar in narData:
         narTwo = (nar["msisdn"])
-        narNumber = narNumber+str(narTwo[3:])+"\n"
+        narNumber = narNumber+narTwo[3:]+"\n"
         narCounter=narCounter+1
     return narNumber
+    
 
-def getNarCointer():
-    return narCounter
+def narPageCount():
+    stopFlag = True
+    meData = ""
+    page = 0
+    while(stopFlag):
+        meData=loadNarData(page)
+        if(not meData):
+            stopFlag = False
+        else:
+            page+=1
+    return page
+
+
+def loadNarTotal(page):
+    totalNumb = 0
+    numberNar = []
+    try:
+        r = conNar(page)
+        totalJSON = json.loads(r.text)
+        for tData in totalJSON:
+            totalNumb = (tData["msisdn"])
+            numberNar.append(totalNumb)
+        return len(numberNar)
+    except TypeError:
+        red()
+        print("Key xətalıdır!")
+
+
 
 
 def logo():
