@@ -425,13 +425,26 @@ def setCategory():
     
 
 def conBakcell(page):
-    r = requests.get(url["Bakcell"], params={"prefix":prefixSel[prefixValue],
+    try:
+        r = requests.get(url["Bakcell"], params={"prefix":prefixSel[prefixValue],
     "msisdn":number,                                        # Nomre datasi
     "categoryId":category[categoryKey],                     # Kategorya
     "showReserved":"true",                                  # Sifaris verilenler
     "size":"2000",                                          # Maksimum nomre sayi
     "page":page},                                           # Maksimum sehife sayi
-    headers=setHeader(0))                                   # Header
+    headers=setHeader(0),timeout=60)                                   # Header
+    except requests.ConnectionError as e:
+        print("İnternet bağlantınızda problem var! İnterneti yoxlayıb yenidən cəhd edin\n")
+        print(str(e))            
+    except requests.Timeout as e:
+        print("Zaman aşımı! Məlumatlar serverdən alına bilmir!")
+        print(str(e))
+    except requests.RequestException as e:
+        print("Ümumi xəta")
+        print(str(e))
+    except KeyboardInterrupt:
+        print("Program dəyandırıldı")
+   
     return r
 
 def getConMaxData(catValKey):
@@ -652,8 +665,20 @@ def narParams(page):                                      # Local Function
     return params
 
 def conNar(page):
-    params = narParams(page)
-    r = requests.get(url["Nar"],params=params,headers=setHeader(1))
+    try:
+        params = narParams(page)
+        r = requests.get(url["Nar"],params=params,headers=setHeader(1), timeout=60)
+    except requests.ConnectionError as e:
+        print("İnternet bağlantınızda problem var! İnterneti yoxlayıb yenidən cəhd edin\n")
+        print(str(e))            
+    except requests.Timeout as e:
+        print("Zaman aşımı! Məlumatlar serverdən alına bilmir!")
+        print(str(e))
+    except requests.RequestException as e:
+        print("Ümumi xəta")
+        print(str(e))
+    except KeyboardInterrupt:
+        print("Program dəyandırıldı")
     return r
     
 

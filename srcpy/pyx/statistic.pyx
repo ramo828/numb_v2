@@ -92,7 +92,7 @@ def dlData():
     longNumber = 0
     tam = 0
     qaliq = 0
-
+    countNumb = 0
     if(tip == 0):
         nameFile = "old.numb"
     elif(tip == 1):
@@ -142,13 +142,15 @@ def dlData():
         raise TypeError("Xəta")
 
     for cevir in range(totalElements):                          
-        sharp=sharp+"#"
+        sharp+="#"
+        countNumb+=1
         if(cevir+1%40 == 0):
-            sharp=sharp+"\n"
+            sharp+="\n"
         os.system("clear")
         nl.lightGreen()
         print("Biraz gözləyin...\n")
         print("Səhifə sayı: "+str(totalElements)+"\nNömrə sayı: "+str(rawTotalElement))
+        print("{0} nömrə qaldı!".format(totalElements-countNumb))
         print(sharp)
         if(operator == 0):
             new +=nl.loadData(cevir)                                   # Tapilan sehifedeki umumi nomreler
