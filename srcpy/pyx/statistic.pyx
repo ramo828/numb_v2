@@ -87,7 +87,8 @@ def calcData():
 
 
 def dlData():
-    global sharp,new,totalElements
+    global sharp
+    global new
     longNumber = 0
     tam = 0
     qaliq = 0
@@ -130,6 +131,13 @@ def dlData():
                 rawTotalElement = nl.loadNarTotal(totalElements-1)+(totalElements-1)*2000 # Nomre sayi
             else:
                 raise TypeError("Xətalı daxiletmə")
+        else:
+            if(operator == 0):
+                totalElements = math.ceil(nl.loadTotal(categoryKey)/2000)                 # Sehife sayi
+                rawTotalElement = nl.loadTotal(categoryKey)                               # Nomre sayi
+            elif(operator == 1):
+                totalElements = nl.narPageCount()                                         # Sehife sayi
+                rawTotalElement = nl.loadNarTotal(totalElements-1)+(totalElements-1)*2000 # Nomre sayi
     else:
         raise TypeError("Xəta")
 
