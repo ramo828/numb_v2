@@ -1,3 +1,4 @@
+from pyparsing import Char
 import numb_lib as nl
 import os.path
 import math
@@ -15,6 +16,7 @@ sharp = ""
 begin = nl.getIndex(0)                                  # Nomre baslangic (araliq)
 end = nl.getIndex(1)   
 prefix = nl.getPrefix()                                 # Prefix deyiskeni
+longData = False
 
 nl.lightGreen();
 operator = int(input("\n\t0 - Bakcell\n\t1 - Nar\n>> "))
@@ -26,6 +28,12 @@ else:
     raise TypeError("Yanlış seçim!")
 
 
+def xcount(data):
+    xc = 0
+    for i in range(7):
+        if(data[i].lower() == 'x'):
+            xc+=1
+    return xc
 
 
 nl.lightGreen()
@@ -37,6 +45,8 @@ if(choise == 0):
     if(operator == 0):
         nl.setCategory()
     elif(operator == 1):
+        if(xcount(number) > 4):
+            longData = True
         nl.setPrefix()                                                  # Kategoriyalari daxil edin
         nl.setPrestige()
     else:
@@ -78,6 +88,10 @@ def calcData():
 
 def dlData():
     global sharp,new
+    longNumber = 0
+    tam = 0
+    qaliq = 0
+
     if(tip == 0):
         nameFile = "old.numb"
     elif(tip == 1):
@@ -89,8 +103,33 @@ def dlData():
         totalElements = math.ceil(nl.loadTotal(categoryKey)/2000)                 # Sehife sayi
         rawTotalElement = nl.loadTotal(categoryKey)                               # Nomre sayi
     elif(operator == 1):
-        totalElements = nl.narPageCount()                                         # Sehife sayi
-        rawTotalElement = nl.loadNarTotal(totalElements-1)+(totalElements-1)*2000 # Nomre sayi
+        if(longData):
+            nl.yellow()
+            print("""
+            Nömrə sayı çoxdur! Nömrə sayını
+            əl ilə daxil etmək istəyirsiniz?
+            Bu sizə xeyli zaman qazandıracaq.\n
+            Dəvam etmək üçün Bəli(b)
+            imtina etmək üçün isə Xeyr(x)
+            daxil edin!
+            \n
+            Qeyd: sayları nöqtəli daxil etməyin!""")
+            nl.lightGreen()
+            ch = str(input(">> "))
+            if(ch.lower() == 'b'):
+                nl.magenta()
+                print("Nömrə sayını daxil edin\n")
+                nl.lightGreen()
+                longNumber = int(input(">> "))
+                tam = divmod(longNumber,2000)[0]
+                qaliq = longNumber%2000
+                totalElements = tam+1
+                rawTotalElement = (tam*2000)+qaliq
+            elif(ch.lower() == 'x'):
+                totalElements = nl.narPageCount()                                         # Sehife sayi
+                rawTotalElement = nl.loadNarTotal(totalElements-1)+(totalElements-1)*2000 # Nomre sayi
+            else:
+                raise TypeError("Xətalı daxiletmə")
     else:
         raise TypeError("Xəta")
 
