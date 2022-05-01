@@ -87,7 +87,7 @@ def calcData():
 
 
 def dlData():
-    global sharp,new
+    global sharp,new,totalElements
     longNumber = 0
     tam = 0
     qaliq = 0

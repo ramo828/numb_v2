@@ -8,3 +8,4 @@ lxml
 Cython
 bs4
 colorama
+pyparsing
