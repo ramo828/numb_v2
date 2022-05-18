@@ -167,7 +167,7 @@ def addSeries(series):
 
 def reg(user, password):
   if(not len(user) < 5 and not len(password) < 8):
-    add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`) VALUES ('{user}', '{password}', '0', NULL,0);".format(user=user,password=password)
+    add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'hash','agent');".format(user=user,password=password)
     connection = conn()
     cursor = connection.cursor()
     cursor.execute(add)

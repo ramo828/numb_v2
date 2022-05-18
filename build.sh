@@ -11,17 +11,30 @@ DEB_VERSION=2.7.0
 PYTHON_SRC="srcpy"
 RED='\033[0;31m'
 OS="GNU/Linux"
+DIST="Arch Linux"
 if [ "$(uname -o)" = "$OS" ];
 then
 {
-	echo "${RED}Linux${NOCOLOR}"
+	if [ "$(egrep '^(VERSION|NAME)=' /etc/os-release | cut -d '"' -f 2)" = "$DIST" ];
+	then {
+		ArchLinux="1"
+		echo "${RED}Arch Linux${NOCOLOR}"
+		BINPATH="usr/bin" 
+		sudo pacman -Ssy
+		sudo pacman -S curl clang zip git make libxslt cmake -y
+	}
+else {	
+		ArchLinux="0"
+		echo "${RED}Other Linux distro${NOCOLOR}"
+		BINPATH="usr/local/bin"
+		sudo apt-get update && sudo apt-get full-upgrade -y
+		sudo apt-get install curl clang zip git make libxslt cmake -y
+}
+fi
 	WHITE='\033[0;32m'
 	GREEN='\033[0;38m'
-	BINPATH="usr/local/bin"
 	echo "${WHITE}"
-	sudo apt-get install curl clang zip python3 git make libxslt*-dev cmake
 	echo "${NOCOLOR}"
-
 }
 else {
 	echo "${RED}Android${NOCOLOR}"
@@ -171,6 +184,8 @@ echo "Python paketleri yuklenir...${NOCOLOR}"
 pip install -r requirements.txt
 sleep 1
 echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
+if [ "$ArchLinux" = "0" ]; 
+then {
 # DEB fayli hazirla
 	mkdir -p $name/DEBIAN/
 	touch $name/DEBIAN/control
@@ -185,13 +200,28 @@ echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
 	dpkg-deb --build --root-owner-group $name
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
 	sleep 2
+}
+else {
+# Arch linux
+echo "Gozle" 
+} 
+fi
 # Emeliyyat sistemine gore
 if [ "$(uname -o)" = "$OS" ];
 then
 {
+	if [ "$ArchLinux" = "1" ];
+	then {
+	echo "${RED}Linux${NOCOLOR}"
+	
+	}
+	else {
 	echo "${RED}Linux${NOCOLOR}"
 	sudo apt-get autoremove -y
 	sudo dpkg -i *.deb
+	}
+	fi
+	
 }
 else {
 	echo "${RED}Android${NOCOLOR}"
@@ -209,12 +239,20 @@ then
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
+	if [ $ArchLinux = "1" ];
+	then {
+	echo "Arch linux oldugu ucun silinmedi" 
+	}
+	else {
 	cd ../
 	rm numb_v2 -rf
+	}
+	fi
+	
 
 }
 fi
 
-	clear
+#	clear
 echo "Yüklənmə tamamlandı"
 
