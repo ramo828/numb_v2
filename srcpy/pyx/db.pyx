@@ -3,6 +3,8 @@ from mysql.connector import errorcode
 import sqlite3
 import datetime
 import numb_lib as nl
+import hashlib as hl
+import subprocess as sp
 
 
 ################################SQLLite####################################
@@ -166,16 +168,18 @@ def addSeries(series):
 
 
 def reg(user, password):
-  if(not len(user) < 5 and not len(password) < 8):
-    add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'hash','agent');".format(user=user,password=password)
-    connection = conn()
-    cursor = connection.cursor()
-    cursor.execute(add)
-    connection.commit()
-    cursor.close()
-  else:
-    nl.red()
-    print("Xəta baş verdi. Login minimum [5] və parol minimum [8] simvoldan ibarət olmalıdır!")
+    agent = sp.check_output(["uname","-a"])
+    hash = hl.sha256(agent).hexdigest()
+    if(not len(user) < 5 and not len(password) < 8):
+        add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'{hash}','{agent}');".format(user=user,password=password,hash=hash,agent=agent)
+        connection = conn()
+        cursor = connection.cursor()
+        cursor.execute(add)
+        connection.commit()
+        cursor.close()
+    else:
+        nl.red()
+        print("Xəta baş verdi. Login minimum [5] və parol minimum [8] simvoldan ibarət olmalıdır!")
 
 def checkUserAndPassword(login, password):
     connection = conn()

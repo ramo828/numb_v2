@@ -5,17 +5,17 @@ pkgdesk="numb_v2"
 arch=("x86_64")
 source=("numb.cpp")
 sha512sums=("SKIP")
-
+binPath="usr/local/bin"
 package() {
 	cmake .. 
 	make
 	rm CMakeCache.txt CMakeFiles/ cmake_install.cmake Makefile -rf
-	mkdir -p "${pkgdir}/usr/bin"
+	mkdir -p "${pkgdir}/$binPath"
 
-	cp "numb" "${pkgdir}/usr/bin/numb"
-	cp "../message/" "${pkgdir}/usr/bin/message" -r
-	cp "../srcpy/" "${pkgdir}/usr/bin/srcpy" -r
-	chmod +x "${pkgdir}/usr/bin/numb"
+	cp "numb" "${pkgdir}/$binPath"
+	cp "../message/" "${pkgdir}/$binPath/message" -r
+	cp "../srcpy/" "${pkgdir}/$binPath/srcpy" -r
+	chmod +x "${pkgdir}/$binPath/numb"
 
 
 

@@ -19,7 +19,7 @@ then
 	then {
 		ArchLinux="1"
 		echo "${RED}Arch Linux${NOCOLOR}"
-		BINPATH="usr/bin" 
+		BINPATH="usr/local/bin" 
 		sudo pacman -Ssy
 		sudo pacman -S curl clang zip git make libxslt cmake -y
 	}
