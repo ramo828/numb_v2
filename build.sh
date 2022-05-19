@@ -245,8 +245,6 @@ then
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
-	cd ../
-	rm numb_v2 -rf 
 }
 
 fi
