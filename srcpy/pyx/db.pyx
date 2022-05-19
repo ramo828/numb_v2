@@ -2,6 +2,8 @@ import mysql.connector
 from mysql.connector import errorcode
 import sqlite3
 import datetime
+
+from scipy.fftpack import idctn
 import numb_lib as nl
 import hashlib as hl
 import subprocess as sp
@@ -171,7 +173,7 @@ def reg(user, password):
     agent = sp.check_output(["uname","-a"])
     hash = hl.sha256(agent).hexdigest()
     if(not len(user) < 5 and not len(password) < 8):
-        add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'{hash}','{agent}');".format(user=user,password=password,hash=hash,agent=agent)
+        add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'{hash}','{agent}','0');".format(user=user,password=password,hash=hash,agent=str(agent,encoding='UTF-8'))
         connection = conn()
         cursor = connection.cursor()
         cursor.execute(add)
@@ -191,6 +193,42 @@ def checkUserAndPassword(login, password):
       return False
     else:
       return True
+
+    
+def getHash(login, password):
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is not None:
+        return record[5]
+    else:
+        return 0
+
+   
+def getID(login, password):
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is not None:
+        return record[3]
+    else:
+        return 0
+        
+ 
+def getCounter(login, password):
+    connection = conn()
+    cursor = connection.cursor()
+    sql_select_query = """SELECT * FROM `accounts` WHERE BINARY `user` LIKE '{login}' AND `pass` LIKE '{password}' """.format(login=login, password=password)
+    cursor.execute(sql_select_query)
+    record = cursor.fetchone()
+    if record is not None:
+        return record[7]
+    else:
+        return 0
 
 def alreadyUser(login):
     connection = conn()
@@ -224,6 +262,22 @@ def checkUserStatus(login, password):
         return record[2]
     else:
         return 0
+
+
+def accoundBlocked(id,count):
+    sql = "UPDATE `accounts` SET `status` = '0' WHERE `accounts`.`id` = {0};".format(id)
+    connection = conn()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+
+
+def counterAdd(id,count):
+    sql = "UPDATE `accounts` SET `saygac` = '{1}' WHERE `accounts`.`id` = {0};".format(id, count)
+    connection = conn()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
 
 def updateKey(op):
     if(op == 0):

@@ -1,7 +1,8 @@
+#from msilib.schema import Error
 import sys
 import os
-import subprocess
-import hashlib
+import subprocess as sp
+import hashlib as hl
 import time as tm
 import db as t1
 import numb_lib as lib
@@ -15,7 +16,7 @@ bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRo
 defaultName = "Metros"
 homeDir = "/home/ramo828/"
 
-if(subprocess.check_output(['uname', '-o']).strip() == b'Android'):
+if(sp.check_output(['uname', '-o']).strip() == b'Android'):
     binPath = "/data/data/com.termux/files/usr/bin/"
 else:
     binPath = "/usr/local/bin/"
@@ -43,11 +44,11 @@ if(t1.autoKey()):
         narKey = t1.updateKey(1)                                         # Nar
         narOld = t1.getKey(1)                                            # oldNar
 
-        old_sha = hashlib.sha256(bytes(old,'utf-8')).hexdigest()
-        new_sha = hashlib.sha256(bytes(key,'utf-8')).hexdigest()
+        old_sha = hl.sha256(bytes(old,'utf-8')).hexdigest()
+        new_sha = hl.sha256(bytes(key,'utf-8')).hexdigest()
 
-        old_sha_nar = hashlib.sha256(bytes(narOld,'utf-8')).hexdigest()
-        new_sha_nar = hashlib.sha256(bytes(narKey,'utf-8')).hexdigest()
+        old_sha_nar = hl.sha256(bytes(narOld,'utf-8')).hexdigest()
+        new_sha_nar = hl.sha256(bytes(narKey,'utf-8')).hexdigest()
 
         if(not (old_sha == new_sha)):
             lib.light_red()
@@ -67,6 +68,8 @@ if(t1.autoKey()):
 
     except TypeError:
         os.system("clear")
+
+
 
 
 def regMetod(uuser,ppass):
@@ -120,6 +123,23 @@ except IndexError:
 
 login = t1.getUserData(0)
 pswd = t1.getUserData(1)
+
+
+
+agent = sp.check_output(["uname","-a"])
+ff = t1.getHash(login,pswd)
+hash = hl.sha256(agent).hexdigest()
+if(hash == ff):
+    pass
+else:
+    lib.red()
+    print("Eyni hesaba birdən çox istifadəçi daxil olduğuna görə hesabınız bloklanıb!")
+    t1.accoundBlocked(t1.getID(login, pswd))
+    exit(1)
+
+count = t1.getCounter(login,pswd)
+idUser = t1.getID(login,pswd)
+t1.counterAdd(idUser, count+1)
 
 status = t1.checkUserAndPassword(login,pswd)
 if(status):
