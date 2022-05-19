@@ -239,9 +239,9 @@ then
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
-	if [ $ArchLinux = "1" ];
+	if [ "$ArchLinux" = "1" ];
 	then {
-	clear 
+	rm numb_v2 -rf 
 	}
 	else {
 	cd ../
