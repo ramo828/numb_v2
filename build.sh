@@ -249,6 +249,7 @@ else {
 
 fi
 
+clear
 echo "Yüklənmə tamamlandı"
 
 
