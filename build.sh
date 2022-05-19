@@ -213,7 +213,7 @@ then
 	if [ "$ArchLinux" = "1" ];
 	then {
 	echo "${RED}Linux${NOCOLOR}"
-	
+		makepkg -si	
 	}
 	else {
 	echo "${RED}Linux${NOCOLOR}"
@@ -241,7 +241,7 @@ else {
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 	if [ $ArchLinux = "1" ];
 	then {
-	echo "Arch linux oldugu ucun silinmedi" 
+	clear 
 	}
 	else {
 	cd ../
