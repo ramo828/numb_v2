@@ -248,11 +248,7 @@ else {
 	rm numb_v2 -rf
 	}
 	fi
-	
-
 }
 fi
-
-#	clear
-echo "Yüklənmə tamamlandı"
+echo " Yüklənmə tamamlandı "
 
