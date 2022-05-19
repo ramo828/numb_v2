@@ -2,8 +2,6 @@ import mysql.connector
 from mysql.connector import errorcode
 import sqlite3
 import datetime
-
-from scipy.fftpack import idctn
 import numb_lib as nl
 import hashlib as hl
 import subprocess as sp

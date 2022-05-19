@@ -245,6 +245,7 @@ else {
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 	if [ "$ArchLinux" = "1" ];
 	then {
+	cd ../
 	rm numb_v2 -rf 
 	}
 	else {
