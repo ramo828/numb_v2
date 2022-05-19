@@ -1,5 +1,4 @@
 #! /usr/bin/bash
-
 YELLOW='\033[0;33m'
 NOCOLOR='\033[0m'
 BLUE='\033[0;34m'
@@ -46,7 +45,6 @@ else {
 	echo "${NOCOLOR}"
 }
 fi
-
 LINEA1="########################################################\n########################################################\n"
 LINEA2="########################################################\n########################################################\n"
 LINEA3="########################################################\n########################################################"
@@ -65,8 +63,8 @@ sleep 7
 echo "${BLUE}"
 echo "########################################################"
 echo "#                                                      #"
-echo "#      Sən bizimsən, bizimsən durduqca bədəndə Can,    #"
-echo "#        Yaşa, yaşa, çox yaşa, ey şanlı Azərbaycan!    #"
+echo "#      SYn bizimsYn, bizimsYn durduqca bYdYndY Can,    #"
+echo "#        Ya_a, ya_a, �ox ya_a, ey _anl1 AzYrbaycan!    #"
 echo "#                                                      #"
 echo "#                                                      #"
 echo "########################################################"
@@ -81,14 +79,12 @@ sleep 1;
 echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
-
 while getopts l: flag
 do
     case "${flag}" in
         l) comp_status=${OPTARG};;
     esac
 done
-
 if [ "${comp_status}" = "true" ];
 then
 {
@@ -128,7 +124,6 @@ echo '			 ___  _            _'
 echo '			| _ )| | __ _  __ | |__'
 echo '			| _ \| |/ _` |/ _|| / /'
 echo '			|___/|_|\__,_|\__||_\_\'
-
 echo '		 	    ___    _  _____ '
 echo '			   / __|  /_\|_   _|'
 echo '		 	  | (__  / _ \ | |  '
@@ -138,8 +133,6 @@ echo '		 ___         _             _'
 echo '		| __| _ __  (_) _ _  __ _| |_  ___  ___'
 echo '		| _| | ^  \ | || _|/ _` ||  _|/ -_)(_-<'
 echo '		|___||_|_|_||_||_| \__,_| \__|\___|/__/'
-
-
 echo '\033[5m	
 		                        _
 		                       | \
@@ -170,12 +163,12 @@ mv $PYTHON_SRC message $BINPATH
 echo "${YELLOW}Lazimsiz fayllar temizlenir"
 # Esak kod qovluguna geri dom
 cd ../
-echo "Lazımlı paketler yüklənir${NOCOLOR}"
+echo "Laz1ml1 paketler y�klYnir${NOCOLOR}"
 # Pip ve setuptools guncelle
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
-echo "${YELLOW}Xəta baş verərsə kodu yenidən çalışdırın"
+echo "${YELLOW}XYta ba_ verYrsY kodu yenidYn �al1_d1r1n"
 sleep 3
 # yaradilmis lazimsiz fayllari sil
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
@@ -234,9 +227,7 @@ else {
 	dpkg -i *.deb
 	termux-setup-storage
 }
-
 fi
-
 if [ "${comp_status}" = "true" ];
 then
     {
@@ -246,10 +237,6 @@ else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 }
-
 fi
-
 clear
-echo "Yüklənmə tamamlandı"
-
-
+echo "Y�klYnmY tamamland1"
