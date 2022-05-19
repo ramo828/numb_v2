@@ -37,6 +37,7 @@ fi
 	echo "${NOCOLOR}"
 }
 else {
+	ArchLinux="0"
 	echo "${RED}Android${NOCOLOR}"
 	BINPATH="data/data/com.termux/files/usr/bin"
 	echo "${GREEN}"
@@ -186,6 +187,7 @@ sleep 1
 echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
 if [ "$ArchLinux" = "0" ]; 
 then {
+	echo "Debian based"
 # DEB fayli hazirla
 	mkdir -p $name/DEBIAN/
 	touch $name/DEBIAN/control
@@ -203,7 +205,7 @@ then {
 }
 else {
 # Arch linux
-echo "Gozle" 
+echo "Arch based" 
 } 
 fi
 # Emeliyyat sistemine gore
@@ -213,9 +215,11 @@ then
 	if [ "$ArchLinux" = "1" ];
 	then {
 	echo "${RED}Linux${NOCOLOR}"
-		makepkg -si	
+	echo "Compile edilit ve qurulur!"	
+	makepkg -si	
 	}
 	else {
+	echo "Debian based"
 	echo "${RED}Linux${NOCOLOR}"
 	sudo apt-get autoremove -y
 	sudo dpkg -i *.deb
