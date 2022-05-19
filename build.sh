@@ -203,10 +203,11 @@ then {
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
 	sleep 2
 }
-else
+else {
 # Arch linux
 echo "Arch based" 
-
+}
+     
 fi
 # Emeliyyat sistemine gore
 if [ "$(uname -o)" = "$OS" ];
@@ -238,7 +239,9 @@ fi
 
 if [ "${comp_status}" = "true" ];
 then
+    {
 	echo "${RED}Local compile${NOCOLOR}"
+    }
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
