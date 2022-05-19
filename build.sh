@@ -237,15 +237,12 @@ fi
 
 if [ "${comp_status}" = "true" ];
 then
-	echo "${RED}Local compile${NOCOLOR}"}
+	echo "${RED}Local compile${NOCOLOR}"
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
-	if [ "$ArchLinux" = "1" ];
-	then
 	cd ../
 	rm numb_v2 -rf 
-	fi
 }
 fi
 echo "Yüklənmə tamamlandı"
