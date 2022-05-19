@@ -262,7 +262,7 @@ def checkUserStatus(login, password):
         return 0
 
 
-def accoundBlocked(id,count):
+def accoundBlocked(id):
     sql = "UPDATE `accounts` SET `status` = '0' WHERE `accounts`.`id` = {0};".format(id)
     connection = conn()
     cursor = connection.cursor()
