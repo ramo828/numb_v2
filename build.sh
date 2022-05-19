@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/bash
 
 YELLOW='\033[0;33m'
 NOCOLOR='\033[0m'
@@ -250,5 +250,5 @@ else {
 	fi
 }
 fi
-echo " Yüklənmə tamamlandı "
+echo "Yüklənmə tamamlandı"
 
