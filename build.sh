@@ -250,3 +250,4 @@ fi
 
 echo "Yüklənmə tamamlandı"
 
+
