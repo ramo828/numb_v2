@@ -233,6 +233,7 @@ else {
 	dpkg -i *.deb
 	termux-setup-storage
 }
+
 fi
 
 if [ "${comp_status}" = "true" ];
@@ -244,6 +245,8 @@ else {
 	cd ../
 	rm numb_v2 -rf 
 }
+
 fi
+
 echo "Yüklənmə tamamlandı"
 
