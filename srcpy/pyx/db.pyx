@@ -171,7 +171,7 @@ def reg(user, password):
     agent = sp.check_output(["uname","-a"])
     hash = hl.sha256(agent).hexdigest()
     if(not len(user) < 5 and not len(password) < 8):
-        add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`) VALUES ('{user}', '{password}', '0', NULL,0,'{hash}','{agent}','0');".format(user=user,password=password,hash=hash,agent=str(agent,encoding='UTF-8'))
+        add = "INSERT INTO `accounts` (`user`, `pass`, `status`, `id`,`level`,`userHash`,`userAgent`,`saygac`) VALUES ('{user}', '{password}', '0', NULL,0,'{hash}','{agent}','0');".format(user=user,password=password,hash=hash,agent=str(agent,encoding='UTF-8'))
         connection = conn()
         cursor = connection.cursor()
         cursor.execute(add)
