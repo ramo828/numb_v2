@@ -63,8 +63,8 @@ sleep 7
 echo "${BLUE}"
 echo "########################################################"
 echo "#                                                      #"
-echo "#      S¿n bizims¿n, bizims¿n durduqca b¿d¿nd¿ Can,    #"
-echo "#        Ya¿a, ya¿a, çox ya¿a, ey ¿anl¿ Az¿rbaycan!    #"
+echo "#      Sən bizimsən, bizimsən durduqca bədəndə Can,    #"
+echo "#        Yaşa, yaşa, çox yaşa, ey şanlı Azərbaycan!    #"
 echo "#                                                      #"
 echo "#                                                      #"
 echo "########################################################"
@@ -99,14 +99,14 @@ else {
 fi
 # 1ci merhele
 echo $BINPATH
-echo "${YELLOW}Sistem T¿mizl¿nir..."
+echo "${YELLOW}Sistem Təmizlənir..."
 # Eger onceden yaradilibsa il
 rm $name -rf
-echo "Qovluq yarad¿l¿r..."
+echo "Qovluq yaradılır..."
 sleep 1
 # yardimci qovlugu yarat
 mkdir -p $name/$BINPATH
-echo "¿sas fayllar kopyalan¿r"
+echo "Əsas fayllar kopyalanır"
 # pyhon kodlarini ve mesajlari yardimci qovluga gonder
 cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir${NOCOLOR}"
@@ -160,15 +160,15 @@ echo "---numb $name/$BINPATH---"
 cd $name
 # Yardimci qovlugdaki python kodlarini OS path'a at
 mv $PYTHON_SRC message $BINPATH
-echo "${YELLOW}Laz¿ms¿z fayllar t¿mizl¿nir"
+echo "${YELLOW}Lazımsız fayllar təmizlənir"
 # Esak kod qovluguna geri dom
 cd ../
-echo "Laz¿ml¿ paketl¿r yükl¿nir${NOCOLOR}"
+echo "Lazımlı paketlər yüklənir${NOCOLOR}"
 # Pip ve setuptools guncelle
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
-echo "${YELLOW}X¿ta ba¿ ver¿rs¿ kodu yenid¿n çal¿¿d¿r¿n"
+echo "${YELLOW}Xəta baş verərsə kodu yenidən çalışdırın"
 sleep 3
 # yaradilmis lazimsiz fayllari sil
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
@@ -177,7 +177,7 @@ echo "Python paketl¿ri yukl¿nir...${NOCOLOR}"
 # Lazim olan python kitabxanalarini yukle
 pip install -r requirements.txt
 sleep 1
-echo "${YELLOW}Deb fayl¿ haz¿rlan¿r${NOCOLOR}"
+echo "${YELLOW}Deb faylı hazırlanır${NOCOLOR}"
 if [ "$ArchLinux" = "0" ]; 
 then {
 	echo "Debian based"
@@ -190,7 +190,7 @@ then {
 	echo "Architecture: all" >> $name/DEBIAN/control
 	echo "Maintainer: RamoSoft <illegalism666@gmail.com>" >> $name/DEBIAN/control
 	echo "Description: Bakcell && Azercell Tools" >> $name/DEBIAN/control
-	echo " Programin esas m¿qs¿di nömr¿ sat¿¿¿ zaman¿ mümkün q¿d¿r vaxta q¿na¿t etm¿kdir" >> $name/DEBIAN/control
+	echo " Programin esas məqsədi nömrə satışı zamanı mümkün qədər vaxta qənaət etməkdir" >> $name/DEBIAN/control
 	#umask 22
 	dpkg-deb --build --root-owner-group $name
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
@@ -239,4 +239,4 @@ else {
 }
 fi
 clear
-echo "Yükl¿nm¿ tamamland¿"
+echo "Yüklənmə tamamlandı"
