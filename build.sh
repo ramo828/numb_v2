@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+﻿#! /usr/bin/bash
 YELLOW='\033[0;33m'
 NOCOLOR='\033[0m'
 BLUE='\033[0;34m'
