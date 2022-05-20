@@ -63,8 +63,8 @@ sleep 7
 echo "${BLUE}"
 echo "########################################################"
 echo "#                                                      #"
-echo "#      SYn bizimsYn, bizimsYn durduqca bYdYndY Can,    #"
-echo "#        Ya_a, ya_a, �ox ya_a, ey _anl1 AzYrbaycan!    #"
+echo "#      S¿n bizims¿n, bizims¿n durduqca b¿d¿nd¿ Can,    #"
+echo "#        Ya¿a, ya¿a, çox ya¿a, ey ¿anl¿ Az¿rbaycan!    #"
 echo "#                                                      #"
 echo "#                                                      #"
 echo "########################################################"
@@ -72,11 +72,11 @@ echo "${NOCOLOR}"
 sleep 8
 echo "${GREEN}Created Mammadli Ramiz"
 sleep 1;
-echo "${GREEN}Lazim olan fayllar yuklenir"
+echo "${GREEN}Lazım olan fayllar yuklənir"
 sleep 1;
-echo "${GREEN}Biraz gozleyin"
+echo "${GREEN}Biraz gözləyin"
 sleep 1;
-echo "${YELLOW}Yuklenen fayllar temizlenir...${NOCOLOR}"
+echo "${YELLOW}Yüklənən fayllar təmizlənir...${NOCOLOR}"
 sleep 2
 echo "${GREEN}"
 while getopts l: flag
@@ -99,14 +99,14 @@ else {
 fi
 # 1ci merhele
 echo $BINPATH
-echo "${YELLOW}Sistem Temizlenir..."
+echo "${YELLOW}Sistem T¿mizl¿nir..."
 # Eger onceden yaradilibsa il
 rm $name -rf
-echo "Qovluq yaradilir..."
+echo "Qovluq yarad¿l¿r..."
 sleep 1
 # yardimci qovlugu yarat
 mkdir -p $name/$BINPATH
-echo "Esas fayllar kopyalanir"
+echo "¿sas fayllar kopyalan¿r"
 # pyhon kodlarini ve mesajlari yardimci qovluga gonder
 cp $PYTHON_SRC message $name -r
 echo "Cython compile edilir${NOCOLOR}"
@@ -160,24 +160,24 @@ echo "---numb $name/$BINPATH---"
 cd $name
 # Yardimci qovlugdaki python kodlarini OS path'a at
 mv $PYTHON_SRC message $BINPATH
-echo "${YELLOW}Lazimsiz fayllar temizlenir"
+echo "${YELLOW}Laz¿ms¿z fayllar t¿mizl¿nir"
 # Esak kod qovluguna geri dom
 cd ../
-echo "Laz1ml1 paketler y�klYnir${NOCOLOR}"
+echo "Laz¿ml¿ paketl¿r yükl¿nir${NOCOLOR}"
 # Pip ve setuptools guncelle
 pip install --upgrade pip setuptools
 pip install --upgrade pip
 sleep 1;
-echo "${YELLOW}XYta ba_ verYrsY kodu yenidYn �al1_d1r1n"
+echo "${YELLOW}X¿ta ba¿ ver¿rs¿ kodu yenid¿n çal¿¿d¿r¿n"
 sleep 3
 # yaradilmis lazimsiz fayllari sil
 rm cmake_install.cmake build CMakeFiles CMakeCache.txt -rf
 sleep 1
-echo "Python paketleri yuklenir...${NOCOLOR}"
+echo "Python paketl¿ri yukl¿nir...${NOCOLOR}"
 # Lazim olan python kitabxanalarini yukle
 pip install -r requirements.txt
 sleep 1
-echo "${YELLOW}Deb fayli hazirlanir${NOCOLOR}"
+echo "${YELLOW}Deb fayl¿ haz¿rlan¿r${NOCOLOR}"
 if [ "$ArchLinux" = "0" ]; 
 then {
 	echo "Debian based"
@@ -190,7 +190,7 @@ then {
 	echo "Architecture: all" >> $name/DEBIAN/control
 	echo "Maintainer: RamoSoft <illegalism666@gmail.com>" >> $name/DEBIAN/control
 	echo "Description: Bakcell && Azercell Tools" >> $name/DEBIAN/control
-	echo " Programin esas meqsedi nomre satisi zamani mumkun qeder vaxta qenaet etmekdir" >> $name/DEBIAN/control
+	echo " Programin esas m¿qs¿di nömr¿ sat¿¿¿ zaman¿ mümkün q¿d¿r vaxta q¿na¿t etm¿kdir" >> $name/DEBIAN/control
 	#umask 22
 	dpkg-deb --build --root-owner-group $name
 	rm -rf CMakeFiles CMakeCache.txt srcpy/*.o  srcpy/pyx/*.c Makefile cmake_install.cmake
@@ -209,7 +209,7 @@ then
 	if [ "$ArchLinux" = "1" ];
 	then {
 	echo "${RED}Linux${NOCOLOR}"
-	echo "Compile edilit ve qurulur!"	
+	echo "Compile edilir ve qurulur!"	
 	makepkg -si	
 	}
 	else {
@@ -239,4 +239,4 @@ else {
 }
 fi
 clear
-echo "Y�klYnmY tamamland1"
+echo "Yükl¿nm¿ tamamland¿"
