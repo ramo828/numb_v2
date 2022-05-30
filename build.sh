@@ -20,8 +20,8 @@ then
 		ArchLinux="1"
 		echo "${RED}Arch Linux${NOCOLOR}"
 		BINPATH="usr/local/bin" 
-		sudo yes | pacman -Syu
-		sudo yes | pacman -S curl clang zip git make libxslt cmake -y
+		sudo pacman -Syu
+		sudo pacman -S curl clang zip git make libxslt cmake -y
 	}
 else {	
 		ArchLinux="0"
@@ -109,7 +109,7 @@ sleep 1
 mkdir -p $name/$BINPATH
 echo "Əsas fayllar kopyalanır"
 # pyhon kodlarini ve mesajlari yardimci qovluga gonder
-cp $PYTHON_SRC message $name -r
+cp $PYTHON_SRC $name -r
 echo "Cython compile edilir${NOCOLOR}"
 # yardimci qovluqdaki python qovluguna daxil ol
 cd $name/$PYTHON_SRC/
@@ -160,7 +160,7 @@ echo "---numb $name/$BINPATH---"
 # Yardimci qovluga daxil ol
 cd $name
 # Yardimci qovlugdaki python kodlarini OS path'a at
-mv $PYTHON_SRC message $BINPATH
+mv $PYTHON_SRC $BINPATH
 echo "${YELLOW}Lazımsız fayllar təmizlənir"
 # Esak kod qovluguna geri dom
 cd ../
@@ -231,7 +231,6 @@ else {
 	termux-setup-storage
 }
 fi
-clear
 echo "Hazırlanır"
 sleep 1
 if [ "${comp_status}" = "true" ];
@@ -244,5 +243,4 @@ else {
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 }
 fi
-clear
 echo "Yüklənmə tamamlandı"

@@ -129,13 +129,15 @@ pswd = t1.getUserData(1)
 agent = sp.check_output(["uname","-a"])
 ff = t1.getHash(login,pswd)
 hash = hl.sha256(agent).hexdigest()
+
 if(hash == ff):
     pass
 else:
-    lib.red()
-    print("Eyni hesaba birdən çox istifadəçi daxil olduğuna görə hesabınız bloklanıb!")
-    t1.accoundBlocked(t1.getID(login, pswd))
-    exit(1)
+    if(t1.checkUserAndPassword(login,pswd) and t1.checkUserStatus(login,pswd)):
+        lib.red()
+        print("Eyni hesaba birdən çox istifadəçi daxil olduğuna görə hesabınız bloklanıb!")
+        t1.accoundBlocked(t1.getID(login, pswd))
+        exit(1)
 
 count = t1.getCounter(login,pswd)
 idUser = t1.getID(login,pswd)

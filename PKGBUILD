@@ -13,7 +13,7 @@ package() {
 	mkdir -p "${pkgdir}/$binPath"
 
 	cp "numb" "${pkgdir}/$binPath"
-	cp "../message/" "${pkgdir}/$binPath/message" -r
+#	cp "../message/" "${pkgdir}/$binPath/message" -r
 	cp "../srcpy/" "${pkgdir}/$binPath/srcpy" -r
 	chmod +x "${pkgdir}/$binPath/numb"
 
