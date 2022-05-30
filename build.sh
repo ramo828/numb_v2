@@ -231,6 +231,7 @@ else {
 	termux-setup-storage
 }
 fi
+clear
 echo "Hazırlanır"
 sleep 1
 if [ "${comp_status}" = "true" ];
@@ -243,4 +244,5 @@ else {
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
 }
 fi
+clear
 echo "Yüklənmə tamamlandı"
