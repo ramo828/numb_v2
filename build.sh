@@ -20,8 +20,8 @@ then
 		ArchLinux="1"
 		echo "${RED}Arch Linux${NOCOLOR}"
 		BINPATH="usr/local/bin" 
-		sudo pacman -Syu
-		sudo pacman -S curl clang zip git make libxslt cmake -y
+		sudo yes | pacman -Syu
+		sudo yes | pacman -S curl clang zip git make libxslt cmake -y
 	}
 else {	
 		ArchLinux="0"
