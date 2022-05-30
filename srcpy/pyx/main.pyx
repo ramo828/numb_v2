@@ -1,4 +1,3 @@
-#from msilib.schema import Error
 import sys
 import os
 import subprocess as sp
@@ -29,12 +28,22 @@ else:
     t1.addSettings(bearerKey["Bakcell"],bearerKey["Nar"],defaultName,homeDir,1)
 
 ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
-run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py",binPath+"srcpy/robo.py")
+run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py")
 runChoise = 0
 raw = ""
 regStatus = False
-
 choise = 0
+
+# if(sys.argv[1] == "--setServer"):
+#         decData= lib.decServer(sys.argv[2])
+#         try:
+#         	host = decData[0]
+#         	user = decData[1]
+#         	password = decData[2]
+#         	database = decData[3]
+#         except IndexError:
+#         	print("Xeta")
+#         t1.addServer(host,user,password,database)
 
 if(t1.autoKey()):
     try:
@@ -68,6 +77,8 @@ if(t1.autoKey()):
 
     except TypeError:
         os.system("clear")
+    except IndexError:
+    	print("Bazaya qosula bilmedi!")
 
 
 
@@ -93,8 +104,8 @@ try:
             runChoise = 0
         elif(sys.argv[2] == "statistic"):
             runChoise = 1
-        elif(sys.argv[2] == "robot"):
-            runChoise = 2
+        # elif(sys.argv[2] == "robot"):
+        #     runChoise = 2
         else:
             print("Xeta")
     elif(sys.argv[1] == "--reg"):
@@ -114,6 +125,7 @@ try:
         t1.updateGlobalKey(choise,sys.argv[3])
         tm.sleep(1)
         exit(1)
+        
 
 except IndexError:
     lib.red()
@@ -125,27 +137,35 @@ login = t1.getUserData(0)
 pswd = t1.getUserData(1)
 
 
-
 agent = sp.check_output(["uname","-a"])
 ff = t1.getHash(login,pswd)
 hash = hl.sha256(agent).hexdigest()
 if(hash == ff):
-    pass
+    	pass
 else:
-    lib.red()
-    print("Eyni hesaba birdən çox istifadəçi daxil olduğuna görə hesabınız bloklanıb!")
-    t1.accoundBlocked(t1.getID(login, pswd))
-    exit(1)
+		lib.red()
+		print("Eyni hesaba birdən çox istifadəçi daxil olduğuna görə hesabınız bloklanıb!")
+		t1.accoundBlocked(t1.getID(login, pswd))
+		exit(1)
 
 count = t1.getCounter(login,pswd)
 idUser = t1.getID(login,pswd)
 t1.counterAdd(idUser, count+1)
 
 status = t1.checkUserAndPassword(login,pswd)
+level = t1.checkUserLevel(login,pswd)
 if(status):
   if(t1.checkUserStatus(login,pswd)):
     try:
-        exec(open(run[runChoise]).read())
+        if(runChoise == 1):
+            if(level == 3):
+                exec(open(run[1]).read())
+            else:
+                lib.red()
+                print("Siz bura daxil ola bilməzsiniz!")
+        else:
+            exec(open(run[runChoise]).read())
+
     except FileNotFoundError:
         lib.red()
         print("Çalışdırılacaq fayl yoxdur!")

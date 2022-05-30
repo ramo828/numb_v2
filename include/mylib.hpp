@@ -11,9 +11,9 @@ class ext {
 	private:
 	
 	public:
-		#define robo 0
-		#define numb 1
-		#define statistic 2
+		// #define robo 0         // remove function
+		#define numb 0
+		#define statistic 1
 		#define folder ""        //null data
 		#if __ANDROID__
 			string bin="/data/data/com.termux/files/usr/bin/";
@@ -23,7 +23,7 @@ class ext {
 		
 		
 		string code[3] = {
-		"python "+bin+"srcpy/main.py --run robot",
+		// "python "+bin+"srcpy/main.py --run robot",
 		"python "+bin+"srcpy/main.py --run numb",
 		"python "+bin+"srcpy/main.py --run statistic"
 		};

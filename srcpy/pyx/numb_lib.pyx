@@ -7,6 +7,7 @@ import json
 import random
 import db
 from colorama import Fore, Back, Style
+import base64
 
 #----------------------------------------------------------
 url = dict()                                               # URL lugeti
@@ -114,7 +115,13 @@ def getPrefix():
     prefix.append("+99460")
     return prefix
     
-
+def decServer(serverData):
+    spl = []
+    dec= base64.standard_b64decode(serverData)
+    rawDataDec = str(dec,encoding="UTF-8")
+    for splDec in rawDataDec.split(":"):
+        spl.append(splDec)
+    return spl
 
 def setOperatorKey(operator):
     global key

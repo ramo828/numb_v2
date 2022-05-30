@@ -1,4 +1,5 @@
-﻿#! /usr/bin/bash
+﻿# !/bin/dash
+clear
 YELLOW='\033[0;33m'
 NOCOLOR='\033[0m'
 BLUE='\033[0;34m'
@@ -19,7 +20,7 @@ then
 		ArchLinux="1"
 		echo "${RED}Arch Linux${NOCOLOR}"
 		BINPATH="usr/local/bin" 
-		sudo pacman -Ssy
+		sudo pacman -Syu
 		sudo pacman -S curl clang zip git make libxslt cmake -y
 	}
 else {	
@@ -211,6 +212,8 @@ then
 	echo "${RED}Linux${NOCOLOR}"
 	echo "Compile edilir ve qurulur!"	
 	makepkg -si	
+	echo "Lazımsız fayllar silinir."
+	rm numb_compile pkg src *.tar.zst -rf
 	}
 	else {
 	echo "Debian based"
@@ -228,11 +231,14 @@ else {
 	termux-setup-storage
 }
 fi
+clear
+echo "Hazırlanır"
+sleep 1
 if [ "${comp_status}" = "true" ];
 then
     {
 	echo "${RED}Local compile${NOCOLOR}"
-    }
+}
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil

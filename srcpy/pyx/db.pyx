@@ -37,10 +37,21 @@ def addAccount(user,password):                                                  
     cursor.execute(addValue)
     con.commit()
 
+def addServer(host,user,password,db):                                                                 # Account elave et
+    addValue = "UPDATE sqlServer SET host = '{0}',user= '{1}',pass= '{2}',database= '{3}'".format(host,user,password,db)
+    cursor.execute(addValue)
+    con.commit()
+
 def addSettings(keyBakcell,keyNar,contactName,homeDir, autoStatus):                                        # Ayarlar
     addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}', {4})".format(keyBakcell,keyNar,contactName,homeDir,autoStatus)
     cursor.execute(addValue)
     con.commit()
+
+def getServerData(idx):
+    sql = "SELECT * FROM sqlServer"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return data[0][idx]
 
 def updateKeyLocal(key,op):                                                                         # Key Bakcell/Nar
     if(op == 0):
@@ -135,20 +146,27 @@ def closeDB():
 
 def conn():
   try:
-    cnx = mysql.connector.connect(host ="remotemysql.com",
-                                user='3KndKumGco',
-                                password = "ViwaxpWyiD",
-                                database='3KndKumGco')
+    host = "remotemysql.com" #getServerData(0)
+    user = "3KndKumGco" #getServerData(1)
+    password = "ViwaxpWyiD" #getServerData(2)
+    database = "3KndKumGco" #getServerData(3)
+    cnx = mysql.connector.connect(host=host,
+                                user=user,
+                                password=password,
+                                database=database)
                                 
   except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         nl.red()
         print("İstifadəçi adında və ya şifrədə bir problem var")
+        exit(1)
     elif err.errno == errorcode.ER_BAD_DB_ERROR:
         nl.red()
         print("Verilənlər bazası yoxdur")
+        exit(1)
     else:
       print(err)
+      exit(1)
   else:
     return cnx
 

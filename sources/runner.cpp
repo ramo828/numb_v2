@@ -13,8 +13,10 @@ void run::runner() {
 			ui.runPY(statistic);                                  // Analiz modu
 			exit(1);                                              // python calisandan sonra cpp'den cix
 		}
+		
 		else if(u.equals(_garr[1],"-bot","--robot")){
-			ui.runPY(robo);                                       // avto mesaj modu
+			// ui.runPY(robo);                                       // avto mesaj modu
+			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
 		else if(u.equals(_garr[1],"-global","--globalKey")){
@@ -87,7 +89,7 @@ void run::runner() {
 		else if(_gcount > 2){
 			DB db;
 			if(u.equals(_garr[1],"-bot","--robot")){
-			ui.runPY(robo);
+			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
 			exit(1);
 			}
 			else if(u.equals(_garr[1],"-auto","--setAuto")){
@@ -98,6 +100,10 @@ void run::runner() {
 				else
 					cout << "Xəta" << endl;
 			}
+			else if(u.equals(_garr[1],"-S","--server")){
+				ui.runPY(e.getBin()+"srcpy/main.py","--setServer",u.str(_garr[2]));
+				u.writeln("Verilənlər bazası əlavə edildi!!");
+		}
 		}
 		else {
 			
