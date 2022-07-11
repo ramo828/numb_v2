@@ -146,10 +146,10 @@ def closeDB():
 
 def conn():
   try:
-    host = "remotemysql.com" #getServerData(0)
-    user = "3KndKumGco" #getServerData(1)
-    password = "ViwaxpWyiD" #getServerData(2)
-    database = "3KndKumGco" #getServerData(3)
+    host = "sql11.freemysqlhosting.net" #getServerData(0)
+    user = "sql11505618" #getServerData(1)
+    password = "JivNUgpe8P" #getServerData(2)
+    database = "sql11505618" #getServerData(3)
     cnx = mysql.connector.connect(host=host,
                                 user=user,
                                 password=password,
