@@ -143,13 +143,12 @@ def closeDB():
     con.close()
 
 ###################################EndSQLLite#########################################################
-
 def conn():
   try:
-    host = "185.87.254.59" #getServerData(0)
-    user = "numbcf_ramo828" #getServerData(1)
-    password = "Ramizz..1994h" #getServerData(2)
-    database = "numbcf_numb" #getServerData(3)
+    host = "pro.freedb.tech" #getServerData(0)
+    user = "ramo828_root" #getServerData(1)
+    password = "yrcJ@jr5@V9NV4s" #getServerData(2)
+    database = "ramo828" #getServerData(3)
     cnx = mysql.connector.connect(host=host,
                                 user=user,
                                 password=password,
