@@ -310,9 +310,9 @@ def updateKey(op):
 
 def updateGlobalKey(op, key):
     if(op == 0):
-        sql = "UPDATE `system` SET `keyBakcell` = 'Bearer {0}' WHERE `system` ".format(key)
+        sql = "UPDATE `system` SET `keyBakcell` = 'Bearer {0}' WHERE `system`.`id` ".format(key)
     elif(op == 1):
-        sql = "UPDATE `system` SET `keyNar` = 'Bearer {0}' WHERE `system` ".format(key)
+        sql = "UPDATE `system` SET `keyNar` = 'Bearer {0}' WHERE `system`.`id` ".format(key)
     else:
         nl.red()
         print('Xətalı operator')
