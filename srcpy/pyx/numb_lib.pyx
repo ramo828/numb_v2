@@ -130,7 +130,7 @@ def setOperatorKey(operator):
     elif(operator == 1):
         key = db.getKey(1)
     else:
-        raise TypeError("Xetali secim")
+        raise TypeError("Xətalı seçim")
     
     # return key
 
@@ -233,7 +233,7 @@ def bannerEnd(count,end):
     ------------------------------------------""")
     try:
         print("""
-    Tapılan nomrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
+    Tapılan nömrə sayı: \033[1;32;40m"""+ str(count/end)+"""\033[0m""")
         print(Style.RESET_ALL+Fore.GREEN+"""
     ------------------------------------------
         """)
