@@ -85,6 +85,12 @@ void run::runner() {
 
 			exit(1);
 		}
+		// hesab bloklananda id ile geri getirmek ucun
+		else if(u.equals(_garr[1],"-id","--id")){
+                          cout << "ID: ";
+                          system("uname -a | sha256sum");
+
+                }
 
 		else if(_gcount > 2){
 			DB db;
@@ -100,14 +106,9 @@ void run::runner() {
 				else
 					cout << "Xəta" << endl;
 			}
-			else if(u.equals(_garr[1],"-id","--id")){
-				cout << "ID: ";
-				system("uname -a | sha256sum")
-				
-		}
 		}
 		else {
-			
+
 			u.writeln("Taninamayan: "+u.str(_garr[1]));
 			exit(1);
 
