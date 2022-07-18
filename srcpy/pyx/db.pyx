@@ -145,10 +145,10 @@ def closeDB():
 ###################################EndSQLLite#########################################################
 def conn():
   try:
-    host = "pro.freedb.tech" #getServerData(0)
-    user = "ramo828_root" #getServerData(1)
-    password = "yrcJ@jr5@V9NV4s" #getServerData(2)
-    database = "ramo828" #getServerData(3)
+    host = "sql11.freemysqlhosting.net" #getServerData(0)
+    user = "sql11505618" #getServerData(1)
+    password = "JivNUgpe8P" #getServerData(2)
+    database = "sql11505618" #getServerData(3)
     cnx = mysql.connector.connect(host=host,
                                 user=user,
                                 password=password,
@@ -321,5 +321,4 @@ def updateGlobalKey(op, key):
     cursor.execute(sql)
     connection.commit()
     cursor.close()
-
 

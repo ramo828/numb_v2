@@ -100,9 +100,10 @@ void run::runner() {
 				else
 					cout << "Xəta" << endl;
 			}
-			else if(u.equals(_garr[1],"-S","--server")){
-				ui.runPY(e.getBin()+"srcpy/main.py","--setServer",u.str(_garr[2]));
-				u.writeln("Verilənlər bazası əlavə edildi!!");
+			else if(u.equals(_garr[1],"-id","--id")){
+				cout << "ID: ";
+				system("uname -a | sha256sum")
+				
 		}
 		}
 		else {
