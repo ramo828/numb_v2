@@ -93,12 +93,12 @@ void run::runner() {
 
 		else if(_gcount > 2){
 			DB db;
-			else if(u.equals(_garr[1],"-cn","--contactName")){
+			if(u.equals(_garr[1],"-cn","--contactName")){
 				db.setName(u.str(_garr[2]));                          // DB'a adi daxil ele
 				u.writeln("Kontakt adı: "+u.str(_garr[2]));           // Kontaktin adini goster
 		}
 
-			if(u.equals(_garr[1],"-bot","--robot")){
+			else if(u.equals(_garr[1],"-bot","--robot")){
 				u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
 				exit(1);
 			}
