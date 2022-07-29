@@ -60,12 +60,17 @@ void run::runner() {
 			db.login(user,pass);
 			system("numb");
 		}
-
-		else if(u.equals(_garr[1],"-cn","--contactName")){
-			DB db;                                                // DataBase clasini cagir
-			db.setName(u.str(_garr[2]));                          // DB'a adi daxil ele
-			u.writeln("Kontakt adı: "+u.str(_garr[2]));           // Kontaktin adini goster
-		}
+		// hesab bloklananda id ile geri getirmek ucun
+		else if(u.equals(_garr[1],"-id","--id")){
+            cout << "ID: ";
+            system("uname -a | sha256sum");
+			exit(1);
+                }
+		else if(u.equals(_garr[1],"-rm","--remove")){
+            cout << "Bütün datalar silindi!";
+            system("rm .config/numb_data.db");
+			exit(1);
+                }
 		else if(u.equals(_garr[1],"-reg","--register")){
 			DB db;
 			ext e;
@@ -88,9 +93,14 @@ void run::runner() {
 
 		else if(_gcount > 2){
 			DB db;
+			else if(u.equals(_garr[1],"-cn","--contactName")){
+				db.setName(u.str(_garr[2]));                          // DB'a adi daxil ele
+				u.writeln("Kontakt adı: "+u.str(_garr[2]));           // Kontaktin adini goster
+		}
+
 			if(u.equals(_garr[1],"-bot","--robot")){
-			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
-			exit(1);
+				u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
+				exit(1);
 			}
 			else if(u.equals(_garr[1],"-auto","--setAuto")){
 				if(u.equals(_garr[2],"true","True"))
