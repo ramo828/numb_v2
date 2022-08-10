@@ -10,7 +10,7 @@ target_compile_definitions (numb PRIVATE BOOST_ERROR_CODE_HEADER_ONLY)
 target_link_libraries (numb sqlite3)
 set(name numb)
 set(Numb_v2_VERSION_MAJOR 2)
-set(Numb_v2_VERSION_MINOR 0)
+set(Numb_v2_VERSION_MINOR 4)
 
 include_directories(header/)
 

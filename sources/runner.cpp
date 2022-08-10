@@ -19,6 +19,11 @@ void run::runner() {
 			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
+		else if(u.equals(_garr[1],"-v","--version")){
+			// ui.runPY(robo);                                       // avto mesaj modu
+			u.writeln(__VERSION_APP__);
+			exit(1);                                              // python calisdiqdan sonra cpp'den cix
+		}
 		else if(u.equals(_garr[1],"-global","--globalKey")){
 			ui.runPY(e.getBin()+"srcpy/main.py","--updateGlobalKey",u.str(_garr[2]),u.str(_garr[3]));
 			u.writeln("Operator: "+u.str(_garr[2]));              // daxil edilen keyi goster

@@ -15,6 +15,7 @@ class ext {
 		#define numb 0
 		#define statistic 1
 		#define folder ""        //null data
+		#define __VERSION_APP__ "2.5.3"
 		#if __ANDROID__
 			string bin="/data/data/com.termux/files/usr/bin/";
 		#elif __linux__
@@ -22,6 +23,7 @@ class ext {
 		#endif
 		
 		
+
 		string code[3] = {
 		// "python "+bin+"srcpy/main.py --run robot",
 		"python "+bin+"srcpy/main.py --run numb",
