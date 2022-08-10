@@ -239,11 +239,13 @@ if [ "${comp_status}" = "true" ];
 then
     {
 	echo "${RED}Local compile${NOCOLOR}"
-}
+	}
 else {
 	echo "${RED}Rwmote compile${NOCOLOR}"
 	# uzaqdan endirilecekse geri don ve esas kod qovlugunu sil
-}
+	}
 fi
 clear
+echo "\n--------------Program versiyası\n--------------"
+numb --version
 echo "Yüklənmə tamamlandı"

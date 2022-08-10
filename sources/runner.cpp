@@ -14,13 +14,12 @@ void run::runner() {
 			exit(1);                                              // python calisandan sonra cpp'den cix
 		}
 		
-		else if(u.equals(_garr[1],"-bot","--robot")){
-			// ui.runPY(robo);                                       // avto mesaj modu
-			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
-			exit(1);                                              // python calisdiqdan sonra cpp'den cix
-		}
+		// else if(u.equals(_garr[1],"-bot","--robot")){
+		// 	// ui.runPY(robo);                                    // avto mesaj modu
+		// 	u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
+		// 	exit(1);                                              // python calisdiqdan sonra cpp'den cix
+		// }
 		else if(u.equals(_garr[1],"-v","--version")){
-			// ui.runPY(robo);                                       // avto mesaj modu
 			u.writeln(__VERSION_APP__);
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
