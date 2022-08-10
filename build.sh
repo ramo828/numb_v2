@@ -92,7 +92,7 @@ then
 	echo "${YELLOW}Local compile${NOCOLOR}"
 }
 else {
-	echo "${YELLOW}Rwmote compile${NOCOLOR}"
+	echo "${YELLOW}Remote compile${NOCOLOR}"
 	rm numb_v2 -rf
 	git clone https://github.com/ramo828/numb_v2.git
 	cd numb_v2
