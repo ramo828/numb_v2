@@ -247,4 +247,3 @@ fi
 clear
 echo "\n--------------Program versiyası\n--------------"
 numb --version
-echo "Yüklənmə tamamlandı"
