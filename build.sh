@@ -96,7 +96,6 @@ else {
 	rm numb_v2 -rf
 	git clone https://github.com/ramo828/numb_v2.git
 	cd numb_v2
-	git checkout proServer
 }
 fi
 # 1ci merhele
