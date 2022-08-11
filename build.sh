@@ -246,4 +246,7 @@ else {
 fi
 clear
 echo "\n--------------Program versiyası\n--------------"
-numb --version
+sleep 1
+clear
+echo "Yükləmə tamamlandı!"
+

@@ -15,6 +15,10 @@ bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRo
 #----------------------------------------------------------
 defaultName = "Metros"
 homeDir = "/home/ramo828/"
+server = [
+    ["sql11.freemysqlhosting.net","sql11505618","JivNUgpe8P","sql11505618"], # server1
+    ["remotemysql.com","3KndKumGco","ViwaxpWyiD","3KndKumGco"],              # server2
+]
 
 if(sp.check_output(['uname', '-o']).strip() == b'Android'):
     binPath = "/data/data/com.termux/files/usr/bin/"
@@ -25,8 +29,21 @@ readDB = open(".config/numb_data.db","rb")
 if( len(readDB.read()) > 0):
     pass
 else:
+    # Əgər program yenidən qurulursa default ayarlar olaraq bunları icra et!
     t1.createTable()
-    t1.addSettings(bearerKey["Bakcell"],bearerKey["Nar"],defaultName,homeDir,1)
+    t1.addSettings(bearerKey["Bakcell"],bearerKey["Nar"],defaultName,homeDir,1,0)
+    t1.addServer(server[0][0],server[0][1],server[0][2],server[0][3])             #server1
+
+
+try:
+    if(t1.getServerNumber() == 0):
+        t1.updateServer(server[0][0],server[0][1],server[0][2],server[0][3])      #server1
+    elif(t1.getServerNumber() == 1):
+        t1.updateServer(server[1][0],server[1][1],server[1][2],server[1][3])      #server2
+except IndexError:
+    lib.red()
+    print("Xəta baş verdi!")
+
 
 ddir = os.getcwd()+"/.config/"                           # Oldugun qovluq
 run = (binPath+"srcpy/numb.py",binPath+"srcpy/statistic.py",binPath+"srcpy/robo.py")
@@ -68,8 +85,6 @@ if(t1.autoKey()):
 
     except TypeError:
         os.system("clear")
-
-
 
 
 def regMetod(uuser,ppass):

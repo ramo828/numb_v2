@@ -4,6 +4,22 @@
 
 using namespace std;
 
+
+static int callback(void* data, int argc, char** argv, char** azColName)
+{
+	int i;
+	fprintf(stderr, "%s", (const char*)data);
+
+	for (i = 0; i < argc; i++) {
+		cout << "-------------------------------------\n";
+		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+		cout << "-------------------------------------\n";
+	}
+
+	printf("\n");
+	return 0;
+}
+
 void run::runner() {
 	util u;              // Aletler
 	userUI ui;           // Istifadeci interfeysi
@@ -14,11 +30,6 @@ void run::runner() {
 			exit(1);                                              // python calisandan sonra cpp'den cix
 		}
 		
-		// else if(u.equals(_garr[1],"-bot","--robot")){
-		// 	// ui.runPY(robo);                                    // avto mesaj modu
-		// 	u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
-		// 	exit(1);                                              // python calisdiqdan sonra cpp'den cix
-		// }
 		else if(u.equals(_garr[1],"-v","--version")){
 			u.writeln(__VERSION_APP__);
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
@@ -30,6 +41,26 @@ void run::runner() {
 
 			exit(1);                                              // python calisdiqdan sonra cpp'den cix
 		}
+
+		else if(u.equals(_garr[1],"-i","--info")){
+			DB db;
+			cout << "\n\t-----MƏLUMAT-----\n";
+			cout << endl <<"Program versiyası: " << __VERSION_APP__ << endl << endl;
+			cout << "\tİstifadəki adı və şifrəsi: "; 
+			db.readDB("select * from account");
+			cout << "\tUserAgent: "<<endl;
+			system("uname -a");
+			cout <<  endl;
+			cout << "\tUserAgentKey: "<< endl;
+			system("uname -a | sha256sum");
+			cout << endl;
+			cout << "\tNumb ayarlar: " ;
+			db.readDB("select * from settings");
+			cout << "\tServer məlumatları: ";
+			db.readDB("select host from sqlServer");
+
+		}
+
 		else if(u.equals(_garr[1],"-k","--key")){
 			util u;
 			DB db;
@@ -98,11 +129,8 @@ void run::runner() {
 
 		else if(_gcount > 2){
 			DB db;
-			if(u.equals(_garr[1],"-bot","--robot")){
-			u.writeln("Bu özəllik artıq sistemdən qaldırılıb!");
-			exit(1);
-			}
-			else if(u.equals(_garr[1],"-auto","--setAuto")){
+			
+			if(u.equals(_garr[1],"-auto","--setAuto")){
 				if(u.equals(_garr[2],"true","True"))
 					db.setAutoStatus("1");
 				else if(u.equals(_garr[2],"false","False"))
@@ -110,6 +138,21 @@ void run::runner() {
 				else
 					cout << "Xəta" << endl;
 			}
+
+			else if(u.equals(_garr[1],"-s","--setServer")){
+				u.writeln("\t------Server------\n"+u.str(_garr[2]));
+				if(u.equals(_garr[2],"0","o")){
+					u.writeln("Seçilən server: "+u.str(_garr[2]));
+					db.choiseServer("0");
+				}
+				else if(u.equals(_garr[2],"1","l")){
+					u.writeln("Seçilən server: "+u.str(_garr[2]));
+					db.choiseServer("1");
+				}
+				else
+					cout << "Xəta" << endl;
+			}
+
 		}
 		else {
 
@@ -138,7 +181,7 @@ void DB::setAutoStatus(string status){
 }
 
 void DB::setName(string name){
-	string updateName = "UPDATE settings SET contactName = '"+name+"'";
+	string updateName = "UPDATE settingzs SET contactName = '"+name+"'";
 	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
         sqlite3_prepare_v2( database, updateName.c_str(), -1, &st, NULL);
         sqlite3_step( st );
@@ -216,5 +259,43 @@ void DB::login(string user, string pass) {
 	DB db;
 	db.clearDb("account");
 	db.reg(user,pass);
+}
+
+void DB::choiseServer(string ch){
+	string test = "select * from accounts";
+	string updateName = "UPDATE settings SET serverNumber = "+ch;
+	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
+        sqlite3_prepare_v2( database, updateName.c_str(), -1, &st, NULL);
+        sqlite3_step( st );
+    } else {
+	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
+    }
+    sqlite3_finalize(st);
+	DB::readDB("select * from account");
+    sqlite3_close(database);
+
+}
+
+void DB::readDB(string query){
+	string data("\n");
+	int exit = 0;
+	exit = sqlite3_open(".config/numb_data.db", &database);
+	string sql(query);
+	if (exit) {
+		std::cerr << "VB açıla bilmədi! " << sqlite3_errmsg(database) << std::endl;
+	}
+	else
+		{
+			cout << endl;
+		}
+	int rc = sqlite3_exec(database, sql.c_str(), callback, (void*)data.c_str(), NULL);
+
+	if (rc != SQLITE_OK)
+		cerr << "Xəta SELECT" << endl;
+	else {
+		
+	}
+
+	sqlite3_close(database);
 }
 

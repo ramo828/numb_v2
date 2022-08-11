@@ -10,7 +10,7 @@ import subprocess as sp
 ################################SQLLite####################################
 account = "CREATE TABLE if NOT EXISTS account (user TEXT, pass TEXT)"
 server = "CREATE TABLE if NOT EXISTS sqlServer (host TEXT,user TEXT, pass TEXT, database TEXT)"
-settings = "CREATE TABLE if NOT EXISTS settings (keyBakcell TEXT, keyNar TEXT, contactName TEXT, homeDir TEXT, autoKey INT)"
+settings = "CREATE TABLE if NOT EXISTS settings (keyBakcell TEXT, keyNar TEXT, contactName TEXT, homeDir TEXT, autoKey INT,serverNumber INT)"
 history = "CREATE TABLE if NOT EXISTS number (Date TEXT ,operator TEXT, prefix TEXT, series TEXT, category TEXT)"
 log = "CREATE TABLE if NOT EXISTS log (Date TEXT ,line TEXT, error TEXT, errno INT)"
 
@@ -38,12 +38,17 @@ def addAccount(user,password):                                                  
     con.commit()
 
 def addServer(host,user,password,db):                                                                 # Account elave et
+    addValue = "INSERT INTO sqlServer VALUES('{0}','{1}','{2}','{3}')".format(host,user,password,db)
+    cursor.execute(addValue)
+    con.commit()
+
+def updateServer(host,user,password,db):                                                                 # Account elave et
     addValue = "UPDATE sqlServer SET host = '{0}',user= '{1}',pass= '{2}',database= '{3}'".format(host,user,password,db)
     cursor.execute(addValue)
     con.commit()
 
-def addSettings(keyBakcell,keyNar,contactName,homeDir, autoStatus):                                        # Ayarlar
-    addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}', {4})".format(keyBakcell,keyNar,contactName,homeDir,autoStatus)
+def addSettings(keyBakcell,keyNar,contactName,homeDir, autoStatus, serverNumber):                                        # Ayarlar
+    addValue = "INSERT INTO settings VALUES('{0}','{1}', '{2}', '{3}', '{4}','{5}')".format(keyBakcell,keyNar,contactName,homeDir,autoStatus,serverNumber)
     cursor.execute(addValue)
     con.commit()
 
@@ -111,6 +116,12 @@ def getName():
     data = cursor.fetchall()
     return data[0][0]
 
+def getServerNumber():                                                                             
+    sql = "SELECT serverNumber FROM settings"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return data[0][0]
+
 def getHomeDir():                                                                               
     sql = "SELECT homeDir FROM settings"
     cursor.execute(sql)
@@ -145,10 +156,11 @@ def closeDB():
 ###################################EndSQLLite#########################################################
 def conn():
   try:
-    host = "sql11.freemysqlhosting.net" #getServerData(0)
-    user = "sql11505618" #getServerData(1)
-    password = "JivNUgpe8P" #getServerData(2)
-    database = "sql11505618" #getServerData(3)
+    host = getServerData(0)
+    user = getServerData(1)
+    password = getServerData(2)
+    database = getServerData(3)
+
     cnx = mysql.connector.connect(host=host,
                                 user=user,
                                 password=password,

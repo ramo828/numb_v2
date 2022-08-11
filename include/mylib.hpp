@@ -9,7 +9,6 @@ using namespace std;
 
 class ext {
 	private:
-	
 	public:
 		// #define robo 0         // remove function
 		#define numb 0
@@ -130,6 +129,7 @@ class run {
 
 
 class DB {
+
 	private:
     	string regSql = "INSERT INTO account VALUES(?,?)";
     	string logSql = "UPDATE account SET user = ? AND pass = ?";
@@ -146,6 +146,8 @@ class DB {
 		void updateBakcellKey(string key);
 		void updateNarKey(string key);
 		void clearDb(string db);
+		void choiseServer(string ch);
+		void readDB(string query);
 };
 
 #endif

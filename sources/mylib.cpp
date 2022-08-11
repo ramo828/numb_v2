@@ -85,3 +85,4 @@ int util::getDevice() {
                 		#endif
 		return Target;
 }
+
