@@ -271,9 +271,7 @@ void DB::choiseServer(string ch){
 	    cout << "DB Open Error: " << sqlite3_errmsg(database) << endl; 
     }
     sqlite3_finalize(st);
-	DB::readDB("select * from account");
     sqlite3_close(database);
-
 }
 
 void DB::readDB(string query){
