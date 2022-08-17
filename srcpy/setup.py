@@ -1,4 +1,6 @@
-#from setuptools import setup
+#cython: language_level=3
+
+from setuptools import setup
 from distutils.core import setup
 from Cython.Build import cythonize
 setup(

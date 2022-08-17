@@ -181,7 +181,7 @@ void DB::setAutoStatus(string status){
 }
 
 void DB::setName(string name){
-	string updateName = "UPDATE settingzs SET contactName = '"+name+"'";
+	string updateName = "UPDATE settings SET contactName = '"+name+"'";
 	if (sqlite3_open(".config/numb_data.db", &database) == SQLITE_OK) { 
         sqlite3_prepare_v2( database, updateName.c_str(), -1, &st, NULL);
         sqlite3_step( st );
