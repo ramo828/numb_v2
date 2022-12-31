@@ -248,5 +248,5 @@ clear
 #echo "\n--------------Program versiyası\n--------------"
 sleep 1
 clear
-echo "Yükləmə tamamlandı!"
+echo "Yükləmə tamamlandı !"
 
