@@ -55,6 +55,9 @@ choise = 0
 
 if(t1.autoKey()):
     try:
+        realKey = AutoKey("824-0038", "samir9995099")
+        rKey = realKey.getKey()
+        t1.updateGlobalKey(1, rKey)
         key = t1.updateKey(0)                                            # Bakcell
         old = t1.getKey(0)                                               # oldBakcell
 
@@ -74,11 +77,10 @@ if(t1.autoKey()):
             tm.sleep(1/2)
             os.system("clear")
         elif(not (old_sha_nar == new_sha_nar)):
-            realKey = AutoKey("824-0038", "samir9995099")
-            rKey = realKey.getKey()
+           
             lib.light_red()
             print("\t\t-------Ferqli kod Nar-------")
-            t1.updateKeyLocal(rKey,1)
+            t1.updateKeyLocal(narKey,1)
             tm.sleep(1/2)
             os.system("clear")
         else:
