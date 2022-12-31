@@ -6,9 +6,10 @@ import hashlib as hl
 import time as tm
 import db as t1
 import numb_lib as lib
-
+from numb_lib import AutoKey
 
 #----------------------------------------------------------
+realKey = AutoKey("824-0038", "samir9995099")
 bearerKey = dict()                                         # Key Lugeti
 bearerKey["Bakcell"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJNQUlOIiwiZXhwIjoxNjQ5MzM0NzAyfQ.N2Jt28lAVMLhw4mnGJwM0QbHsEaW8c3raG-xzjufnh05uGPrJuNZvfsy8-A-M-suzpCYV-XYgBrthwui7NAadw"
 bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRoIjoiSVNQLFJFQ0hBUkdFX0xPRyIsImV4cCI6MTY0ODkwNzA5Mn0.ox1r4jNdH873sBwyzZAntAn6ld0Mk1nal1nH2jst3HyVy9Vhiv9-PLGvjIRmfufAO8cRoONyae1a-qjdHfgrIA" 
@@ -74,9 +75,10 @@ if(t1.autoKey()):
             tm.sleep(1/2)
             os.system("clear")
         elif(not (old_sha_nar == new_sha_nar)):
+            rKey = realKey.getKey()
             lib.light_red()
             print("\t\t-------Ferqli kod Nar-------")
-            t1.updateKeyLocal(narKey,1)
+            t1.updateKeyLocal(rKey,1)
             tm.sleep(1/2)
             os.system("clear")
         else:

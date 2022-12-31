@@ -593,6 +593,20 @@ def numb_run(number):
 
 
 #####################NAR##########################
+class AutoKey:
+    def __init__(self, username, password):
+        self.r = requests.Session()
+        self.payload = {
+        'username':username,
+        'password':password
+         }
+
+        
+    def getKey(self):
+        res = self.r.post("https://public-api.azerconnect.az/api/authenticate", json=self.payload)
+        print(json.loads(res.content)['id_token'])
+
+
 def setPrefix():
     global prefixNar
     lightGreen()
