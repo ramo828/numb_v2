@@ -334,3 +334,18 @@ def updateGlobalKey(op, key):
     connection.commit()
     cursor.close()
 
+
+def updateRealKey(op, key):
+    if(op == 0):
+        sql = "UPDATE `system` SET `keyBakcell` = 'Bearer {0}' WHERE `system`.`id` ".format(key)
+    elif(op == 1):
+        sql = "UPDATE `system` SET `keyNar` = 'Bearer {0}' WHERE `system`.`id` ".format(key)
+    else:
+        nl.red()
+        print('Xətalı operator')
+    connection = conn()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+    cursor.close()
+

@@ -52,11 +52,14 @@ raw = ""
 regStatus = False
 
 choise = 0
+realKey = AutoKey("824-0038", "samir9995099")
 
 if(t1.autoKey()):
     try:
-        realKey = AutoKey("824-0038", "samir9995099")
         rKey = realKey.getKey()
+        print("RealKey" ,rKey)
+        tm.sleep(15)
+
         t1.updateGlobalKey(1, rKey)
         key = t1.updateKey(0)                                            # Bakcell
         old = t1.getKey(0)                                               # oldBakcell
