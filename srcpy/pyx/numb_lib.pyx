@@ -605,7 +605,7 @@ class AutoKey:
     def getKey(self):
         res = self.r.post("https://public-api.azerconnect.az/api/authenticate", json=self.payload)
         key = str(json.loads(res.content)['id_token'])
-        print("myRealKey: ", key)
+        #print("myRealKey: ", key)
         return key
 
 
