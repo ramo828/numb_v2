@@ -16,7 +16,7 @@ bearerKey["Nar"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4MjQtMDAwMGIiLCJhdXRo
 defaultName = "Metros"
 homeDir = "/home/ramo828/"
 server = [
-    ["sql7.freemysqlhosting.net","sql7633763","l9jshiR1vV","sql7633763"], # server1
+    ["sql7.freemysqlhosting.net","sql7642008","b2XxkIq5K4","sql7642008"], # server1
     ["remotemysql.com","3KndKumGco","ViwaxpWyiD","3KndKumGco"],              # server2
 ]
 
